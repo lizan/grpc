@@ -40,6 +40,61 @@ exports_files(["LICENSE"])
 
 package(default_visibility = ["//visibility:public"])
 
+load("@protobuf_git//:protobuf.bzl", "cc_proto_library")
+
+cc_proto_library(
+  name = "testing_messages_proto",
+  srcs = [
+    "src/proto/grpc/testing/messages.proto",
+  ],
+  use_grpc_plugin = True,
+  protoc = "//external:protoc",
+  default_runtime = "//external:protobuf",
+)
+
+cc_proto_library(
+  name = "interop_proto",
+  srcs = [
+    "src/proto/grpc/testing/empty.proto",
+    "src/proto/grpc/testing/test.proto",
+  ],
+  deps = [
+    ":testing_messages_proto",
+  ],
+  use_grpc_plugin = True,
+  protoc = "//external:protoc",
+  default_runtime = "//external:protobuf",
+)
+
+cc_proto_library(
+  name = "qps_proto",
+  srcs = [
+    "src/proto/grpc/testing/payloads.proto",
+    "src/proto/grpc/testing/stats.proto",
+    "src/proto/grpc/testing/control.proto",
+    "src/proto/grpc/testing/services.proto",
+  ],
+  deps = [
+    ":testing_messages_proto",
+  ],
+  use_grpc_plugin = True,
+  protoc = "//external:protoc",
+  default_runtime = "//external:protobuf",
+)
+
+cc_proto_library(
+  name = "test_util_proto",
+  srcs = [
+    "src/proto/grpc/testing/echo_messages.proto",
+    "src/proto/grpc/testing/echo.proto",
+    "src/proto/grpc/testing/duplicate/echo_duplicate.proto",
+  ],
+  use_grpc_plugin = True,
+  protoc = "//external:protoc",
+  default_runtime = "//external:protobuf",
+)
+
+
 
 
 
@@ -151,9 +206,26 @@ cc_library(
   ],
   includes = [
     "include",
-    ".",
   ],
   deps = [
+  ],
+)
+
+
+
+cc_library(
+  name = "gpr_test_util",
+  srcs = [
+    "test/core/util/test_config.h",
+    "test/core/util/test_config.c",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":gpr",
   ],
 )
 
@@ -545,13 +617,12 @@ cc_library(
   ],
   includes = [
     "include",
-    ".",
   ],
   deps = [
     "//external:libssl",
     "//external:zlib",
     ":gpr",
-    "//external:nanopb",
+    "//third_party/nanopb",
   ],
   copts = [
     "-std=gnu99",
@@ -906,11 +977,327 @@ cc_library(
   ],
   includes = [
     "include",
-    ".",
   ],
   deps = [
     "//external:libssl",
     ":gpr",
+  ],
+)
+
+
+
+cc_library(
+  name = "grpc_dll",
+  srcs = [
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":gpr",
+    ":grpc",
+  ],
+)
+
+
+
+cc_library(
+  name = "grpc_test_util",
+  srcs = [
+    "test/core/end2end/data/ssl_test_data.h",
+    "test/core/security/oauth2_utils.h",
+    "test/core/end2end/cq_verifier.h",
+    "test/core/end2end/fake_resolver.h",
+    "test/core/end2end/fixtures/http_proxy.h",
+    "test/core/end2end/fixtures/proxy.h",
+    "test/core/iomgr/endpoint_tests.h",
+    "test/core/util/grpc_profiler.h",
+    "test/core/util/memory_counters.h",
+    "test/core/util/mock_endpoint.h",
+    "test/core/util/parse_hexstring.h",
+    "test/core/util/passthru_endpoint.h",
+    "test/core/util/port.h",
+    "test/core/util/port_server_client.h",
+    "test/core/util/slice_splitter.h",
+    "src/core/lib/channel/channel_args.h",
+    "src/core/lib/channel/channel_stack.h",
+    "src/core/lib/channel/channel_stack_builder.h",
+    "src/core/lib/channel/compress_filter.h",
+    "src/core/lib/channel/connected_channel.h",
+    "src/core/lib/channel/context.h",
+    "src/core/lib/channel/deadline_filter.h",
+    "src/core/lib/channel/handshaker.h",
+    "src/core/lib/channel/http_client_filter.h",
+    "src/core/lib/channel/http_server_filter.h",
+    "src/core/lib/channel/message_size_filter.h",
+    "src/core/lib/compression/algorithm_metadata.h",
+    "src/core/lib/compression/message_compress.h",
+    "src/core/lib/debug/trace.h",
+    "src/core/lib/http/format_request.h",
+    "src/core/lib/http/httpcli.h",
+    "src/core/lib/http/parser.h",
+    "src/core/lib/iomgr/closure.h",
+    "src/core/lib/iomgr/combiner.h",
+    "src/core/lib/iomgr/endpoint.h",
+    "src/core/lib/iomgr/endpoint_pair.h",
+    "src/core/lib/iomgr/error.h",
+    "src/core/lib/iomgr/ev_epoll_linux.h",
+    "src/core/lib/iomgr/ev_poll_and_epoll_posix.h",
+    "src/core/lib/iomgr/ev_poll_posix.h",
+    "src/core/lib/iomgr/ev_posix.h",
+    "src/core/lib/iomgr/exec_ctx.h",
+    "src/core/lib/iomgr/executor.h",
+    "src/core/lib/iomgr/iocp_windows.h",
+    "src/core/lib/iomgr/iomgr.h",
+    "src/core/lib/iomgr/iomgr_internal.h",
+    "src/core/lib/iomgr/iomgr_posix.h",
+    "src/core/lib/iomgr/load_file.h",
+    "src/core/lib/iomgr/network_status_tracker.h",
+    "src/core/lib/iomgr/polling_entity.h",
+    "src/core/lib/iomgr/pollset.h",
+    "src/core/lib/iomgr/pollset_set.h",
+    "src/core/lib/iomgr/pollset_set_windows.h",
+    "src/core/lib/iomgr/pollset_windows.h",
+    "src/core/lib/iomgr/resolve_address.h",
+    "src/core/lib/iomgr/sockaddr.h",
+    "src/core/lib/iomgr/sockaddr_posix.h",
+    "src/core/lib/iomgr/sockaddr_utils.h",
+    "src/core/lib/iomgr/sockaddr_windows.h",
+    "src/core/lib/iomgr/socket_utils_posix.h",
+    "src/core/lib/iomgr/socket_windows.h",
+    "src/core/lib/iomgr/tcp_client.h",
+    "src/core/lib/iomgr/tcp_posix.h",
+    "src/core/lib/iomgr/tcp_server.h",
+    "src/core/lib/iomgr/tcp_windows.h",
+    "src/core/lib/iomgr/time_averaged_stats.h",
+    "src/core/lib/iomgr/timer.h",
+    "src/core/lib/iomgr/timer_heap.h",
+    "src/core/lib/iomgr/udp_server.h",
+    "src/core/lib/iomgr/unix_sockets_posix.h",
+    "src/core/lib/iomgr/wakeup_fd_pipe.h",
+    "src/core/lib/iomgr/wakeup_fd_posix.h",
+    "src/core/lib/iomgr/workqueue.h",
+    "src/core/lib/iomgr/workqueue_posix.h",
+    "src/core/lib/iomgr/workqueue_windows.h",
+    "src/core/lib/json/json.h",
+    "src/core/lib/json/json_common.h",
+    "src/core/lib/json/json_reader.h",
+    "src/core/lib/json/json_writer.h",
+    "src/core/lib/surface/api_trace.h",
+    "src/core/lib/surface/call.h",
+    "src/core/lib/surface/call_test_only.h",
+    "src/core/lib/surface/channel.h",
+    "src/core/lib/surface/channel_init.h",
+    "src/core/lib/surface/channel_stack_type.h",
+    "src/core/lib/surface/completion_queue.h",
+    "src/core/lib/surface/event_string.h",
+    "src/core/lib/surface/init.h",
+    "src/core/lib/surface/lame_client.h",
+    "src/core/lib/surface/server.h",
+    "src/core/lib/transport/byte_stream.h",
+    "src/core/lib/transport/connectivity_state.h",
+    "src/core/lib/transport/metadata.h",
+    "src/core/lib/transport/metadata_batch.h",
+    "src/core/lib/transport/static_metadata.h",
+    "src/core/lib/transport/timeout_encoding.h",
+    "src/core/lib/transport/transport.h",
+    "src/core/lib/transport/transport_impl.h",
+    "test/core/end2end/data/client_certs.c",
+    "test/core/end2end/data/server1_cert.c",
+    "test/core/end2end/data/server1_key.c",
+    "test/core/end2end/data/test_root_cert.c",
+    "test/core/security/oauth2_utils.c",
+    "test/core/end2end/cq_verifier.c",
+    "test/core/end2end/fake_resolver.c",
+    "test/core/end2end/fixtures/http_proxy.c",
+    "test/core/end2end/fixtures/proxy.c",
+    "test/core/iomgr/endpoint_tests.c",
+    "test/core/util/grpc_profiler.c",
+    "test/core/util/memory_counters.c",
+    "test/core/util/mock_endpoint.c",
+    "test/core/util/parse_hexstring.c",
+    "test/core/util/passthru_endpoint.c",
+    "test/core/util/port_posix.c",
+    "test/core/util/port_server_client.c",
+    "test/core/util/port_windows.c",
+    "test/core/util/slice_splitter.c",
+    "src/core/lib/channel/channel_args.c",
+    "src/core/lib/channel/channel_stack.c",
+    "src/core/lib/channel/channel_stack_builder.c",
+    "src/core/lib/channel/compress_filter.c",
+    "src/core/lib/channel/connected_channel.c",
+    "src/core/lib/channel/deadline_filter.c",
+    "src/core/lib/channel/handshaker.c",
+    "src/core/lib/channel/http_client_filter.c",
+    "src/core/lib/channel/http_server_filter.c",
+    "src/core/lib/channel/message_size_filter.c",
+    "src/core/lib/compression/compression.c",
+    "src/core/lib/compression/message_compress.c",
+    "src/core/lib/debug/trace.c",
+    "src/core/lib/http/format_request.c",
+    "src/core/lib/http/httpcli.c",
+    "src/core/lib/http/parser.c",
+    "src/core/lib/iomgr/closure.c",
+    "src/core/lib/iomgr/combiner.c",
+    "src/core/lib/iomgr/endpoint.c",
+    "src/core/lib/iomgr/endpoint_pair_posix.c",
+    "src/core/lib/iomgr/endpoint_pair_windows.c",
+    "src/core/lib/iomgr/error.c",
+    "src/core/lib/iomgr/ev_epoll_linux.c",
+    "src/core/lib/iomgr/ev_poll_and_epoll_posix.c",
+    "src/core/lib/iomgr/ev_poll_posix.c",
+    "src/core/lib/iomgr/ev_posix.c",
+    "src/core/lib/iomgr/exec_ctx.c",
+    "src/core/lib/iomgr/executor.c",
+    "src/core/lib/iomgr/iocp_windows.c",
+    "src/core/lib/iomgr/iomgr.c",
+    "src/core/lib/iomgr/iomgr_posix.c",
+    "src/core/lib/iomgr/iomgr_windows.c",
+    "src/core/lib/iomgr/load_file.c",
+    "src/core/lib/iomgr/network_status_tracker.c",
+    "src/core/lib/iomgr/polling_entity.c",
+    "src/core/lib/iomgr/pollset_set_windows.c",
+    "src/core/lib/iomgr/pollset_windows.c",
+    "src/core/lib/iomgr/resolve_address_posix.c",
+    "src/core/lib/iomgr/resolve_address_windows.c",
+    "src/core/lib/iomgr/sockaddr_utils.c",
+    "src/core/lib/iomgr/socket_utils_common_posix.c",
+    "src/core/lib/iomgr/socket_utils_linux.c",
+    "src/core/lib/iomgr/socket_utils_posix.c",
+    "src/core/lib/iomgr/socket_windows.c",
+    "src/core/lib/iomgr/tcp_client_posix.c",
+    "src/core/lib/iomgr/tcp_client_windows.c",
+    "src/core/lib/iomgr/tcp_posix.c",
+    "src/core/lib/iomgr/tcp_server_posix.c",
+    "src/core/lib/iomgr/tcp_server_windows.c",
+    "src/core/lib/iomgr/tcp_windows.c",
+    "src/core/lib/iomgr/time_averaged_stats.c",
+    "src/core/lib/iomgr/timer.c",
+    "src/core/lib/iomgr/timer_heap.c",
+    "src/core/lib/iomgr/udp_server.c",
+    "src/core/lib/iomgr/unix_sockets_posix.c",
+    "src/core/lib/iomgr/unix_sockets_posix_noop.c",
+    "src/core/lib/iomgr/wakeup_fd_eventfd.c",
+    "src/core/lib/iomgr/wakeup_fd_nospecial.c",
+    "src/core/lib/iomgr/wakeup_fd_pipe.c",
+    "src/core/lib/iomgr/wakeup_fd_posix.c",
+    "src/core/lib/iomgr/workqueue_posix.c",
+    "src/core/lib/iomgr/workqueue_windows.c",
+    "src/core/lib/json/json.c",
+    "src/core/lib/json/json_reader.c",
+    "src/core/lib/json/json_string.c",
+    "src/core/lib/json/json_writer.c",
+    "src/core/lib/surface/alarm.c",
+    "src/core/lib/surface/api_trace.c",
+    "src/core/lib/surface/byte_buffer.c",
+    "src/core/lib/surface/byte_buffer_reader.c",
+    "src/core/lib/surface/call.c",
+    "src/core/lib/surface/call_details.c",
+    "src/core/lib/surface/call_log_batch.c",
+    "src/core/lib/surface/channel.c",
+    "src/core/lib/surface/channel_init.c",
+    "src/core/lib/surface/channel_ping.c",
+    "src/core/lib/surface/channel_stack_type.c",
+    "src/core/lib/surface/completion_queue.c",
+    "src/core/lib/surface/event_string.c",
+    "src/core/lib/surface/lame_client.c",
+    "src/core/lib/surface/metadata_array.c",
+    "src/core/lib/surface/server.c",
+    "src/core/lib/surface/validate_metadata.c",
+    "src/core/lib/surface/version.c",
+    "src/core/lib/transport/byte_stream.c",
+    "src/core/lib/transport/connectivity_state.c",
+    "src/core/lib/transport/metadata.c",
+    "src/core/lib/transport/metadata_batch.c",
+    "src/core/lib/transport/static_metadata.c",
+    "src/core/lib/transport/timeout_encoding.c",
+    "src/core/lib/transport/transport.c",
+    "src/core/lib/transport/transport_op_string.c",
+  ],
+  hdrs = [
+    "include/grpc/byte_buffer.h",
+    "include/grpc/byte_buffer_reader.h",
+    "include/grpc/compression.h",
+    "include/grpc/grpc.h",
+    "include/grpc/grpc_posix.h",
+    "include/grpc/grpc_security_constants.h",
+    "include/grpc/status.h",
+    "include/grpc/impl/codegen/byte_buffer_reader.h",
+    "include/grpc/impl/codegen/compression_types.h",
+    "include/grpc/impl/codegen/connectivity_state.h",
+    "include/grpc/impl/codegen/grpc_types.h",
+    "include/grpc/impl/codegen/propagation_bits.h",
+    "include/grpc/impl/codegen/status.h",
+    "include/grpc/impl/codegen/atm.h",
+    "include/grpc/impl/codegen/atm_gcc_atomic.h",
+    "include/grpc/impl/codegen/atm_gcc_sync.h",
+    "include/grpc/impl/codegen/atm_windows.h",
+    "include/grpc/impl/codegen/gpr_types.h",
+    "include/grpc/impl/codegen/port_platform.h",
+    "include/grpc/impl/codegen/slice.h",
+    "include/grpc/impl/codegen/sync.h",
+    "include/grpc/impl/codegen/sync_generic.h",
+    "include/grpc/impl/codegen/sync_posix.h",
+    "include/grpc/impl/codegen/sync_windows.h",
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+    ":grpc",
+  ],
+  copts = [
+    "-std=gnu99",
+  ],
+)
+
+
+
+cc_library(
+  name = "grpc_test_util_unsecure",
+  srcs = [
+    "test/core/end2end/cq_verifier.h",
+    "test/core/end2end/fake_resolver.h",
+    "test/core/end2end/fixtures/http_proxy.h",
+    "test/core/end2end/fixtures/proxy.h",
+    "test/core/iomgr/endpoint_tests.h",
+    "test/core/util/grpc_profiler.h",
+    "test/core/util/memory_counters.h",
+    "test/core/util/mock_endpoint.h",
+    "test/core/util/parse_hexstring.h",
+    "test/core/util/passthru_endpoint.h",
+    "test/core/util/port.h",
+    "test/core/util/port_server_client.h",
+    "test/core/util/slice_splitter.h",
+    "test/core/end2end/cq_verifier.c",
+    "test/core/end2end/fake_resolver.c",
+    "test/core/end2end/fixtures/http_proxy.c",
+    "test/core/end2end/fixtures/proxy.c",
+    "test/core/iomgr/endpoint_tests.c",
+    "test/core/util/grpc_profiler.c",
+    "test/core/util/memory_counters.c",
+    "test/core/util/mock_endpoint.c",
+    "test/core/util/parse_hexstring.c",
+    "test/core/util/passthru_endpoint.c",
+    "test/core/util/port_posix.c",
+    "test/core/util/port_server_client.c",
+    "test/core/util/port_windows.c",
+    "test/core/util/slice_splitter.c",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":gpr",
+    ":gpr_test_util",
+    ":grpc_unsecure",
+    ":grpc",
   ],
 )
 
@@ -1248,14 +1635,56 @@ cc_library(
   ],
   includes = [
     "include",
-    ".",
   ],
   deps = [
     ":gpr",
-    "//external:nanopb",
+    "//third_party/nanopb",
   ],
   copts = [
     "-std=gnu99",
+  ],
+)
+
+
+
+cc_library(
+  name = "reconnect_server",
+  srcs = [
+    "test/core/util/reconnect_server.h",
+    "test/core/util/reconnect_server.c",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":test_tcp_server",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+
+cc_library(
+  name = "test_tcp_server",
+  srcs = [
+    "test/core/util/test_tcp_server.h",
+    "test/core/util/test_tcp_server.c",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
   ],
 )
 
@@ -1406,7 +1835,6 @@ cc_library(
   ],
   includes = [
     "include",
-    ".",
   ],
   deps = [
     "//external:libssl",
@@ -1483,10 +1911,126 @@ cc_library(
   ],
   includes = [
     "include",
-    ".",
   ],
   deps = [
     ":grpc++",
+  ],
+)
+
+
+
+cc_library(
+  name = "grpc++_reflection_codegen",
+  srcs = [
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+  ],
+)
+
+
+
+cc_library(
+  name = "grpc++_test_config",
+  srcs = [
+    "test/cpp/util/test_config.h",
+    "test/cpp/util/test_config_cc.cc",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    "//external:gflags",
+  ],
+)
+
+
+
+cc_library(
+  name = "grpc++_test_util",
+  srcs = [
+    "test/cpp/end2end/test_service_impl.h",
+    "test/cpp/util/byte_buffer_proto_helper.h",
+    "test/cpp/util/create_test_channel.h",
+    "test/cpp/util/string_ref_helper.h",
+    "test/cpp/util/subprocess.h",
+    "test/cpp/util/test_credentials_provider.h",
+    "test/cpp/end2end/test_service_impl.cc",
+    "test/cpp/util/byte_buffer_proto_helper.cc",
+    "test/cpp/util/create_test_channel.cc",
+    "test/cpp/util/string_ref_helper.cc",
+    "test/cpp/util/subprocess.cc",
+    "test/cpp/util/test_credentials_provider.cc",
+    "src/cpp/codegen/codegen_init.cc",
+  ],
+  hdrs = [
+    "include/grpc++/impl/codegen/async_stream.h",
+    "include/grpc++/impl/codegen/async_unary_call.h",
+    "include/grpc++/impl/codegen/call.h",
+    "include/grpc++/impl/codegen/call_hook.h",
+    "include/grpc++/impl/codegen/channel_interface.h",
+    "include/grpc++/impl/codegen/client_context.h",
+    "include/grpc++/impl/codegen/client_unary_call.h",
+    "include/grpc++/impl/codegen/completion_queue.h",
+    "include/grpc++/impl/codegen/completion_queue_tag.h",
+    "include/grpc++/impl/codegen/config.h",
+    "include/grpc++/impl/codegen/core_codegen_interface.h",
+    "include/grpc++/impl/codegen/create_auth_context.h",
+    "include/grpc++/impl/codegen/grpc_library.h",
+    "include/grpc++/impl/codegen/method_handler_impl.h",
+    "include/grpc++/impl/codegen/rpc_method.h",
+    "include/grpc++/impl/codegen/rpc_service_method.h",
+    "include/grpc++/impl/codegen/security/auth_context.h",
+    "include/grpc++/impl/codegen/serialization_traits.h",
+    "include/grpc++/impl/codegen/server_context.h",
+    "include/grpc++/impl/codegen/server_interface.h",
+    "include/grpc++/impl/codegen/service_type.h",
+    "include/grpc++/impl/codegen/status.h",
+    "include/grpc++/impl/codegen/status_code_enum.h",
+    "include/grpc++/impl/codegen/status_helper.h",
+    "include/grpc++/impl/codegen/string_ref.h",
+    "include/grpc++/impl/codegen/stub_options.h",
+    "include/grpc++/impl/codegen/sync.h",
+    "include/grpc++/impl/codegen/sync_cxx11.h",
+    "include/grpc++/impl/codegen/sync_no_cxx11.h",
+    "include/grpc++/impl/codegen/sync_stream.h",
+    "include/grpc++/impl/codegen/time.h",
+    "include/grpc/impl/codegen/byte_buffer_reader.h",
+    "include/grpc/impl/codegen/compression_types.h",
+    "include/grpc/impl/codegen/connectivity_state.h",
+    "include/grpc/impl/codegen/grpc_types.h",
+    "include/grpc/impl/codegen/propagation_bits.h",
+    "include/grpc/impl/codegen/status.h",
+    "include/grpc/impl/codegen/atm.h",
+    "include/grpc/impl/codegen/atm_gcc_atomic.h",
+    "include/grpc/impl/codegen/atm_gcc_sync.h",
+    "include/grpc/impl/codegen/atm_windows.h",
+    "include/grpc/impl/codegen/gpr_types.h",
+    "include/grpc/impl/codegen/port_platform.h",
+    "include/grpc/impl/codegen/slice.h",
+    "include/grpc/impl/codegen/sync.h",
+    "include/grpc/impl/codegen/sync_generic.h",
+    "include/grpc/impl/codegen/sync_posix.h",
+    "include/grpc/impl/codegen/sync_windows.h",
+    "include/grpc++/impl/codegen/proto_utils.h",
+    "include/grpc++/impl/codegen/config_protobuf.h",
+    "include/grpc++/impl/codegen/thrift_serializer.h",
+    "include/grpc++/impl/codegen/thrift_utils.h",
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":test_util_proto",
+    "//external:googletest",
+    ":grpc++",
+    ":grpc_test_util",
   ],
 )
 
@@ -1628,12 +2172,41 @@ cc_library(
   ],
   includes = [
     "include",
-    ".",
   ],
   deps = [
     "//external:protobuf_clib",
     ":gpr",
     ":grpc_unsecure",
+  ],
+)
+
+
+
+cc_library(
+  name = "grpc_cli_libs",
+  srcs = [
+    "test/cpp/util/cli_call.h",
+    "test/cpp/util/cli_credentials.h",
+    "test/cpp/util/config_grpc_cli.h",
+    "test/cpp/util/grpc_tool.h",
+    "test/cpp/util/proto_file_parser.h",
+    "test/cpp/util/proto_reflection_descriptor_database.h",
+    "test/cpp/util/service_describer.h",
+    "test/cpp/util/cli_call.cc",
+    "test/cpp/util/cli_credentials.cc",
+    "test/cpp/util/grpc_tool.cc",
+    "test/cpp/util/proto_file_parser.cc",
+    "test/cpp/util/proto_reflection_descriptor_database.cc",
+    "test/cpp/util/service_describer.cc",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":grpc++_reflection",
+    ":grpc++",
   ],
 )
 
@@ -1672,10 +2245,172 @@ cc_library(
   ],
   includes = [
     "include",
-    ".",
   ],
   deps = [
     "//external:protobuf_compiler",
+  ],
+)
+
+
+
+cc_library(
+  name = "interop_client_helper",
+  srcs = [
+    "test/cpp/interop/client_helper.h",
+    "test/cpp/interop/client_helper.cc",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":interop_proto",
+    "//external:gflags",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr",
+  ],
+)
+
+
+
+cc_library(
+  name = "interop_client_main",
+  srcs = [
+    "test/cpp/interop/interop_client.h",
+    "test/cpp/interop/client.cc",
+    "test/cpp/interop/interop_client.cc",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":interop_proto",
+    "//external:gflags",
+    ":interop_client_helper",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+    ":grpc++_test_config",
+  ],
+)
+
+
+
+cc_library(
+  name = "interop_server_helper",
+  srcs = [
+    "test/cpp/interop/server_helper.h",
+    "test/cpp/interop/server_helper.cc",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":interop_proto",
+    "//external:gflags",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr",
+  ],
+)
+
+
+
+cc_library(
+  name = "interop_server_lib",
+  srcs = [
+    "test/cpp/interop/interop_server.cc",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":interop_proto",
+    "//external:gflags",
+    ":interop_server_helper",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+    ":grpc++_test_config",
+  ],
+)
+
+
+
+cc_library(
+  name = "interop_server_main",
+  srcs = [
+    "test/cpp/interop/interop_server_bootstrap.cc",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":interop_proto",
+    "//external:gflags",
+    ":interop_server_lib",
+  ],
+)
+
+
+
+cc_library(
+  name = "qps",
+  srcs = [
+    "test/cpp/qps/client.h",
+    "test/cpp/qps/driver.h",
+    "test/cpp/qps/histogram.h",
+    "test/cpp/qps/interarrival.h",
+    "test/cpp/qps/limit_cores.h",
+    "test/cpp/qps/parse_json.h",
+    "test/cpp/qps/qps_worker.h",
+    "test/cpp/qps/report.h",
+    "test/cpp/qps/server.h",
+    "test/cpp/qps/stats.h",
+    "test/cpp/qps/usage_timer.h",
+    "test/cpp/util/benchmark_config.h",
+    "test/cpp/qps/client_async.cc",
+    "test/cpp/qps/client_sync.cc",
+    "test/cpp/qps/driver.cc",
+    "test/cpp/qps/limit_cores.cc",
+    "test/cpp/qps/parse_json.cc",
+    "test/cpp/qps/qps_worker.cc",
+    "test/cpp/qps/report.cc",
+    "test/cpp/qps/server_async.cc",
+    "test/cpp/qps/server_sync.cc",
+    "test/cpp/qps/usage_timer.cc",
+    "test/cpp/util/benchmark_config.cc",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":qps_proto",
+    "//external:gflags",
+    ":grpc_test_util",
+    ":grpc++_test_util",
+    ":grpc++",
   ],
 )
 
@@ -1690,10 +2425,183 @@ cc_library(
   ],
   includes = [
     "include",
-    ".",
   ],
   deps = [
     ":grpc",
+    ":gpr",
+  ],
+)
+
+
+
+cc_library(
+  name = "bad_client_test",
+  srcs = [
+    "test/core/bad_client/bad_client.h",
+    "test/core/bad_client/bad_client.c",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+
+cc_library(
+  name = "bad_ssl_test_server",
+  srcs = [
+    "test/core/bad_ssl/server_common.h",
+    "test/core/bad_ssl/server_common.c",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+
+cc_library(
+  name = "end2end_tests",
+  srcs = [
+    "test/core/end2end/tests/cancel_test_helpers.h",
+    "test/core/end2end/end2end_tests.h",
+    "test/core/end2end/end2end_tests.c",
+    "test/core/end2end/tests/bad_hostname.c",
+    "test/core/end2end/tests/binary_metadata.c",
+    "test/core/end2end/tests/call_creds.c",
+    "test/core/end2end/tests/cancel_after_accept.c",
+    "test/core/end2end/tests/cancel_after_client_done.c",
+    "test/core/end2end/tests/cancel_after_invoke.c",
+    "test/core/end2end/tests/cancel_before_invoke.c",
+    "test/core/end2end/tests/cancel_in_a_vacuum.c",
+    "test/core/end2end/tests/cancel_with_status.c",
+    "test/core/end2end/tests/compressed_payload.c",
+    "test/core/end2end/tests/connectivity.c",
+    "test/core/end2end/tests/default_host.c",
+    "test/core/end2end/tests/disappearing_server.c",
+    "test/core/end2end/tests/empty_batch.c",
+    "test/core/end2end/tests/filter_call_init_fails.c",
+    "test/core/end2end/tests/filter_causes_close.c",
+    "test/core/end2end/tests/graceful_server_shutdown.c",
+    "test/core/end2end/tests/high_initial_seqno.c",
+    "test/core/end2end/tests/hpack_size.c",
+    "test/core/end2end/tests/idempotent_request.c",
+    "test/core/end2end/tests/invoke_large_request.c",
+    "test/core/end2end/tests/large_metadata.c",
+    "test/core/end2end/tests/load_reporting_hook.c",
+    "test/core/end2end/tests/max_concurrent_streams.c",
+    "test/core/end2end/tests/max_message_length.c",
+    "test/core/end2end/tests/negative_deadline.c",
+    "test/core/end2end/tests/network_status_change.c",
+    "test/core/end2end/tests/no_logging.c",
+    "test/core/end2end/tests/no_op.c",
+    "test/core/end2end/tests/payload.c",
+    "test/core/end2end/tests/ping.c",
+    "test/core/end2end/tests/ping_pong_streaming.c",
+    "test/core/end2end/tests/registered_call.c",
+    "test/core/end2end/tests/request_with_flags.c",
+    "test/core/end2end/tests/request_with_payload.c",
+    "test/core/end2end/tests/server_finishes_request.c",
+    "test/core/end2end/tests/shutdown_finishes_calls.c",
+    "test/core/end2end/tests/shutdown_finishes_tags.c",
+    "test/core/end2end/tests/simple_cacheable_request.c",
+    "test/core/end2end/tests/simple_delayed_request.c",
+    "test/core/end2end/tests/simple_metadata.c",
+    "test/core/end2end/tests/simple_request.c",
+    "test/core/end2end/tests/streaming_error_response.c",
+    "test/core/end2end/tests/trailing_metadata.c",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    "//external:libssl",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+
+cc_library(
+  name = "end2end_nosec_tests",
+  srcs = [
+    "test/core/end2end/tests/cancel_test_helpers.h",
+    "test/core/end2end/end2end_tests.h",
+    "test/core/end2end/end2end_nosec_tests.c",
+    "test/core/end2end/tests/bad_hostname.c",
+    "test/core/end2end/tests/binary_metadata.c",
+    "test/core/end2end/tests/cancel_after_accept.c",
+    "test/core/end2end/tests/cancel_after_client_done.c",
+    "test/core/end2end/tests/cancel_after_invoke.c",
+    "test/core/end2end/tests/cancel_before_invoke.c",
+    "test/core/end2end/tests/cancel_in_a_vacuum.c",
+    "test/core/end2end/tests/cancel_with_status.c",
+    "test/core/end2end/tests/compressed_payload.c",
+    "test/core/end2end/tests/connectivity.c",
+    "test/core/end2end/tests/default_host.c",
+    "test/core/end2end/tests/disappearing_server.c",
+    "test/core/end2end/tests/empty_batch.c",
+    "test/core/end2end/tests/filter_call_init_fails.c",
+    "test/core/end2end/tests/filter_causes_close.c",
+    "test/core/end2end/tests/graceful_server_shutdown.c",
+    "test/core/end2end/tests/high_initial_seqno.c",
+    "test/core/end2end/tests/hpack_size.c",
+    "test/core/end2end/tests/idempotent_request.c",
+    "test/core/end2end/tests/invoke_large_request.c",
+    "test/core/end2end/tests/large_metadata.c",
+    "test/core/end2end/tests/load_reporting_hook.c",
+    "test/core/end2end/tests/max_concurrent_streams.c",
+    "test/core/end2end/tests/max_message_length.c",
+    "test/core/end2end/tests/negative_deadline.c",
+    "test/core/end2end/tests/network_status_change.c",
+    "test/core/end2end/tests/no_logging.c",
+    "test/core/end2end/tests/no_op.c",
+    "test/core/end2end/tests/payload.c",
+    "test/core/end2end/tests/ping.c",
+    "test/core/end2end/tests/ping_pong_streaming.c",
+    "test/core/end2end/tests/registered_call.c",
+    "test/core/end2end/tests/request_with_flags.c",
+    "test/core/end2end/tests/request_with_payload.c",
+    "test/core/end2end/tests/server_finishes_request.c",
+    "test/core/end2end/tests/shutdown_finishes_calls.c",
+    "test/core/end2end/tests/shutdown_finishes_tags.c",
+    "test/core/end2end/tests/simple_cacheable_request.c",
+    "test/core/end2end/tests/simple_delayed_request.c",
+    "test/core/end2end/tests/simple_metadata.c",
+    "test/core/end2end/tests/simple_request.c",
+    "test/core/end2end/tests/streaming_error_response.c",
+    "test/core/end2end/tests/trailing_metadata.c",
+  ],
+  hdrs = [
+  ],
+  includes = [
+    "include",
+  ],
+  deps = [
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
     ":gpr",
   ],
 )
@@ -1808,7 +2716,6 @@ objc_library(
   ],
   includes = [
     "include",
-    ".",
   ],
   deps = [
   ],
@@ -2202,7 +3109,6 @@ objc_library(
   ],
   includes = [
     "include",
-    ".",
   ],
   deps = [
     ":gpr_objc",
@@ -2212,6 +3118,1749 @@ objc_library(
   sdk_dylibs = ["libz"],
 )
 
+
+
+cc_binary(
+  name = "alarm_test",
+  srcs = [
+    "test/core/surface/alarm_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "algorithm_test",
+  srcs = [
+    "test/core/compression/algorithm_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "alloc_test",
+  srcs = [
+    "test/core/support/alloc_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "alpn_test",
+  srcs = [
+    "test/core/transport/chttp2/alpn_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "bad_server_response_test",
+  srcs = [
+    "test/core/end2end/bad_server_response_test.c",
+  ],
+  deps = [
+    ":test_tcp_server",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "bin_decoder_test",
+  srcs = [
+    "test/core/transport/chttp2/bin_decoder_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+  ],
+)
+
+
+cc_binary(
+  name = "bin_encoder_test",
+  srcs = [
+    "test/core/transport/chttp2/bin_encoder_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+  ],
+)
+
+
+cc_binary(
+  name = "census_context_test",
+  srcs = [
+    "test/core/census/context_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "census_resource_test",
+  srcs = [
+    "test/core/census/resource_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "census_trace_context_test",
+  srcs = [
+    "test/core/census/trace_context_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "channel_create_test",
+  srcs = [
+    "test/core/surface/channel_create_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "chttp2_hpack_encoder_test",
+  srcs = [
+    "test/core/transport/chttp2/hpack_encoder_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "chttp2_status_conversion_test",
+  srcs = [
+    "test/core/transport/chttp2/status_conversion_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "chttp2_stream_map_test",
+  srcs = [
+    "test/core/transport/chttp2/stream_map_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "chttp2_varint_test",
+  srcs = [
+    "test/core/transport/chttp2/varint_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "combiner_test",
+  srcs = [
+    "test/core/iomgr/combiner_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "compression_test",
+  srcs = [
+    "test/core/compression/compression_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "concurrent_connectivity_test",
+  srcs = [
+    "test/core/surface/concurrent_connectivity_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "connection_refused_test",
+  srcs = [
+    "test/core/end2end/connection_refused_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "dns_resolver_connectivity_test",
+  srcs = [
+    "test/core/client_config/resolvers/dns_resolver_connectivity_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "dns_resolver_test",
+  srcs = [
+    "test/core/client_config/resolvers/dns_resolver_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "dualstack_socket_test",
+  srcs = [
+    "test/core/end2end/dualstack_socket_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "endpoint_pair_test",
+  srcs = [
+    "test/core/iomgr/endpoint_pair_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "ev_epoll_linux_test",
+  srcs = [
+    "test/core/iomgr/ev_epoll_linux_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "fd_conservation_posix_test",
+  srcs = [
+    "test/core/iomgr/fd_conservation_posix_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "fd_posix_test",
+  srcs = [
+    "test/core/iomgr/fd_posix_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "fling_client",
+  srcs = [
+    "test/core/fling/client.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "fling_server",
+  srcs = [
+    "test/core/fling/server.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "fling_stream_test",
+  srcs = [
+    "test/core/fling/fling_stream_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "fling_test",
+  srcs = [
+    "test/core/fling/fling_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "goaway_server_test",
+  srcs = [
+    "test/core/end2end/goaway_server_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_avl_test",
+  srcs = [
+    "test/core/support/avl_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_backoff_test",
+  srcs = [
+    "test/core/support/backoff_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_cmdline_test",
+  srcs = [
+    "test/core/support/cmdline_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_cpu_test",
+  srcs = [
+    "test/core/support/cpu_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_env_test",
+  srcs = [
+    "test/core/support/env_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_histogram_test",
+  srcs = [
+    "test/core/support/histogram_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_host_port_test",
+  srcs = [
+    "test/core/support/host_port_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_log_test",
+  srcs = [
+    "test/core/support/log_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_mpscq_test",
+  srcs = [
+    "test/core/support/mpscq_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_percent_encoding_test",
+  srcs = [
+    "test/core/support/percent_encoding_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_slice_buffer_test",
+  srcs = [
+    "test/core/support/slice_buffer_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_slice_test",
+  srcs = [
+    "test/core/support/slice_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_stack_lockfree_test",
+  srcs = [
+    "test/core/support/stack_lockfree_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_string_test",
+  srcs = [
+    "test/core/support/string_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_sync_test",
+  srcs = [
+    "test/core/support/sync_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_thd_test",
+  srcs = [
+    "test/core/support/thd_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_time_test",
+  srcs = [
+    "test/core/support/time_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_tls_test",
+  srcs = [
+    "test/core/support/tls_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "gpr_useful_test",
+  srcs = [
+    "test/core/support/useful_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_auth_context_test",
+  srcs = [
+    "test/core/security/auth_context_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_b64_test",
+  srcs = [
+    "test/core/security/b64_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_byte_buffer_reader_test",
+  srcs = [
+    "test/core/surface/byte_buffer_reader_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_channel_args_test",
+  srcs = [
+    "test/core/channel/channel_args_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_channel_stack_test",
+  srcs = [
+    "test/core/channel/channel_stack_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_completion_queue_test",
+  srcs = [
+    "test/core/surface/completion_queue_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_credentials_test",
+  srcs = [
+    "test/core/security/credentials_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_fetch_oauth2",
+  srcs = [
+    "test/core/security/fetch_oauth2.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_invalid_channel_args_test",
+  srcs = [
+    "test/core/surface/invalid_channel_args_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_json_token_test",
+  srcs = [
+    "test/core/security/json_token_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_jwt_verifier_test",
+  srcs = [
+    "test/core/security/jwt_verifier_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_security_connector_test",
+  srcs = [
+    "test/core/security/security_connector_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "hpack_parser_test",
+  srcs = [
+    "test/core/transport/chttp2/hpack_parser_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "hpack_table_test",
+  srcs = [
+    "test/core/transport/chttp2/hpack_table_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "http_parser_test",
+  srcs = [
+    "test/core/http/parser_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "httpcli_format_request_test",
+  srcs = [
+    "test/core/http/format_request_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "httpcli_test",
+  srcs = [
+    "test/core/http/httpcli_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "httpscli_test",
+  srcs = [
+    "test/core/http/httpscli_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "init_test",
+  srcs = [
+    "test/core/surface/init_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "internal_api_canary_iomgr_test",
+  srcs = [
+    "test/core/internal_api_canaries/iomgr.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "internal_api_canary_support_test",
+  srcs = [
+    "test/core/internal_api_canaries/iomgr.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "internal_api_canary_transport_test",
+  srcs = [
+    "test/core/internal_api_canaries/iomgr.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "invalid_call_argument_test",
+  srcs = [
+    "test/core/end2end/invalid_call_argument_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "json_rewrite",
+  srcs = [
+    "test/core/json/json_rewrite.c",
+  ],
+  deps = [
+    ":grpc",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "json_rewrite_test",
+  srcs = [
+    "test/core/json/json_rewrite_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "json_stream_error_test",
+  srcs = [
+    "test/core/json/json_stream_error_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "json_test",
+  srcs = [
+    "test/core/json/json_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "lame_client_test",
+  srcs = [
+    "test/core/surface/lame_client_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "lb_policies_test",
+  srcs = [
+    "test/core/client_config/lb_policies_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "load_file_test",
+  srcs = [
+    "test/core/iomgr/load_file_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "message_compress_test",
+  srcs = [
+    "test/core/compression/message_compress_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "mlog_test",
+  srcs = [
+    "test/core/census/mlog_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "multiple_server_queues_test",
+  srcs = [
+    "test/core/end2end/multiple_server_queues_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "murmur_hash_test",
+  srcs = [
+    "test/core/support/murmur_hash_test.c",
+  ],
+  deps = [
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "no_server_test",
+  srcs = [
+    "test/core/end2end/no_server_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "resolve_address_test",
+  srcs = [
+    "test/core/iomgr/resolve_address_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "secure_channel_create_test",
+  srcs = [
+    "test/core/surface/secure_channel_create_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "secure_endpoint_test",
+  srcs = [
+    "test/core/security/secure_endpoint_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "sequential_connectivity_test",
+  srcs = [
+    "test/core/surface/sequential_connectivity_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "server_chttp2_test",
+  srcs = [
+    "test/core/surface/server_chttp2_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "server_test",
+  srcs = [
+    "test/core/surface/server_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "set_initial_connect_string_test",
+  srcs = [
+    "test/core/client_config/set_initial_connect_string_test.c",
+  ],
+  deps = [
+    ":test_tcp_server",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "sockaddr_resolver_test",
+  srcs = [
+    "test/core/client_config/resolvers/sockaddr_resolver_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "sockaddr_utils_test",
+  srcs = [
+    "test/core/iomgr/sockaddr_utils_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "socket_utils_test",
+  srcs = [
+    "test/core/iomgr/socket_utils_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "tcp_client_posix_test",
+  srcs = [
+    "test/core/iomgr/tcp_client_posix_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "tcp_posix_test",
+  srcs = [
+    "test/core/iomgr/tcp_posix_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "tcp_server_posix_test",
+  srcs = [
+    "test/core/iomgr/tcp_server_posix_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "time_averaged_stats_test",
+  srcs = [
+    "test/core/iomgr/time_averaged_stats_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "timeout_encoding_test",
+  srcs = [
+    "test/core/transport/timeout_encoding_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "timer_heap_test",
+  srcs = [
+    "test/core/iomgr/timer_heap_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "timer_list_test",
+  srcs = [
+    "test/core/iomgr/timer_list_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "transport_connectivity_state_test",
+  srcs = [
+    "test/core/transport/connectivity_state_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "transport_metadata_test",
+  srcs = [
+    "test/core/transport/metadata_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "transport_security_test",
+  srcs = [
+    "test/core/tsi/transport_security_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "udp_server_test",
+  srcs = [
+    "test/core/iomgr/udp_server_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "uri_parser_test",
+  srcs = [
+    "test/core/client_config/uri_parser_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "alarm_cpp_test",
+  srcs = [
+    "test/cpp/common/alarm_cpp_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "async_end2end_test",
+  srcs = [
+    "test/cpp/end2end/async_end2end_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "auth_property_iterator_test",
+  srcs = [
+    "test/cpp/common/auth_property_iterator_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "channel_arguments_test",
+  srcs = [
+    "test/cpp/common/channel_arguments_test.cc",
+  ],
+  deps = [
+    ":grpc++",
+    ":grpc",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "cli_call_test",
+  srcs = [
+    "test/cpp/util/cli_call_test.cc",
+  ],
+  deps = [
+    ":grpc_cli_libs",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "client_crash_test",
+  srcs = [
+    "test/cpp/end2end/client_crash_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "client_crash_test_server",
+  srcs = [
+    "test/cpp/end2end/client_crash_test_server.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "codegen_test_full",
+  srcs = [
+    "src/proto/grpc/testing/control.proto",
+    "src/proto/grpc/testing/messages.proto",
+    "src/proto/grpc/testing/payloads.proto",
+    "src/proto/grpc/testing/services.proto",
+    "src/proto/grpc/testing/stats.proto",
+    "test/cpp/codegen/codegen_test_full.cc",
+  ],
+  deps = [
+    ":grpc++",
+    ":grpc",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "codegen_test_minimal",
+  srcs = [
+    "src/proto/grpc/testing/control.proto",
+    "src/proto/grpc/testing/messages.proto",
+    "src/proto/grpc/testing/payloads.proto",
+    "src/proto/grpc/testing/services.proto",
+    "src/proto/grpc/testing/stats.proto",
+    "test/cpp/codegen/codegen_test_minimal.cc",
+    "src/cpp/codegen/codegen_init.cc",
+  ],
+  deps = [
+  ],
+)
+
+
+cc_binary(
+  name = "credentials_test",
+  srcs = [
+    "test/cpp/client/credentials_test.cc",
+  ],
+  deps = [
+    ":grpc++",
+    ":grpc",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "cxx_byte_buffer_test",
+  srcs = [
+    "test/cpp/util/byte_buffer_test.cc",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "cxx_slice_test",
+  srcs = [
+    "test/cpp/util/slice_test.cc",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "cxx_string_ref_test",
+  srcs = [
+    "test/cpp/util/string_ref_test.cc",
+  ],
+  deps = [
+    ":grpc++",
+  ],
+)
+
+
+cc_binary(
+  name = "cxx_time_test",
+  srcs = [
+    "test/cpp/util/time_test.cc",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "end2end_test",
+  srcs = [
+    "test/cpp/end2end/end2end_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "filter_end2end_test",
+  srcs = [
+    "test/cpp/end2end/filter_end2end_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "generic_end2end_test",
+  srcs = [
+    "test/cpp/end2end/generic_end2end_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "golden_file_test",
+  srcs = [
+    "src/proto/grpc/testing/compiler_test.proto",
+    "test/cpp/codegen/golden_file_test.cc",
+  ],
+  deps = [
+    ":grpc++",
+    ":grpc",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_cli",
+  srcs = [
+    "test/cpp/util/grpc_cli.cc",
+  ],
+  deps = [
+    ":grpc_cli_libs",
+    ":grpc++_reflection",
+    ":grpc++",
+    ":grpc",
+    ":gpr",
+    ":grpc++_test_config",
+  ],
+)
 
 
 cc_binary(
@@ -2294,6 +4943,1818 @@ cc_binary(
   deps = [
     "//external:protobuf_compiler",
     ":grpc_plugin_support",
+  ],
+)
+
+
+cc_binary(
+  name = "grpc_tool_test",
+  srcs = [
+    "src/proto/grpc/testing/echo.proto",
+    "src/proto/grpc/testing/echo_messages.proto",
+    "test/cpp/util/grpc_tool_test.cc",
+    "test/cpp/util/string_ref_helper.cc",
+  ],
+  deps = [
+    ":grpc_cli_libs",
+    ":grpc++_reflection",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "grpclb_api_test",
+  srcs = [
+    "src/proto/grpc/lb/v1/load_balancer.proto",
+    "test/cpp/grpclb/grpclb_api_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+  ],
+)
+
+
+cc_binary(
+  name = "grpclb_test",
+  srcs = [
+    "src/proto/grpc/lb/v1/load_balancer.proto",
+    "test/cpp/grpclb/grpclb_test.cc",
+  ],
+  deps = [
+    ":gpr",
+    ":gpr_test_util",
+    ":grpc",
+    ":grpc++",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+  ],
+)
+
+
+cc_binary(
+  name = "hybrid_end2end_test",
+  srcs = [
+    "test/cpp/end2end/hybrid_end2end_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "interop_client",
+  srcs = [
+  ],
+  deps = [
+    ":interop_proto",
+    "//external:gflags",
+    ":interop_client_main",
+    ":interop_client_helper",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+    ":grpc++_test_config",
+  ],
+)
+
+
+cc_binary(
+  name = "interop_server",
+  srcs = [
+  ],
+  deps = [
+    ":interop_proto",
+    "//external:gflags",
+    ":interop_server_main",
+    ":interop_server_helper",
+    ":interop_server_lib",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+    ":grpc++_test_config",
+  ],
+)
+
+
+cc_binary(
+  name = "interop_test",
+  srcs = [
+    "test/cpp/interop/interop_test.cc",
+  ],
+  deps = [
+    ":interop_proto",
+    "//external:gflags",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "json_run_localhost",
+  srcs = [
+    "test/cpp/qps/json_run_localhost.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+    ":grpc++_test_config",
+  ],
+)
+
+
+cc_binary(
+  name = "metrics_client",
+  srcs = [
+    "src/proto/grpc/testing/metrics.proto",
+    "test/cpp/interop/metrics_client.cc",
+  ],
+  deps = [
+    ":grpc++",
+    ":grpc",
+    ":gpr",
+    ":grpc++_test_config",
+  ],
+)
+
+
+cc_binary(
+  name = "mock_test",
+  srcs = [
+    "test/cpp/end2end/mock_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "proto_server_reflection_test",
+  srcs = [
+    "test/cpp/end2end/proto_server_reflection_test.cc",
+    "test/cpp/util/proto_reflection_descriptor_database.cc",
+  ],
+  deps = [
+    ":grpc++_reflection",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "qps_interarrival_test",
+  srcs = [
+    "test/cpp/qps/qps_interarrival_test.cc",
+  ],
+  deps = [
+    ":qps",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "qps_json_driver",
+  srcs = [
+    "test/cpp/qps/qps_json_driver.cc",
+  ],
+  deps = [
+    ":qps",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+    ":grpc++_test_config",
+  ],
+)
+
+
+cc_binary(
+  name = "qps_openloop_test",
+  srcs = [
+    "test/cpp/qps/qps_openloop_test.cc",
+  ],
+  deps = [
+    ":qps",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+    ":grpc++_test_config",
+  ],
+)
+
+
+cc_binary(
+  name = "qps_worker",
+  srcs = [
+    "test/cpp/qps/worker.cc",
+  ],
+  deps = [
+    ":qps",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+    ":grpc++_test_config",
+  ],
+)
+
+
+cc_binary(
+  name = "reconnect_interop_client",
+  srcs = [
+    "src/proto/grpc/testing/empty.proto",
+    "src/proto/grpc/testing/messages.proto",
+    "src/proto/grpc/testing/test.proto",
+    "test/cpp/interop/reconnect_interop_client.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+    ":grpc++_test_config",
+  ],
+)
+
+
+cc_binary(
+  name = "reconnect_interop_server",
+  srcs = [
+    "src/proto/grpc/testing/empty.proto",
+    "src/proto/grpc/testing/messages.proto",
+    "src/proto/grpc/testing/test.proto",
+    "test/cpp/interop/reconnect_interop_server.cc",
+  ],
+  deps = [
+    ":reconnect_server",
+    ":test_tcp_server",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+    ":grpc++_test_config",
+  ],
+)
+
+
+cc_binary(
+  name = "secure_auth_context_test",
+  srcs = [
+    "test/cpp/common/secure_auth_context_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "secure_sync_unary_ping_pong_test",
+  srcs = [
+    "test/cpp/qps/secure_sync_unary_ping_pong_test.cc",
+  ],
+  deps = [
+    ":qps",
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "server_builder_plugin_test",
+  srcs = [
+    "test/cpp/end2end/server_builder_plugin_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "server_crash_test",
+  srcs = [
+    "test/cpp/end2end/server_crash_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "server_crash_test_client",
+  srcs = [
+    "test/cpp/end2end/server_crash_test_client.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "shutdown_test",
+  srcs = [
+    "test/cpp/end2end/shutdown_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "status_test",
+  srcs = [
+    "test/cpp/util/status_test.cc",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "streaming_throughput_test",
+  srcs = [
+    "test/cpp/end2end/streaming_throughput_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "stress_test",
+  srcs = [
+    "src/proto/grpc/testing/empty.proto",
+    "src/proto/grpc/testing/messages.proto",
+    "src/proto/grpc/testing/metrics.proto",
+    "src/proto/grpc/testing/test.proto",
+    "test/cpp/interop/interop_client.cc",
+    "test/cpp/interop/stress_interop_client.cc",
+    "test/cpp/interop/stress_test.cc",
+    "test/cpp/util/metrics_server.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+    ":grpc++_test_config",
+  ],
+)
+
+
+cc_binary(
+  name = "thread_stress_test",
+  srcs = [
+    "test/cpp/end2end/thread_stress_test.cc",
+  ],
+  deps = [
+    ":grpc++_test_util",
+    ":grpc_test_util",
+    ":grpc++",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "public_headers_must_be_c89",
+  srcs = [
+    "test/core/surface/public_headers_must_be_c89.c",
+  ],
+  deps = [
+    ":grpc",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_aes_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_aes_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_asn1_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_asn1_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_base64_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_base64_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_bio_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_bio_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_bn_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_bn_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_bytestring_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_bytestring_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_aead_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_aead_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_cipher_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_cipher_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_cmac_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_cmac_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_constant_time_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_constant_time_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_ed25519_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_ed25519_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_x25519_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_x25519_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_dh_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_dh_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_digest_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_digest_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_dsa_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_dsa_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_ec_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_ec_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_example_mul",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_example_mul_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_ecdsa_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_ecdsa_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_err_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_err_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_evp_extra_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_evp_extra_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_evp_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_evp_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_pbkdf_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_pbkdf_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_hkdf_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_hkdf_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_hmac_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_hmac_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_lhash_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_lhash_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_gcm_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_gcm_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_pkcs12_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_pkcs12_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_pkcs8_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_pkcs8_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_poly1305_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_poly1305_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_refcount_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_refcount_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_rsa_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_rsa_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_thread_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_thread_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_pkcs7_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_pkcs7_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_x509_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_x509_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_tab_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_tab_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_v3name_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_v3name_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_pqueue_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_pqueue_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "boringssl_ssl_test",
+  srcs = [
+  ],
+  deps = [
+    "//external:libssl",
+    ":boringssl_ssl_test_lib",
+    ":boringssl_test_util",
+    ":boringssl",
+  ],
+)
+
+
+cc_binary(
+  name = "badreq_bad_client_test",
+  srcs = [
+    "test/core/bad_client/tests/badreq.c",
+  ],
+  deps = [
+    "//external:libssl",
+    ":bad_client_test",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "connection_prefix_bad_client_test",
+  srcs = [
+    "test/core/bad_client/tests/connection_prefix.c",
+  ],
+  deps = [
+    "//external:libssl",
+    ":bad_client_test",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "head_of_line_blocking_bad_client_test",
+  srcs = [
+    "test/core/bad_client/tests/head_of_line_blocking.c",
+  ],
+  deps = [
+    "//external:libssl",
+    ":bad_client_test",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "headers_bad_client_test",
+  srcs = [
+    "test/core/bad_client/tests/headers.c",
+  ],
+  deps = [
+    "//external:libssl",
+    ":bad_client_test",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "initial_settings_frame_bad_client_test",
+  srcs = [
+    "test/core/bad_client/tests/initial_settings_frame.c",
+  ],
+  deps = [
+    "//external:libssl",
+    ":bad_client_test",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "large_metadata_bad_client_test",
+  srcs = [
+    "test/core/bad_client/tests/large_metadata.c",
+  ],
+  deps = [
+    "//external:libssl",
+    ":bad_client_test",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "server_registered_method_bad_client_test",
+  srcs = [
+    "test/core/bad_client/tests/server_registered_method.c",
+  ],
+  deps = [
+    "//external:libssl",
+    ":bad_client_test",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "simple_request_bad_client_test",
+  srcs = [
+    "test/core/bad_client/tests/simple_request.c",
+  ],
+  deps = [
+    "//external:libssl",
+    ":bad_client_test",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "unknown_frame_bad_client_test",
+  srcs = [
+    "test/core/bad_client/tests/unknown_frame.c",
+  ],
+  deps = [
+    "//external:libssl",
+    ":bad_client_test",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "window_overflow_bad_client_test",
+  srcs = [
+    "test/core/bad_client/tests/window_overflow.c",
+  ],
+  deps = [
+    "//external:libssl",
+    ":bad_client_test",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "bad_ssl_cert_server",
+  srcs = [
+    "test/core/bad_ssl/servers/cert.c",
+  ],
+  deps = [
+    ":bad_ssl_test_server",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "bad_ssl_cert_test",
+  srcs = [
+    "test/core/bad_ssl/bad_ssl_test.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_census_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_census.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_compress_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_compress.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_fakesec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_fakesec.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_fd_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_fd.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_full_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_full.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_full+pipe_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_full+pipe.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_full+trace_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_full+trace.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_http_proxy_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_http_proxy.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_load_reporting_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_load_reporting.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_oauth2_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_oauth2.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_proxy_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_proxy.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_sockpair_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_sockpair.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_sockpair+trace_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_sockpair+trace.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_sockpair_1byte_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_sockpair_1byte.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_ssl_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_ssl.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_ssl_cert_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_ssl_cert.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_ssl_proxy_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_ssl_proxy.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_uds_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_uds.c",
+  ],
+  deps = [
+    ":end2end_tests",
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_census_nosec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_census.c",
+  ],
+  deps = [
+    ":end2end_nosec_tests",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_compress_nosec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_compress.c",
+  ],
+  deps = [
+    ":end2end_nosec_tests",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_fd_nosec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_fd.c",
+  ],
+  deps = [
+    ":end2end_nosec_tests",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_full_nosec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_full.c",
+  ],
+  deps = [
+    ":end2end_nosec_tests",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_full+pipe_nosec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_full+pipe.c",
+  ],
+  deps = [
+    ":end2end_nosec_tests",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_full+trace_nosec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_full+trace.c",
+  ],
+  deps = [
+    ":end2end_nosec_tests",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_http_proxy_nosec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_http_proxy.c",
+  ],
+  deps = [
+    ":end2end_nosec_tests",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_load_reporting_nosec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_load_reporting.c",
+  ],
+  deps = [
+    ":end2end_nosec_tests",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_proxy_nosec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_proxy.c",
+  ],
+  deps = [
+    ":end2end_nosec_tests",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_sockpair_nosec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_sockpair.c",
+  ],
+  deps = [
+    ":end2end_nosec_tests",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_sockpair+trace_nosec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_sockpair+trace.c",
+  ],
+  deps = [
+    ":end2end_nosec_tests",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_sockpair_1byte_nosec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_sockpair_1byte.c",
+  ],
+  deps = [
+    ":end2end_nosec_tests",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "h2_uds_nosec_test",
+  srcs = [
+    "test/core/end2end/fixtures/h2_uds.c",
+  ],
+  deps = [
+    ":end2end_nosec_tests",
+    ":grpc_test_util_unsecure",
+    ":grpc_unsecure",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "api_fuzzer_one_entry",
+  srcs = [
+    "test/core/end2end/fuzzers/api_fuzzer.c",
+    "test/core/util/one_corpus_entry_fuzzer.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "client_fuzzer_one_entry",
+  srcs = [
+    "test/core/end2end/fuzzers/client_fuzzer.c",
+    "test/core/util/one_corpus_entry_fuzzer.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "hpack_parser_fuzzer_test_one_entry",
+  srcs = [
+    "test/core/transport/chttp2/hpack_parser_fuzzer_test.c",
+    "test/core/util/one_corpus_entry_fuzzer.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "http_request_fuzzer_test_one_entry",
+  srcs = [
+    "test/core/http/request_fuzzer.c",
+    "test/core/util/one_corpus_entry_fuzzer.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "http_response_fuzzer_test_one_entry",
+  srcs = [
+    "test/core/http/response_fuzzer.c",
+    "test/core/util/one_corpus_entry_fuzzer.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "json_fuzzer_test_one_entry",
+  srcs = [
+    "test/core/json/fuzzer.c",
+    "test/core/util/one_corpus_entry_fuzzer.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "nanopb_fuzzer_response_test_one_entry",
+  srcs = [
+    "test/core/nanopb/fuzzer_response.c",
+    "test/core/util/one_corpus_entry_fuzzer.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "nanopb_fuzzer_serverlist_test_one_entry",
+  srcs = [
+    "test/core/nanopb/fuzzer_serverlist.c",
+    "test/core/util/one_corpus_entry_fuzzer.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "percent_decode_fuzzer_one_entry",
+  srcs = [
+    "test/core/support/percent_decode_fuzzer.c",
+    "test/core/util/one_corpus_entry_fuzzer.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "percent_encode_fuzzer_one_entry",
+  srcs = [
+    "test/core/support/percent_encode_fuzzer.c",
+    "test/core/util/one_corpus_entry_fuzzer.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "server_fuzzer_one_entry",
+  srcs = [
+    "test/core/end2end/fuzzers/server_fuzzer.c",
+    "test/core/util/one_corpus_entry_fuzzer.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
+  ],
+)
+
+
+cc_binary(
+  name = "uri_fuzzer_test_one_entry",
+  srcs = [
+    "test/core/client_config/uri_fuzzer_test.c",
+    "test/core/util/one_corpus_entry_fuzzer.c",
+  ],
+  deps = [
+    ":grpc_test_util",
+    ":grpc",
+    ":gpr_test_util",
+    ":gpr",
   ],
 )
 

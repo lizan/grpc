@@ -2434,6 +2434,256 @@
   }, 
   {
     "deps": [
+      "alts_counter", 
+      "alts_crypt", 
+      "alts_crypt_test_util", 
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "alts_counter_test", 
+    "src": [
+      "test/core/tsi/alts/frame_protector/alts_counter_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "alts_crypt", 
+      "alts_crypt_test_util", 
+      "gpr", 
+      "gpr_test_util", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "alts_crypt_test", 
+    "src": [
+      "test/core/tsi/alts/crypt/aes_gcm_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "alts_counter", 
+      "alts_crypt", 
+      "alts_crypt_test_util", 
+      "alts_frame_protector", 
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "alts_crypter_test", 
+    "src": [
+      "test/core/tsi/alts/frame_protector/alts_crypter_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "alts_counter", 
+      "alts_crypt", 
+      "alts_crypt_test_util", 
+      "alts_frame_protector", 
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "alts_frame_handler_test", 
+    "src": [
+      "test/core/tsi/alts/frame_protector/frame_handler_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "alts_counter", 
+      "alts_crypt", 
+      "alts_crypt_test_util", 
+      "alts_frame_protector", 
+      "alts_frame_protector_test_lib", 
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "alts_frame_protector_test", 
+    "src": [
+      "test/core/tsi/alts/frame_protector/alts_frame_protector_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "alts_counter", 
+      "alts_crypt", 
+      "alts_crypt_test_util", 
+      "alts_zero_copy_frame_protector", 
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "alts_grpc_record_protocol_test", 
+    "src": [
+      "test/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "alts_counter", 
+      "alts_credentials_options", 
+      "alts_crypt", 
+      "alts_frame_protector", 
+      "alts_handshaker_service_api", 
+      "alts_handshaker_service_api_test_lib", 
+      "alts_zero_copy_frame_protector", 
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "alts_handshaker_client_test", 
+    "src": [
+      "test/core/tsi/alts/handshaker/alts_handshaker_client_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "alts_handshaker_service_api", 
+      "alts_handshaker_service_api_test_lib", 
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "alts_handshaker_service_api_test", 
+    "src": [
+      "test/core/tsi/alts/handshaker/alts_handshaker_service_api_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "alts_counter", 
+      "alts_crypt", 
+      "alts_crypt_test_util", 
+      "alts_zero_copy_frame_protector", 
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "alts_iovec_record_protocol_test", 
+    "src": [
+      "test/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "alts_counter", 
+      "alts_credentials_options", 
+      "alts_crypt", 
+      "alts_frame_protector", 
+      "alts_handshaker_service_api", 
+      "alts_zero_copy_frame_protector", 
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "alts_security_connector_test", 
+    "src": [
+      "test/core/security/alts_security_connector_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "alts_counter", 
+      "alts_credentials_options", 
+      "alts_crypt", 
+      "alts_frame_protector", 
+      "alts_handshaker_service_api", 
+      "alts_handshaker_service_api_test_lib", 
+      "alts_zero_copy_frame_protector", 
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "alts_tsi_handshaker_test", 
+    "src": [
+      "test/core/tsi/alts/handshaker/alts_tsi_handshaker_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "alts_handshaker_service_api", 
+      "alts_handshaker_service_api_test_lib", 
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "alts_tsi_utils_test", 
+    "src": [
+      "test/core/tsi/alts/handshaker/alts_tsi_utils_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "alts_counter", 
+      "alts_crypt", 
+      "alts_crypt_test_util", 
+      "alts_zero_copy_frame_protector", 
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "alts_zero_copy_grpc_protector_test", 
+    "src": [
+      "test/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
       "gpr", 
       "gpr_test_util", 
       "grpc", 
@@ -2838,6 +3088,21 @@
     "name": "channel_filter_test", 
     "src": [
       "test/cpp/common/channel_filter_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "check_gcp_environment_test", 
+    "src": [
+      "test/core/security/check_gcp_environment_test.cc"
     ], 
     "third_party": false, 
     "type": "target"
@@ -4343,6 +4608,23 @@
     "name": "transport_pid_controller_test", 
     "src": [
       "test/core/transport/pid_controller_test.cc"
+    ], 
+    "third_party": false, 
+    "type": "target"
+  }, 
+  {
+    "deps": [
+      "alts_handshaker_service_api", 
+      "alts_handshaker_service_api_test_lib", 
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [], 
+    "is_filegroup": false, 
+    "language": "c++", 
+    "name": "transport_security_common_api_test", 
+    "src": [
+      "test/core/tsi/alts/handshaker/transport_security_common_api_test.cc"
     ], 
     "third_party": false, 
     "type": "target"
@@ -8168,6 +8450,191 @@
     "type": "lib"
   }, 
   {
+    "deps": [], 
+    "headers": [
+      "src/core/tsi/alts/frame_protector/alts_counter.h"
+    ], 
+    "is_filegroup": true, 
+    "language": "c", 
+    "name": "alts_counter", 
+    "src": [
+      "src/core/tsi/alts/frame_protector/alts_counter.cc", 
+      "src/core/tsi/alts/frame_protector/alts_counter.h"
+    ], 
+    "third_party": false, 
+    "type": "filegroup"
+  }, 
+  {
+    "deps": [
+      "grpc"
+    ], 
+    "headers": [
+      "src/core/lib/security/credentials/alts/grpc_alts_credentials_options.h"
+    ], 
+    "is_filegroup": true, 
+    "language": "c", 
+    "name": "alts_credentials_options", 
+    "src": [
+      "src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc", 
+      "src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc", 
+      "src/core/lib/security/credentials/alts/grpc_alts_credentials_options.h", 
+      "src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc"
+    ], 
+    "third_party": false, 
+    "type": "filegroup"
+  }, 
+  {
+    "deps": [
+      "gpr", 
+      "grpc"
+    ], 
+    "headers": [
+      "src/core/tsi/alts/crypt/gsec.h"
+    ], 
+    "is_filegroup": true, 
+    "language": "c", 
+    "name": "alts_crypt", 
+    "src": [
+      "src/core/tsi/alts/crypt/aes_gcm.cc", 
+      "src/core/tsi/alts/crypt/gsec.cc", 
+      "src/core/tsi/alts/crypt/gsec.h"
+    ], 
+    "third_party": false, 
+    "type": "filegroup"
+  }, 
+  {
+    "deps": [], 
+    "headers": [
+      "test/core/tsi/alts/crypt/gsec_test_util.h"
+    ], 
+    "is_filegroup": true, 
+    "language": "c", 
+    "name": "alts_crypt_test_util", 
+    "src": [
+      "test/core/tsi/alts/crypt/gsec_test_util.cc", 
+      "test/core/tsi/alts/crypt/gsec_test_util.h"
+    ], 
+    "third_party": false, 
+    "type": "filegroup"
+  }, 
+  {
+    "deps": [
+      "tsi_interface"
+    ], 
+    "headers": [
+      "src/core/tsi/alts/frame_protector/alts_crypter.h", 
+      "src/core/tsi/alts/frame_protector/alts_frame_protector.h", 
+      "src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.h", 
+      "src/core/tsi/alts/frame_protector/frame_handler.h,"
+    ], 
+    "is_filegroup": true, 
+    "language": "c", 
+    "name": "alts_frame_protector", 
+    "src": [
+      "src/core/tsi/alts/frame_protector/alts_crypter.cc", 
+      "src/core/tsi/alts/frame_protector/alts_crypter.h", 
+      "src/core/tsi/alts/frame_protector/alts_frame_protector.cc", 
+      "src/core/tsi/alts/frame_protector/alts_frame_protector.h", 
+      "src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc", 
+      "src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.h", 
+      "src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc", 
+      "src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc", 
+      "src/core/tsi/alts/frame_protector/frame_handler.cc", 
+      "src/core/tsi/alts/frame_protector/frame_handler.h,"
+    ], 
+    "third_party": false, 
+    "type": "filegroup"
+  }, 
+  {
+    "deps": [], 
+    "headers": [
+      "test/core/tsi/alts/frame_protector/alts_frame_protector_test_lib.h"
+    ], 
+    "is_filegroup": true, 
+    "language": "c", 
+    "name": "alts_frame_protector_test_lib", 
+    "src": [
+      "test/core/tsi/alts/frame_protector/alts_frame_protector_test_lib.cc", 
+      "test/core/tsi/alts/frame_protector/alts_frame_protector_test_lib.h"
+    ], 
+    "third_party": false, 
+    "type": "filegroup"
+  }, 
+  {
+    "deps": [], 
+    "headers": [
+      "src/core/tsi/alts/handshaker/alts_handshaker_service_api.h", 
+      "src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.h", 
+      "src/core/tsi/alts/handshaker/handshaker.pb.h", 
+      "src/core/tsi/alts/handshaker/transport_security_common.pb.h", 
+      "src/core/tsi/alts/handshaker/transport_security_common_api.h"
+    ], 
+    "is_filegroup": true, 
+    "language": "c", 
+    "name": "alts_handshaker_service_api", 
+    "src": [
+      "src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc", 
+      "src/core/tsi/alts/handshaker/alts_handshaker_service_api.h", 
+      "src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc", 
+      "src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.h", 
+      "src/core/tsi/alts/handshaker/handshaker.pb.cc", 
+      "src/core/tsi/alts/handshaker/handshaker.pb.h", 
+      "src/core/tsi/alts/handshaker/transport_security_common.pb.c", 
+      "src/core/tsi/alts/handshaker/transport_security_common.pb.h", 
+      "src/core/tsi/alts/handshaker/transport_security_common_api.cc", 
+      "src/core/tsi/alts/handshaker/transport_security_common_api.h"
+    ], 
+    "third_party": false, 
+    "type": "filegroup"
+  }, 
+  {
+    "deps": [], 
+    "headers": [
+      "test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.h"
+    ], 
+    "is_filegroup": true, 
+    "language": "c", 
+    "name": "alts_handshaker_service_api_test_lib", 
+    "src": [
+      "test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc", 
+      "test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.h"
+    ], 
+    "third_party": false, 
+    "type": "filegroup"
+  }, 
+  {
+    "deps": [
+      "tsi", 
+      "tsi_interface"
+    ], 
+    "headers": [
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.h", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.h", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol.h", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.h", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.h", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.h"
+    ], 
+    "is_filegroup": true, 
+    "language": "c", 
+    "name": "alts_zero_copy_frame_protector", 
+    "src": [
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.h", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.h", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol.h", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.h", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.h", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc", 
+      "src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.h"
+    ], 
+    "third_party": false, 
+    "type": "filegroup"
+  }, 
+  {
     "deps": [
       "gpr", 
       "grpc_base", 
@@ -9254,6 +9721,8 @@
     "headers": [
       "include/grpc/grpc_security.h", 
       "src/core/lib/security/context/security_context.h", 
+      "src/core/lib/security/credentials/alts/alts_credentials.h", 
+      "src/core/lib/security/credentials/alts/check_gcp_environment.h", 
       "src/core/lib/security/credentials/composite/composite_credentials.h", 
       "src/core/lib/security/credentials/credentials.h", 
       "src/core/lib/security/credentials/fake/fake_credentials.h", 
@@ -9265,6 +9734,7 @@
       "src/core/lib/security/credentials/oauth2/oauth2_credentials.h", 
       "src/core/lib/security/credentials/plugin/plugin_credentials.h", 
       "src/core/lib/security/credentials/ssl/ssl_credentials.h", 
+      "src/core/lib/security/transport/alts/alts_security_connector.h", 
       "src/core/lib/security/transport/auth_filters.h", 
       "src/core/lib/security/transport/lb_targets_info.h", 
       "src/core/lib/security/transport/secure_endpoint.h", 
@@ -9281,6 +9751,10 @@
       "src/core/lib/http/httpcli_security_connector.cc", 
       "src/core/lib/security/context/security_context.cc", 
       "src/core/lib/security/context/security_context.h", 
+      "src/core/lib/security/credentials/alts/alts_credentials.cc", 
+      "src/core/lib/security/credentials/alts/alts_credentials.h", 
+      "src/core/lib/security/credentials/alts/check_gcp_environment.cc", 
+      "src/core/lib/security/credentials/alts/check_gcp_environment.h", 
       "src/core/lib/security/credentials/composite/composite_credentials.cc", 
       "src/core/lib/security/credentials/composite/composite_credentials.h", 
       "src/core/lib/security/credentials/credentials.cc", 
@@ -9305,6 +9779,8 @@
       "src/core/lib/security/credentials/plugin/plugin_credentials.h", 
       "src/core/lib/security/credentials/ssl/ssl_credentials.cc", 
       "src/core/lib/security/credentials/ssl/ssl_credentials.h", 
+      "src/core/lib/security/transport/alts/alts_security_connector.cc", 
+      "src/core/lib/security/transport/alts/alts_security_connector.h", 
       "src/core/lib/security/transport/auth_filters.h", 
       "src/core/lib/security/transport/client_auth_filter.cc", 
       "src/core/lib/security/transport/lb_targets_info.cc", 
@@ -9813,6 +10289,11 @@
       "tsi_interface"
     ], 
     "headers": [
+      "src/core/tsi/alts/handshaker/alts/alts_handshaker_client.h", 
+      "src/core/tsi/alts/handshaker/alts/alts_tsi_event.h", 
+      "src/core/tsi/alts/handshaker/alts/alts_tsi_handshaker.h", 
+      "src/core/tsi/alts/handshaker/alts/alts_tsi_handshaker_private.h", 
+      "src/core/tsi/alts/handshaker/alts/alts_tsi_utils.h", 
       "src/core/tsi/alts_transport_security.h", 
       "src/core/tsi/fake_transport_security.h", 
       "src/core/tsi/ssl_transport_security.h", 
@@ -9823,6 +10304,15 @@
     "language": "c", 
     "name": "tsi", 
     "src": [
+      "src/core/tsi/alts/handshaker/alts/alts_handshaker_client.h", 
+      "src/core/tsi/alts/handshaker/alts/alts_tsi_event.h", 
+      "src/core/tsi/alts/handshaker/alts/alts_tsi_handshaker.h", 
+      "src/core/tsi/alts/handshaker/alts/alts_tsi_handshaker_private.h", 
+      "src/core/tsi/alts/handshaker/alts/alts_tsi_utils.h", 
+      "src/core/tsi/alts/handshaker/alts_handshaker_client.cc", 
+      "src/core/tsi/alts/handshaker/alts_tsi_event.cc", 
+      "src/core/tsi/alts/handshaker/alts_tsi_handshaker.cc", 
+      "src/core/tsi/alts/handshaker/alts_tsi_utils.cc", 
       "src/core/tsi/alts_transport_security.cc", 
       "src/core/tsi/alts_transport_security.h", 
       "src/core/tsi/fake_transport_security.cc", 

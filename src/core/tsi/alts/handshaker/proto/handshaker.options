@@ -1,0 +1,3 @@
+handshaker.* proto3:false
+handshaker.proto no_unions:true
+grpc.alts.StartServerHandshakeReq.handshake_parameters max_count:3

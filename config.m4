@@ -245,6 +245,8 @@ if test "$PHP_GRPC" != "no"; then
     src/core/ext/filters/http/server/http_server_filter.cc \
     src/core/lib/http/httpcli_security_connector.cc \
     src/core/lib/security/context/security_context.cc \
+    src/core/lib/security/credentials/alts/alts_credentials.cc \
+    src/core/lib/security/credentials/alts/check_gcp_environment.cc \
     src/core/lib/security/credentials/composite/composite_credentials.cc \
     src/core/lib/security/credentials/credentials.cc \
     src/core/lib/security/credentials/credentials_metadata.cc \
@@ -258,6 +260,7 @@ if test "$PHP_GRPC" != "no"; then
     src/core/lib/security/credentials/oauth2/oauth2_credentials.cc \
     src/core/lib/security/credentials/plugin/plugin_credentials.cc \
     src/core/lib/security/credentials/ssl/ssl_credentials.cc \
+    src/core/lib/security/transport/alts/alts_security_connector.cc \
     src/core/lib/security/transport/client_auth_filter.cc \
     src/core/lib/security/transport/lb_targets_info.cc \
     src/core/lib/security/transport/secure_endpoint.cc \
@@ -267,6 +270,10 @@ if test "$PHP_GRPC" != "no"; then
     src/core/lib/security/transport/tsi_error.cc \
     src/core/lib/security/util/json_util.cc \
     src/core/lib/surface/init_secure.cc \
+    src/core/tsi/alts/handshaker/alts_handshaker_client.cc \
+    src/core/tsi/alts/handshaker/alts_tsi_event.cc \
+    src/core/tsi/alts/handshaker/alts_tsi_handshaker.cc \
+    src/core/tsi/alts/handshaker/alts_tsi_utils.cc \
     src/core/tsi/alts_transport_security.cc \
     src/core/tsi/fake_transport_security.cc \
     src/core/tsi/ssl_transport_security.cc \
@@ -633,6 +640,7 @@ if test "$PHP_GRPC" != "no"; then
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/profiling)
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/security/context)
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/security/credentials)
+  PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/security/credentials/alts)
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/security/credentials/composite)
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/security/credentials/fake)
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/security/credentials/google_default)
@@ -642,12 +650,14 @@ if test "$PHP_GRPC" != "no"; then
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/security/credentials/plugin)
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/security/credentials/ssl)
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/security/transport)
+  PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/security/transport/alts)
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/security/util)
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/slice)
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/surface)
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/lib/transport)
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/plugin_registry)
   PHP_ADD_BUILD_DIR($ext_builddir/src/core/tsi)
+  PHP_ADD_BUILD_DIR($ext_builddir/src/core/tsi/alts/handshaker)
   PHP_ADD_BUILD_DIR($ext_builddir/third_party/boringssl/crypto)
   PHP_ADD_BUILD_DIR($ext_builddir/third_party/boringssl/crypto/asn1)
   PHP_ADD_BUILD_DIR($ext_builddir/third_party/boringssl/crypto/base64)

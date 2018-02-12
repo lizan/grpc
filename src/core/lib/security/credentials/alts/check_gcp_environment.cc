@@ -39,7 +39,7 @@ static char* trim(char* src) {
     end--;
   }
   /* find the first character that is not a whitespace. */
-  while (start < strlen(src) && isspace(src[start])) {
+  while ((size_t)start < strlen(src) && isspace(src[start])) {
     start++;
   }
   if (start <= end) {

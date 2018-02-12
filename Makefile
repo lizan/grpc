@@ -1375,9 +1375,9 @@ pc_cxx: $(LIBDIR)/$(CONFIG)/pkgconfig/grpc++.pc
 pc_cxx_unsecure: $(LIBDIR)/$(CONFIG)/pkgconfig/grpc++_unsecure.pc
 
 ifeq ($(EMBED_OPENSSL),true)
-privatelibs_cxx:  $(LIBDIR)/$(CONFIG)/libgrpc++_core_stats.a $(LIBDIR)/$(CONFIG)/libgrpc++_proto_reflection_desc_db.a $(LIBDIR)/$(CONFIG)/libgrpc++_test_config.a $(LIBDIR)/$(CONFIG)/libgrpc++_test_util.a $(LIBDIR)/$(CONFIG)/libgrpc++_test_util_unsecure.a $(LIBDIR)/$(CONFIG)/libgrpc_cli_libs.a $(LIBDIR)/$(CONFIG)/libhttp2_client_main.a $(LIBDIR)/$(CONFIG)/libinterop_client_helper.a $(LIBDIR)/$(CONFIG)/libinterop_client_main.a $(LIBDIR)/$(CONFIG)/libinterop_server_helper.a $(LIBDIR)/$(CONFIG)/libinterop_server_lib.a $(LIBDIR)/$(CONFIG)/libinterop_server_main.a $(LIBDIR)/$(CONFIG)/libqps.a $(LIBDIR)/$(CONFIG)/libboringssl_test_util.a $(LIBDIR)/$(CONFIG)/libboringssl_crypto_test_data_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_asn1_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_base64_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_bio_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_bytestring_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_chacha_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_aead_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_cipher_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_cmac_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_compiler_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_constant_time_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_ed25519_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_spake25519_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_x25519_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_dh_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_digest_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_dsa_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_ecdh_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_err_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_evp_extra_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_evp_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_pbkdf_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_scrypt_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_aes_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_bn_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_ec_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_p256-x86_64_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_ecdsa_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_gcm_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_ctrdrbg_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_hkdf_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_hmac_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_lhash_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_obj_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_pkcs7_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_pkcs12_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_pkcs8_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_poly1305_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_pool_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_refcount_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_rsa_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_file_test_gtest_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_gtest_main_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_thread_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_x509_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_tab_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_v3name_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_span_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_ssl_test_lib.a $(LIBDIR)/$(CONFIG)/libbenchmark.a
+privatelibs_cxx:  $(LIBDIR)/$(CONFIG)/libalts_counter.a $(LIBDIR)/$(CONFIG)/libalts_crypt.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a $(LIBDIR)/$(CONFIG)/libgrpc++_core_stats.a $(LIBDIR)/$(CONFIG)/libgrpc++_proto_reflection_desc_db.a $(LIBDIR)/$(CONFIG)/libgrpc++_test_config.a $(LIBDIR)/$(CONFIG)/libgrpc++_test_util.a $(LIBDIR)/$(CONFIG)/libgrpc++_test_util_unsecure.a $(LIBDIR)/$(CONFIG)/libgrpc_cli_libs.a $(LIBDIR)/$(CONFIG)/libhttp2_client_main.a $(LIBDIR)/$(CONFIG)/libinterop_client_helper.a $(LIBDIR)/$(CONFIG)/libinterop_client_main.a $(LIBDIR)/$(CONFIG)/libinterop_server_helper.a $(LIBDIR)/$(CONFIG)/libinterop_server_lib.a $(LIBDIR)/$(CONFIG)/libinterop_server_main.a $(LIBDIR)/$(CONFIG)/libqps.a $(LIBDIR)/$(CONFIG)/libboringssl_test_util.a $(LIBDIR)/$(CONFIG)/libboringssl_crypto_test_data_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_asn1_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_base64_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_bio_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_bytestring_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_chacha_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_aead_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_cipher_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_cmac_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_compiler_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_constant_time_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_ed25519_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_spake25519_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_x25519_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_dh_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_digest_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_dsa_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_ecdh_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_err_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_evp_extra_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_evp_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_pbkdf_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_scrypt_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_aes_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_bn_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_ec_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_p256-x86_64_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_ecdsa_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_gcm_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_ctrdrbg_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_hkdf_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_hmac_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_lhash_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_obj_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_pkcs7_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_pkcs12_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_pkcs8_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_poly1305_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_pool_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_refcount_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_rsa_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_file_test_gtest_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_gtest_main_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_thread_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_x509_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_tab_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_v3name_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_span_test_lib.a $(LIBDIR)/$(CONFIG)/libboringssl_ssl_test_lib.a $(LIBDIR)/$(CONFIG)/libbenchmark.a
 else
-privatelibs_cxx:  $(LIBDIR)/$(CONFIG)/libgrpc++_core_stats.a $(LIBDIR)/$(CONFIG)/libgrpc++_proto_reflection_desc_db.a $(LIBDIR)/$(CONFIG)/libgrpc++_test_config.a $(LIBDIR)/$(CONFIG)/libgrpc++_test_util.a $(LIBDIR)/$(CONFIG)/libgrpc++_test_util_unsecure.a $(LIBDIR)/$(CONFIG)/libgrpc_cli_libs.a $(LIBDIR)/$(CONFIG)/libhttp2_client_main.a $(LIBDIR)/$(CONFIG)/libinterop_client_helper.a $(LIBDIR)/$(CONFIG)/libinterop_client_main.a $(LIBDIR)/$(CONFIG)/libinterop_server_helper.a $(LIBDIR)/$(CONFIG)/libinterop_server_lib.a $(LIBDIR)/$(CONFIG)/libinterop_server_main.a $(LIBDIR)/$(CONFIG)/libqps.a $(LIBDIR)/$(CONFIG)/libbenchmark.a
+privatelibs_cxx:  $(LIBDIR)/$(CONFIG)/libalts_counter.a $(LIBDIR)/$(CONFIG)/libalts_crypt.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a $(LIBDIR)/$(CONFIG)/libgrpc++_core_stats.a $(LIBDIR)/$(CONFIG)/libgrpc++_proto_reflection_desc_db.a $(LIBDIR)/$(CONFIG)/libgrpc++_test_config.a $(LIBDIR)/$(CONFIG)/libgrpc++_test_util.a $(LIBDIR)/$(CONFIG)/libgrpc++_test_util_unsecure.a $(LIBDIR)/$(CONFIG)/libgrpc_cli_libs.a $(LIBDIR)/$(CONFIG)/libhttp2_client_main.a $(LIBDIR)/$(CONFIG)/libinterop_client_helper.a $(LIBDIR)/$(CONFIG)/libinterop_client_main.a $(LIBDIR)/$(CONFIG)/libinterop_server_helper.a $(LIBDIR)/$(CONFIG)/libinterop_server_lib.a $(LIBDIR)/$(CONFIG)/libinterop_server_main.a $(LIBDIR)/$(CONFIG)/libqps.a $(LIBDIR)/$(CONFIG)/libbenchmark.a
 endif
 
 
@@ -3290,6 +3290,28 @@ LIBGRPC_SRC = \
     src/core/tsi/transport_security_grpc.cc \
     src/core/tsi/transport_security.cc \
     src/core/tsi/transport_security_adapter.cc \
+    src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc \
+    src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc \
+    src/core/tsi/alts/handshaker/handshaker.pb.cc \
+    src/core/tsi/alts/handshaker/transport_security_common.pb.c \
+    src/core/tsi/alts/handshaker/transport_security_common_api.cc \
+    src/core/tsi/alts/frame_protector/alts_crypter.cc \
+    src/core/tsi/alts/frame_protector/alts_frame_protector.cc \
+    src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc \
+    src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc \
+    src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc \
+    src/core/tsi/alts/frame_protector/frame_handler.cc \
+    src/core/tsi/alts/crypt/aes_gcm.cc \
+    src/core/tsi/alts/crypt/gsec.cc \
+    src/core/tsi/alts/frame_protector/alts_counter.cc \
+    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc \
+    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc \
+    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc \
+    src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc \
+    src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc \
+    src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc \
+    src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc \
+    src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc \
     src/core/ext/transport/chttp2/server/chttp2_server.cc \
     src/core/ext/transport/chttp2/client/secure/secure_channel_create.cc \
     src/core/ext/filters/client_channel/backup_poller.cc \
@@ -3663,6 +3685,28 @@ LIBGRPC_CRONET_SRC = \
     src/core/tsi/transport_security_grpc.cc \
     src/core/tsi/transport_security.cc \
     src/core/tsi/transport_security_adapter.cc \
+    src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc \
+    src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc \
+    src/core/tsi/alts/handshaker/handshaker.pb.cc \
+    src/core/tsi/alts/handshaker/transport_security_common.pb.c \
+    src/core/tsi/alts/handshaker/transport_security_common_api.cc \
+    src/core/tsi/alts/frame_protector/alts_crypter.cc \
+    src/core/tsi/alts/frame_protector/alts_frame_protector.cc \
+    src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc \
+    src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc \
+    src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc \
+    src/core/tsi/alts/frame_protector/frame_handler.cc \
+    src/core/tsi/alts/crypt/aes_gcm.cc \
+    src/core/tsi/alts/crypt/gsec.cc \
+    src/core/tsi/alts/frame_protector/alts_counter.cc \
+    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc \
+    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc \
+    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc \
+    src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc \
+    src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc \
+    src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc \
+    src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc \
+    src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc \
     src/core/ext/transport/chttp2/client/chttp2_connector.cc \
     src/core/ext/filters/load_reporting/server_load_reporting_filter.cc \
     src/core/ext/filters/load_reporting/server_load_reporting_plugin.cc \
@@ -4666,6 +4710,203 @@ endif
 ifneq ($(NO_SECURE),true)
 ifneq ($(NO_DEPS),true)
 -include $(LIBTEST_TCP_SERVER_OBJS:.o=.dep)
+endif
+endif
+
+
+LIBALTS_COUNTER_SRC = \
+    src/core/tsi/alts/frame_protector/alts_counter.cc \
+
+PUBLIC_HEADERS_CXX += \
+
+LIBALTS_COUNTER_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(LIBALTS_COUNTER_SRC))))
+
+
+ifeq ($(NO_SECURE),true)
+
+# You can't build secure libraries if you don't have OpenSSL.
+
+$(LIBDIR)/$(CONFIG)/libalts_counter.a: openssl_dep_error
+
+
+else
+
+ifeq ($(NO_PROTOBUF),true)
+
+# You can't build a C++ library if you don't have protobuf - a bit overreached, but still okay.
+
+$(LIBDIR)/$(CONFIG)/libalts_counter.a: protobuf_dep_error
+
+
+else
+
+$(LIBDIR)/$(CONFIG)/libalts_counter.a: $(ZLIB_DEP) $(OPENSSL_DEP) $(CARES_DEP) $(PROTOBUF_DEP) $(LIBALTS_COUNTER_OBJS) 
+	$(E) "[AR]      Creating $@"
+	$(Q) mkdir -p `dirname $@`
+	$(Q) rm -f $(LIBDIR)/$(CONFIG)/libalts_counter.a
+	$(Q) $(AR) $(AROPTS) $(LIBDIR)/$(CONFIG)/libalts_counter.a $(LIBALTS_COUNTER_OBJS) 
+ifeq ($(SYSTEM),Darwin)
+	$(Q) ranlib -no_warning_for_no_symbols $(LIBDIR)/$(CONFIG)/libalts_counter.a
+endif
+
+
+
+
+endif
+
+endif
+
+ifneq ($(NO_SECURE),true)
+ifneq ($(NO_DEPS),true)
+-include $(LIBALTS_COUNTER_OBJS:.o=.dep)
+endif
+endif
+
+
+LIBALTS_CRYPT_SRC = \
+    src/core/tsi/alts/crypt/aes_gcm.cc \
+    src/core/tsi/alts/crypt/gsec.cc \
+
+PUBLIC_HEADERS_CXX += \
+
+LIBALTS_CRYPT_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(LIBALTS_CRYPT_SRC))))
+
+
+ifeq ($(NO_SECURE),true)
+
+# You can't build secure libraries if you don't have OpenSSL.
+
+$(LIBDIR)/$(CONFIG)/libalts_crypt.a: openssl_dep_error
+
+
+else
+
+ifeq ($(NO_PROTOBUF),true)
+
+# You can't build a C++ library if you don't have protobuf - a bit overreached, but still okay.
+
+$(LIBDIR)/$(CONFIG)/libalts_crypt.a: protobuf_dep_error
+
+
+else
+
+$(LIBDIR)/$(CONFIG)/libalts_crypt.a: $(ZLIB_DEP) $(OPENSSL_DEP) $(CARES_DEP) $(PROTOBUF_DEP) $(LIBALTS_CRYPT_OBJS) 
+	$(E) "[AR]      Creating $@"
+	$(Q) mkdir -p `dirname $@`
+	$(Q) rm -f $(LIBDIR)/$(CONFIG)/libalts_crypt.a
+	$(Q) $(AR) $(AROPTS) $(LIBDIR)/$(CONFIG)/libalts_crypt.a $(LIBALTS_CRYPT_OBJS) 
+ifeq ($(SYSTEM),Darwin)
+	$(Q) ranlib -no_warning_for_no_symbols $(LIBDIR)/$(CONFIG)/libalts_crypt.a
+endif
+
+
+
+
+endif
+
+endif
+
+ifneq ($(NO_SECURE),true)
+ifneq ($(NO_DEPS),true)
+-include $(LIBALTS_CRYPT_OBJS:.o=.dep)
+endif
+endif
+
+
+LIBALTS_CRYPT_TEST_UTIL_SRC = \
+    test/core/tsi/alts/crypt/gsec_test_util.cc \
+
+PUBLIC_HEADERS_CXX += \
+
+LIBALTS_CRYPT_TEST_UTIL_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(LIBALTS_CRYPT_TEST_UTIL_SRC))))
+
+
+ifeq ($(NO_SECURE),true)
+
+# You can't build secure libraries if you don't have OpenSSL.
+
+$(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a: openssl_dep_error
+
+
+else
+
+ifeq ($(NO_PROTOBUF),true)
+
+# You can't build a C++ library if you don't have protobuf - a bit overreached, but still okay.
+
+$(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a: protobuf_dep_error
+
+
+else
+
+$(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a: $(ZLIB_DEP) $(OPENSSL_DEP) $(CARES_DEP) $(PROTOBUF_DEP) $(LIBALTS_CRYPT_TEST_UTIL_OBJS) 
+	$(E) "[AR]      Creating $@"
+	$(Q) mkdir -p `dirname $@`
+	$(Q) rm -f $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a
+	$(Q) $(AR) $(AROPTS) $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LIBALTS_CRYPT_TEST_UTIL_OBJS) 
+ifeq ($(SYSTEM),Darwin)
+	$(Q) ranlib -no_warning_for_no_symbols $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a
+endif
+
+
+
+
+endif
+
+endif
+
+ifneq ($(NO_SECURE),true)
+ifneq ($(NO_DEPS),true)
+-include $(LIBALTS_CRYPT_TEST_UTIL_OBJS:.o=.dep)
+endif
+endif
+
+
+LIBALTS_HANDSHAKER_SERVICE_API_TEST_LIB_SRC = \
+    test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc \
+
+PUBLIC_HEADERS_CXX += \
+
+LIBALTS_HANDSHAKER_SERVICE_API_TEST_LIB_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(LIBALTS_HANDSHAKER_SERVICE_API_TEST_LIB_SRC))))
+
+
+ifeq ($(NO_SECURE),true)
+
+# You can't build secure libraries if you don't have OpenSSL.
+
+$(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a: openssl_dep_error
+
+
+else
+
+ifeq ($(NO_PROTOBUF),true)
+
+# You can't build a C++ library if you don't have protobuf - a bit overreached, but still okay.
+
+$(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a: protobuf_dep_error
+
+
+else
+
+$(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a: $(ZLIB_DEP) $(OPENSSL_DEP) $(CARES_DEP) $(PROTOBUF_DEP) $(LIBALTS_HANDSHAKER_SERVICE_API_TEST_LIB_OBJS) 
+	$(E) "[AR]      Creating $@"
+	$(Q) mkdir -p `dirname $@`
+	$(Q) rm -f $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a
+	$(Q) $(AR) $(AROPTS) $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a $(LIBALTS_HANDSHAKER_SERVICE_API_TEST_LIB_OBJS) 
+ifeq ($(SYSTEM),Darwin)
+	$(Q) ranlib -no_warning_for_no_symbols $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a
+endif
+
+
+
+
+endif
+
+endif
+
+ifneq ($(NO_SECURE),true)
+ifneq ($(NO_DEPS),true)
+-include $(LIBALTS_HANDSHAKER_SERVICE_API_TEST_LIB_OBJS:.o=.dep)
 endif
 endif
 
@@ -14011,10 +14252,6 @@ endif
 
 ALTS_COUNTER_TEST_SRC = \
     test/core/tsi/alts/frame_protector/alts_counter_test.cc \
-    src/core/tsi/alts/frame_protector/alts_counter.cc \
-    src/core/tsi/alts/crypt/aes_gcm.cc \
-    src/core/tsi/alts/crypt/gsec.cc \
-    test/core/tsi/alts/crypt/gsec_test_util.cc \
 
 ALTS_COUNTER_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(ALTS_COUNTER_TEST_SRC))))
 ifeq ($(NO_SECURE),true)
@@ -14036,24 +14273,16 @@ $(BINDIR)/$(CONFIG)/alts_counter_test: protobuf_dep_error
 
 else
 
-$(BINDIR)/$(CONFIG)/alts_counter_test: $(PROTOBUF_DEP) $(ALTS_COUNTER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
+$(BINDIR)/$(CONFIG)/alts_counter_test: $(PROTOBUF_DEP) $(ALTS_COUNTER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
 	$(E) "[LD]      Linking $@"
 	$(Q) mkdir -p `dirname $@`
-	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_COUNTER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_counter_test
+	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_COUNTER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_counter_test
 
 endif
 
 endif
 
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/frame_protector/alts_counter_test.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_counter.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/aes_gcm.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/gsec.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/crypt/gsec_test_util.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/frame_protector/alts_counter_test.o:  $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
 
 deps_alts_counter_test: $(ALTS_COUNTER_TEST_OBJS:.o=.dep)
 
@@ -14066,9 +14295,6 @@ endif
 
 ALTS_CRYPT_TEST_SRC = \
     test/core/tsi/alts/crypt/aes_gcm_test.cc \
-    src/core/tsi/alts/crypt/aes_gcm.cc \
-    src/core/tsi/alts/crypt/gsec.cc \
-    test/core/tsi/alts/crypt/gsec_test_util.cc \
 
 ALTS_CRYPT_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(ALTS_CRYPT_TEST_SRC))))
 ifeq ($(NO_SECURE),true)
@@ -14090,22 +14316,16 @@ $(BINDIR)/$(CONFIG)/alts_crypt_test: protobuf_dep_error
 
 else
 
-$(BINDIR)/$(CONFIG)/alts_crypt_test: $(PROTOBUF_DEP) $(ALTS_CRYPT_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgpr_test_util.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
+$(BINDIR)/$(CONFIG)/alts_crypt_test: $(PROTOBUF_DEP) $(ALTS_CRYPT_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgpr_test_util.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
 	$(E) "[LD]      Linking $@"
 	$(Q) mkdir -p `dirname $@`
-	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_CRYPT_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgpr_test_util.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_crypt_test
+	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_CRYPT_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgpr_test_util.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_crypt_test
 
 endif
 
 endif
 
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/crypt/aes_gcm_test.o:  $(LIBDIR)/$(CONFIG)/libgpr_test_util.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/aes_gcm.o:  $(LIBDIR)/$(CONFIG)/libgpr_test_util.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/gsec.o:  $(LIBDIR)/$(CONFIG)/libgpr_test_util.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/crypt/gsec_test_util.o:  $(LIBDIR)/$(CONFIG)/libgpr_test_util.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/crypt/aes_gcm_test.o:  $(LIBDIR)/$(CONFIG)/libgpr_test_util.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
 
 deps_alts_crypt_test: $(ALTS_CRYPT_TEST_OBJS:.o=.dep)
 
@@ -14118,16 +14338,6 @@ endif
 
 ALTS_CRYPTER_TEST_SRC = \
     test/core/tsi/alts/frame_protector/alts_crypter_test.cc \
-    src/core/tsi/alts/crypt/aes_gcm.cc \
-    src/core/tsi/alts/crypt/gsec.cc \
-    test/core/tsi/alts/crypt/gsec_test_util.cc \
-    src/core/tsi/alts/frame_protector/alts_counter.cc \
-    src/core/tsi/alts/frame_protector/alts_crypter.cc \
-    src/core/tsi/alts/frame_protector/alts_frame_protector.cc \
-    src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc \
-    src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc \
-    src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc \
-    src/core/tsi/alts/frame_protector/frame_handler.cc \
 
 ALTS_CRYPTER_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(ALTS_CRYPTER_TEST_SRC))))
 ifeq ($(NO_SECURE),true)
@@ -14149,36 +14359,16 @@ $(BINDIR)/$(CONFIG)/alts_crypter_test: protobuf_dep_error
 
 else
 
-$(BINDIR)/$(CONFIG)/alts_crypter_test: $(PROTOBUF_DEP) $(ALTS_CRYPTER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
+$(BINDIR)/$(CONFIG)/alts_crypter_test: $(PROTOBUF_DEP) $(ALTS_CRYPTER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
 	$(E) "[LD]      Linking $@"
 	$(Q) mkdir -p `dirname $@`
-	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_CRYPTER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_crypter_test
+	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_CRYPTER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_crypter_test
 
 endif
 
 endif
 
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/frame_protector/alts_crypter_test.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/aes_gcm.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/gsec.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/crypt/gsec_test_util.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_counter.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_crypter.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_frame_protector.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/frame_handler.o:  $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/frame_protector/alts_crypter_test.o:  $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libgrpc.a
 
 deps_alts_crypter_test: $(ALTS_CRYPTER_TEST_OBJS:.o=.dep)
 
@@ -14191,16 +14381,6 @@ endif
 
 ALTS_FRAME_HANDLER_TEST_SRC = \
     test/core/tsi/alts/frame_protector/frame_handler_test.cc \
-    src/core/tsi/alts/frame_protector/alts_crypter.cc \
-    src/core/tsi/alts/frame_protector/alts_frame_protector.cc \
-    src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc \
-    src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc \
-    src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc \
-    src/core/tsi/alts/frame_protector/frame_handler.cc \
-    src/core/tsi/alts/crypt/aes_gcm.cc \
-    src/core/tsi/alts/crypt/gsec.cc \
-    src/core/tsi/alts/frame_protector/alts_counter.cc \
-    test/core/tsi/alts/crypt/gsec_test_util.cc \
 
 ALTS_FRAME_HANDLER_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(ALTS_FRAME_HANDLER_TEST_SRC))))
 ifeq ($(NO_SECURE),true)
@@ -14222,36 +14402,16 @@ $(BINDIR)/$(CONFIG)/alts_frame_handler_test: protobuf_dep_error
 
 else
 
-$(BINDIR)/$(CONFIG)/alts_frame_handler_test: $(PROTOBUF_DEP) $(ALTS_FRAME_HANDLER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(BINDIR)/$(CONFIG)/alts_frame_handler_test: $(PROTOBUF_DEP) $(ALTS_FRAME_HANDLER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a
 	$(E) "[LD]      Linking $@"
 	$(Q) mkdir -p `dirname $@`
-	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_FRAME_HANDLER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_frame_handler_test
+	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_FRAME_HANDLER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_frame_handler_test
 
 endif
 
 endif
 
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/frame_protector/frame_handler_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_frame_protector.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/frame_handler.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/aes_gcm.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/gsec.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_counter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/crypt/gsec_test_util.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/frame_protector/frame_handler_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a
 
 deps_alts_frame_handler_test: $(ALTS_FRAME_HANDLER_TEST_OBJS:.o=.dep)
 
@@ -14264,16 +14424,6 @@ endif
 
 ALTS_FRAME_PROTECTOR_TEST_SRC = \
     test/core/tsi/alts/frame_protector/alts_frame_protector_test.cc \
-    src/core/tsi/alts/frame_protector/alts_crypter.cc \
-    src/core/tsi/alts/frame_protector/alts_frame_protector.cc \
-    src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc \
-    src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc \
-    src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc \
-    src/core/tsi/alts/frame_protector/frame_handler.cc \
-    src/core/tsi/alts/crypt/aes_gcm.cc \
-    src/core/tsi/alts/crypt/gsec.cc \
-    src/core/tsi/alts/frame_protector/alts_counter.cc \
-    test/core/tsi/alts/crypt/gsec_test_util.cc \
     test/core/tsi/alts/frame_protector/alts_frame_protector_test_lib.cc \
 
 ALTS_FRAME_PROTECTOR_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(ALTS_FRAME_PROTECTOR_TEST_SRC))))
@@ -14296,38 +14446,18 @@ $(BINDIR)/$(CONFIG)/alts_frame_protector_test: protobuf_dep_error
 
 else
 
-$(BINDIR)/$(CONFIG)/alts_frame_protector_test: $(PROTOBUF_DEP) $(ALTS_FRAME_PROTECTOR_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(BINDIR)/$(CONFIG)/alts_frame_protector_test: $(PROTOBUF_DEP) $(ALTS_FRAME_PROTECTOR_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a
 	$(E) "[LD]      Linking $@"
 	$(Q) mkdir -p `dirname $@`
-	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_FRAME_PROTECTOR_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_frame_protector_test
+	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_FRAME_PROTECTOR_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_frame_protector_test
 
 endif
 
 endif
 
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/frame_protector/alts_frame_protector_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/frame_protector/alts_frame_protector_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a
 
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_frame_protector.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/frame_handler.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/aes_gcm.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/gsec.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_counter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/crypt/gsec_test_util.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/frame_protector/alts_frame_protector_test_lib.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/frame_protector/alts_frame_protector_test_lib.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a
 
 deps_alts_frame_protector_test: $(ALTS_FRAME_PROTECTOR_TEST_OBJS:.o=.dep)
 
@@ -14340,15 +14470,6 @@ endif
 
 ALTS_GRPC_RECORD_PROTOCOL_TEST_SRC = \
     test/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_test.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc \
-    src/core/tsi/alts/crypt/aes_gcm.cc \
-    src/core/tsi/alts/crypt/gsec.cc \
-    src/core/tsi/alts/frame_protector/alts_counter.cc \
-    test/core/tsi/alts/crypt/gsec_test_util.cc \
 
 ALTS_GRPC_RECORD_PROTOCOL_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(ALTS_GRPC_RECORD_PROTOCOL_TEST_SRC))))
 ifeq ($(NO_SECURE),true)
@@ -14370,34 +14491,16 @@ $(BINDIR)/$(CONFIG)/alts_grpc_record_protocol_test: protobuf_dep_error
 
 else
 
-$(BINDIR)/$(CONFIG)/alts_grpc_record_protocol_test: $(PROTOBUF_DEP) $(ALTS_GRPC_RECORD_PROTOCOL_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(BINDIR)/$(CONFIG)/alts_grpc_record_protocol_test: $(PROTOBUF_DEP) $(ALTS_GRPC_RECORD_PROTOCOL_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a
 	$(E) "[LD]      Linking $@"
 	$(Q) mkdir -p `dirname $@`
-	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_GRPC_RECORD_PROTOCOL_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_grpc_record_protocol_test
+	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_GRPC_RECORD_PROTOCOL_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_grpc_record_protocol_test
 
 endif
 
 endif
 
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/aes_gcm.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/gsec.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_counter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/crypt/gsec_test_util.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a
 
 deps_alts_grpc_record_protocol_test: $(ALTS_GRPC_RECORD_PROTOCOL_TEST_OBJS:.o=.dep)
 
@@ -14410,29 +14513,6 @@ endif
 
 ALTS_HANDSHAKER_CLIENT_TEST_SRC = \
     test/core/tsi/alts/handshaker/alts_handshaker_client_test.cc \
-    src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc \
-    src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc \
-    src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc \
-    src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc \
-    src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc \
-    src/core/tsi/alts/handshaker/handshaker.pb.cc \
-    src/core/tsi/alts/handshaker/transport_security_common.pb.c \
-    src/core/tsi/alts/handshaker/transport_security_common_api.cc \
-    test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc \
-    src/core/tsi/alts/frame_protector/alts_crypter.cc \
-    src/core/tsi/alts/frame_protector/alts_frame_protector.cc \
-    src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc \
-    src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc \
-    src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc \
-    src/core/tsi/alts/frame_protector/frame_handler.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc \
-    src/core/tsi/alts/crypt/aes_gcm.cc \
-    src/core/tsi/alts/crypt/gsec.cc \
-    src/core/tsi/alts/frame_protector/alts_counter.cc \
 
 ALTS_HANDSHAKER_CLIENT_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(ALTS_HANDSHAKER_CLIENT_TEST_SRC))))
 ifeq ($(NO_SECURE),true)
@@ -14454,62 +14534,16 @@ $(BINDIR)/$(CONFIG)/alts_handshaker_client_test: protobuf_dep_error
 
 else
 
-$(BINDIR)/$(CONFIG)/alts_handshaker_client_test: $(PROTOBUF_DEP) $(ALTS_HANDSHAKER_CLIENT_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(BINDIR)/$(CONFIG)/alts_handshaker_client_test: $(PROTOBUF_DEP) $(ALTS_HANDSHAKER_CLIENT_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a
 	$(E) "[LD]      Linking $@"
 	$(Q) mkdir -p `dirname $@`
-	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_HANDSHAKER_CLIENT_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_handshaker_client_test
+	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_HANDSHAKER_CLIENT_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_handshaker_client_test
 
 endif
 
 endif
 
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/alts_handshaker_client_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/lib/security/credentials/alts/grpc_alts_credentials_options.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/alts_handshaker_service_api.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/handshaker.pb.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/transport_security_common.pb.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/transport_security_common_api.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_frame_protector.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/frame_handler.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/aes_gcm.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/gsec.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_counter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/alts_handshaker_client_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a
 
 deps_alts_handshaker_client_test: $(ALTS_HANDSHAKER_CLIENT_TEST_OBJS:.o=.dep)
 
@@ -14522,12 +14556,6 @@ endif
 
 ALTS_HANDSHAKER_SERVICE_API_TEST_SRC = \
     test/core/tsi/alts/handshaker/alts_handshaker_service_api_test.cc \
-    src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc \
-    src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc \
-    src/core/tsi/alts/handshaker/handshaker.pb.cc \
-    src/core/tsi/alts/handshaker/transport_security_common.pb.c \
-    src/core/tsi/alts/handshaker/transport_security_common_api.cc \
-    test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc \
 
 ALTS_HANDSHAKER_SERVICE_API_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(ALTS_HANDSHAKER_SERVICE_API_TEST_SRC))))
 ifeq ($(NO_SECURE),true)
@@ -14549,28 +14577,16 @@ $(BINDIR)/$(CONFIG)/alts_handshaker_service_api_test: protobuf_dep_error
 
 else
 
-$(BINDIR)/$(CONFIG)/alts_handshaker_service_api_test: $(PROTOBUF_DEP) $(ALTS_HANDSHAKER_SERVICE_API_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(BINDIR)/$(CONFIG)/alts_handshaker_service_api_test: $(PROTOBUF_DEP) $(ALTS_HANDSHAKER_SERVICE_API_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a
 	$(E) "[LD]      Linking $@"
 	$(Q) mkdir -p `dirname $@`
-	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_HANDSHAKER_SERVICE_API_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_handshaker_service_api_test
+	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_HANDSHAKER_SERVICE_API_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_handshaker_service_api_test
 
 endif
 
 endif
 
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/alts_handshaker_service_api_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/alts_handshaker_service_api.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/handshaker.pb.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/transport_security_common.pb.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/transport_security_common_api.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/alts_handshaker_service_api_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a
 
 deps_alts_handshaker_service_api_test: $(ALTS_HANDSHAKER_SERVICE_API_TEST_OBJS:.o=.dep)
 
@@ -14583,15 +14599,6 @@ endif
 
 ALTS_IOVEC_RECORD_PROTOCOL_TEST_SRC = \
     test/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol_test.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc \
-    src/core/tsi/alts/crypt/aes_gcm.cc \
-    src/core/tsi/alts/crypt/gsec.cc \
-    src/core/tsi/alts/frame_protector/alts_counter.cc \
-    test/core/tsi/alts/crypt/gsec_test_util.cc \
 
 ALTS_IOVEC_RECORD_PROTOCOL_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(ALTS_IOVEC_RECORD_PROTOCOL_TEST_SRC))))
 ifeq ($(NO_SECURE),true)
@@ -14613,34 +14620,16 @@ $(BINDIR)/$(CONFIG)/alts_iovec_record_protocol_test: protobuf_dep_error
 
 else
 
-$(BINDIR)/$(CONFIG)/alts_iovec_record_protocol_test: $(PROTOBUF_DEP) $(ALTS_IOVEC_RECORD_PROTOCOL_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(BINDIR)/$(CONFIG)/alts_iovec_record_protocol_test: $(PROTOBUF_DEP) $(ALTS_IOVEC_RECORD_PROTOCOL_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a
 	$(E) "[LD]      Linking $@"
 	$(Q) mkdir -p `dirname $@`
-	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_IOVEC_RECORD_PROTOCOL_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_iovec_record_protocol_test
+	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_IOVEC_RECORD_PROTOCOL_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_iovec_record_protocol_test
 
 endif
 
 endif
 
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/aes_gcm.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/gsec.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_counter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/crypt/gsec_test_util.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a
 
 deps_alts_iovec_record_protocol_test: $(ALTS_IOVEC_RECORD_PROTOCOL_TEST_OBJS:.o=.dep)
 
@@ -14653,28 +14642,6 @@ endif
 
 ALTS_SECURITY_CONNECTOR_TEST_SRC = \
     test/core/security/alts_security_connector_test.cc \
-    src/core/tsi/alts/frame_protector/alts_crypter.cc \
-    src/core/tsi/alts/frame_protector/alts_frame_protector.cc \
-    src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc \
-    src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc \
-    src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc \
-    src/core/tsi/alts/frame_protector/frame_handler.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc \
-    src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc \
-    src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc \
-    src/core/tsi/alts/handshaker/handshaker.pb.cc \
-    src/core/tsi/alts/handshaker/transport_security_common.pb.c \
-    src/core/tsi/alts/handshaker/transport_security_common_api.cc \
-    src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc \
-    src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc \
-    src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc \
-    src/core/tsi/alts/crypt/aes_gcm.cc \
-    src/core/tsi/alts/crypt/gsec.cc \
-    src/core/tsi/alts/frame_protector/alts_counter.cc \
 
 ALTS_SECURITY_CONNECTOR_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(ALTS_SECURITY_CONNECTOR_TEST_SRC))))
 ifeq ($(NO_SECURE),true)
@@ -14707,50 +14674,6 @@ endif
 
 $(OBJDIR)/$(CONFIG)/test/core/security/alts_security_connector_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
 
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_frame_protector.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/frame_handler.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/alts_handshaker_service_api.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/handshaker.pb.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/transport_security_common.pb.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/transport_security_common_api.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/lib/security/credentials/alts/grpc_alts_credentials_options.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/aes_gcm.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/gsec.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_counter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
 deps_alts_security_connector_test: $(ALTS_SECURITY_CONNECTOR_TEST_OBJS:.o=.dep)
 
 ifneq ($(NO_SECURE),true)
@@ -14762,29 +14685,6 @@ endif
 
 ALTS_TSI_HANDSHAKER_TEST_SRC = \
     test/core/tsi/alts/handshaker/alts_tsi_handshaker_test.cc \
-    test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc \
-    src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc \
-    src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc \
-    src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc \
-    src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc \
-    src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc \
-    src/core/tsi/alts/handshaker/handshaker.pb.cc \
-    src/core/tsi/alts/handshaker/transport_security_common.pb.c \
-    src/core/tsi/alts/handshaker/transport_security_common_api.cc \
-    src/core/tsi/alts/frame_protector/alts_crypter.cc \
-    src/core/tsi/alts/frame_protector/alts_frame_protector.cc \
-    src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc \
-    src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc \
-    src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc \
-    src/core/tsi/alts/frame_protector/frame_handler.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc \
-    src/core/tsi/alts/crypt/aes_gcm.cc \
-    src/core/tsi/alts/crypt/gsec.cc \
-    src/core/tsi/alts/frame_protector/alts_counter.cc \
 
 ALTS_TSI_HANDSHAKER_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(ALTS_TSI_HANDSHAKER_TEST_SRC))))
 ifeq ($(NO_SECURE),true)
@@ -14806,62 +14706,16 @@ $(BINDIR)/$(CONFIG)/alts_tsi_handshaker_test: protobuf_dep_error
 
 else
 
-$(BINDIR)/$(CONFIG)/alts_tsi_handshaker_test: $(PROTOBUF_DEP) $(ALTS_TSI_HANDSHAKER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(BINDIR)/$(CONFIG)/alts_tsi_handshaker_test: $(PROTOBUF_DEP) $(ALTS_TSI_HANDSHAKER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a
 	$(E) "[LD]      Linking $@"
 	$(Q) mkdir -p `dirname $@`
-	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_TSI_HANDSHAKER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_tsi_handshaker_test
+	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_TSI_HANDSHAKER_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_tsi_handshaker_test
 
 endif
 
 endif
 
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/alts_tsi_handshaker_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/lib/security/credentials/alts/grpc_alts_credentials_options.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/alts_handshaker_service_api.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/handshaker.pb.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/transport_security_common.pb.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/transport_security_common_api.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_frame_protector.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/frame_handler.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/aes_gcm.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/gsec.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_counter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/alts_tsi_handshaker_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a
 
 deps_alts_tsi_handshaker_test: $(ALTS_TSI_HANDSHAKER_TEST_OBJS:.o=.dep)
 
@@ -14874,12 +14728,6 @@ endif
 
 ALTS_TSI_UTILS_TEST_SRC = \
     test/core/tsi/alts/handshaker/alts_tsi_utils_test.cc \
-    test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc \
-    src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc \
-    src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc \
-    src/core/tsi/alts/handshaker/handshaker.pb.cc \
-    src/core/tsi/alts/handshaker/transport_security_common.pb.c \
-    src/core/tsi/alts/handshaker/transport_security_common_api.cc \
 
 ALTS_TSI_UTILS_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(ALTS_TSI_UTILS_TEST_SRC))))
 ifeq ($(NO_SECURE),true)
@@ -14901,28 +14749,16 @@ $(BINDIR)/$(CONFIG)/alts_tsi_utils_test: protobuf_dep_error
 
 else
 
-$(BINDIR)/$(CONFIG)/alts_tsi_utils_test: $(PROTOBUF_DEP) $(ALTS_TSI_UTILS_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(BINDIR)/$(CONFIG)/alts_tsi_utils_test: $(PROTOBUF_DEP) $(ALTS_TSI_UTILS_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
 	$(E) "[LD]      Linking $@"
 	$(Q) mkdir -p `dirname $@`
-	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_TSI_UTILS_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_tsi_utils_test
+	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_TSI_UTILS_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_tsi_utils_test
 
 endif
 
 endif
 
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/alts_tsi_utils_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/alts_handshaker_service_api.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/handshaker.pb.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/transport_security_common.pb.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/transport_security_common_api.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/alts_tsi_utils_test.o:  $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
 
 deps_alts_tsi_utils_test: $(ALTS_TSI_UTILS_TEST_OBJS:.o=.dep)
 
@@ -14935,15 +14771,6 @@ endif
 
 ALTS_ZERO_COPY_GRPC_PROTECTOR_TEST_SRC = \
     test/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector_test.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc \
-    src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc \
-    src/core/tsi/alts/crypt/aes_gcm.cc \
-    src/core/tsi/alts/crypt/gsec.cc \
-    src/core/tsi/alts/frame_protector/alts_counter.cc \
-    test/core/tsi/alts/crypt/gsec_test_util.cc \
 
 ALTS_ZERO_COPY_GRPC_PROTECTOR_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(ALTS_ZERO_COPY_GRPC_PROTECTOR_TEST_SRC))))
 ifeq ($(NO_SECURE),true)
@@ -14965,34 +14792,16 @@ $(BINDIR)/$(CONFIG)/alts_zero_copy_grpc_protector_test: protobuf_dep_error
 
 else
 
-$(BINDIR)/$(CONFIG)/alts_zero_copy_grpc_protector_test: $(PROTOBUF_DEP) $(ALTS_ZERO_COPY_GRPC_PROTECTOR_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(BINDIR)/$(CONFIG)/alts_zero_copy_grpc_protector_test: $(PROTOBUF_DEP) $(ALTS_ZERO_COPY_GRPC_PROTECTOR_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a
 	$(E) "[LD]      Linking $@"
 	$(Q) mkdir -p `dirname $@`
-	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_ZERO_COPY_GRPC_PROTECTOR_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_zero_copy_grpc_protector_test
+	$(Q) $(LDXX) $(LDFLAGS) $(ALTS_ZERO_COPY_GRPC_PROTECTOR_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/alts_zero_copy_grpc_protector_test
 
 endif
 
 endif
 
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/aes_gcm.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/crypt/gsec.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/frame_protector/alts_counter.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/crypt/gsec_test_util.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_crypt_test_util.a
 
 deps_alts_zero_copy_grpc_protector_test: $(ALTS_ZERO_COPY_GRPC_PROTECTOR_TEST_OBJS:.o=.dep)
 
@@ -19115,12 +18924,6 @@ endif
 
 TRANSPORT_SECURITY_COMMON_API_TEST_SRC = \
     test/core/tsi/alts/handshaker/transport_security_common_api_test.cc \
-    src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc \
-    src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc \
-    src/core/tsi/alts/handshaker/handshaker.pb.cc \
-    src/core/tsi/alts/handshaker/transport_security_common.pb.c \
-    src/core/tsi/alts/handshaker/transport_security_common_api.cc \
-    test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc \
 
 TRANSPORT_SECURITY_COMMON_API_TEST_OBJS = $(addprefix $(OBJDIR)/$(CONFIG)/, $(addsuffix .o, $(basename $(TRANSPORT_SECURITY_COMMON_API_TEST_SRC))))
 ifeq ($(NO_SECURE),true)
@@ -19142,28 +18945,16 @@ $(BINDIR)/$(CONFIG)/transport_security_common_api_test: protobuf_dep_error
 
 else
 
-$(BINDIR)/$(CONFIG)/transport_security_common_api_test: $(PROTOBUF_DEP) $(TRANSPORT_SECURITY_COMMON_API_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(BINDIR)/$(CONFIG)/transport_security_common_api_test: $(PROTOBUF_DEP) $(TRANSPORT_SECURITY_COMMON_API_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a
 	$(E) "[LD]      Linking $@"
 	$(Q) mkdir -p `dirname $@`
-	$(Q) $(LDXX) $(LDFLAGS) $(TRANSPORT_SECURITY_COMMON_API_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/transport_security_common_api_test
+	$(Q) $(LDXX) $(LDFLAGS) $(TRANSPORT_SECURITY_COMMON_API_TEST_OBJS) $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a $(LDLIBSXX) $(LDLIBS_PROTOBUF) $(LDLIBS) $(LDLIBS_SECURE) $(GTEST_LIB) -o $(BINDIR)/$(CONFIG)/transport_security_common_api_test
 
 endif
 
 endif
 
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/transport_security_common_api_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/alts_handshaker_service_api.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/handshaker.pb.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/transport_security_common.pb.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/src/core/tsi/alts/handshaker/transport_security_common_api.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
-
-$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a
+$(OBJDIR)/$(CONFIG)/test/core/tsi/alts/handshaker/transport_security_common_api_test.o:  $(LIBDIR)/$(CONFIG)/libgrpc.a $(LIBDIR)/$(CONFIG)/libgpr.a $(LIBDIR)/$(CONFIG)/libalts_handshaker_service_api_test_lib.a
 
 deps_transport_security_common_api_test: $(TRANSPORT_SECURITY_COMMON_API_TEST_OBJS:.o=.dep)
 
@@ -23146,6 +22937,9 @@ src/core/lib/http/httpcli_security_connector.cc: $(OPENSSL_DEP)
 src/core/lib/security/context/security_context.cc: $(OPENSSL_DEP)
 src/core/lib/security/credentials/alts/alts_credentials.cc: $(OPENSSL_DEP)
 src/core/lib/security/credentials/alts/check_gcp_environment.cc: $(OPENSSL_DEP)
+src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc: $(OPENSSL_DEP)
+src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc: $(OPENSSL_DEP)
+src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc: $(OPENSSL_DEP)
 src/core/lib/security/credentials/composite/composite_credentials.cc: $(OPENSSL_DEP)
 src/core/lib/security/credentials/credentials.cc: $(OPENSSL_DEP)
 src/core/lib/security/credentials/credentials_metadata.cc: $(OPENSSL_DEP)
@@ -23171,10 +22965,29 @@ src/core/lib/security/util/json_util.cc: $(OPENSSL_DEP)
 src/core/lib/surface/init_secure.cc: $(OPENSSL_DEP)
 src/core/plugin_registry/grpc_cronet_plugin_registry.cc: $(OPENSSL_DEP)
 src/core/plugin_registry/grpc_plugin_registry.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/crypt/aes_gcm.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/crypt/gsec.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/frame_protector/alts_counter.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/frame_protector/alts_crypter.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/frame_protector/alts_frame_protector.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/frame_protector/frame_handler.cc: $(OPENSSL_DEP)
 src/core/tsi/alts/handshaker/alts_handshaker_client.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc: $(OPENSSL_DEP)
 src/core/tsi/alts/handshaker/alts_tsi_event.cc: $(OPENSSL_DEP)
 src/core/tsi/alts/handshaker/alts_tsi_handshaker.cc: $(OPENSSL_DEP)
 src/core/tsi/alts/handshaker/alts_tsi_utils.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/handshaker/handshaker.pb.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/handshaker/transport_security_common.pb.c: $(OPENSSL_DEP)
+src/core/tsi/alts/handshaker/transport_security_common_api.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc: $(OPENSSL_DEP)
+src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc: $(OPENSSL_DEP)
 src/core/tsi/alts_transport_security.cc: $(OPENSSL_DEP)
 src/core/tsi/fake_transport_security.cc: $(OPENSSL_DEP)
 src/core/tsi/ssl_transport_security.cc: $(OPENSSL_DEP)
@@ -23202,6 +23015,8 @@ test/core/end2end/data/test_root_cert.cc: $(OPENSSL_DEP)
 test/core/end2end/end2end_tests.cc: $(OPENSSL_DEP)
 test/core/end2end/tests/call_creds.cc: $(OPENSSL_DEP)
 test/core/security/oauth2_utils.cc: $(OPENSSL_DEP)
+test/core/tsi/alts/crypt/gsec_test_util.cc: $(OPENSSL_DEP)
+test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc: $(OPENSSL_DEP)
 test/core/util/reconnect_server.cc: $(OPENSSL_DEP)
 test/core/util/test_tcp_server.cc: $(OPENSSL_DEP)
 test/cpp/end2end/test_service_impl.cc: $(OPENSSL_DEP)

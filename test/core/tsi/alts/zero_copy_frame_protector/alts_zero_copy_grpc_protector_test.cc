@@ -2,6 +2,7 @@
 #include <grpc/support/log.h>
 #include <grpc/slice_buffer.h>
 
+#include "src/core/tsi/alts/crypt/gsec.h"
 #include "src/core/lib/slice/slice_internal.h"
 #include "src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.h"
 #include "src/core/tsi/transport_security_grpc.h"

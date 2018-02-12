@@ -997,6 +997,28 @@ add_library(grpc
   src/core/tsi/transport_security_grpc.cc
   src/core/tsi/transport_security.cc
   src/core/tsi/transport_security_adapter.cc
+  src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc
+  src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc
+  src/core/tsi/alts/handshaker/handshaker.pb.cc
+  src/core/tsi/alts/handshaker/transport_security_common.pb.c
+  src/core/tsi/alts/handshaker/transport_security_common_api.cc
+  src/core/tsi/alts/frame_protector/alts_crypter.cc
+  src/core/tsi/alts/frame_protector/alts_frame_protector.cc
+  src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc
+  src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc
+  src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc
+  src/core/tsi/alts/frame_protector/frame_handler.cc
+  src/core/tsi/alts/crypt/aes_gcm.cc
+  src/core/tsi/alts/crypt/gsec.cc
+  src/core/tsi/alts/frame_protector/alts_counter.cc
+  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc
+  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc
+  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc
+  src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc
+  src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc
+  src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc
+  src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc
+  src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc
   src/core/ext/transport/chttp2/server/chttp2_server.cc
   src/core/ext/transport/chttp2/client/secure/secure_channel_create.cc
   src/core/ext/filters/client_channel/backup_poller.cc
@@ -1368,6 +1390,28 @@ add_library(grpc_cronet
   src/core/tsi/transport_security_grpc.cc
   src/core/tsi/transport_security.cc
   src/core/tsi/transport_security_adapter.cc
+  src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc
+  src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc
+  src/core/tsi/alts/handshaker/handshaker.pb.cc
+  src/core/tsi/alts/handshaker/transport_security_common.pb.c
+  src/core/tsi/alts/handshaker/transport_security_common_api.cc
+  src/core/tsi/alts/frame_protector/alts_crypter.cc
+  src/core/tsi/alts/frame_protector/alts_frame_protector.cc
+  src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc
+  src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc
+  src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc
+  src/core/tsi/alts/frame_protector/frame_handler.cc
+  src/core/tsi/alts/crypt/aes_gcm.cc
+  src/core/tsi/alts/crypt/gsec.cc
+  src/core/tsi/alts/frame_protector/alts_counter.cc
+  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc
+  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc
+  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc
+  src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc
+  src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc
+  src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc
+  src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc
+  src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc
   src/core/ext/transport/chttp2/client/chttp2_connector.cc
   src/core/ext/filters/load_reporting/server_load_reporting_filter.cc
   src/core/ext/filters/load_reporting/server_load_reporting_plugin.cc
@@ -2409,6 +2453,177 @@ target_link_libraries(test_tcp_server
   grpc
   gpr_test_util
   gpr
+)
+
+
+endif (gRPC_BUILD_TESTS)
+if (gRPC_BUILD_TESTS)
+
+add_library(alts_counter
+  src/core/tsi/alts/frame_protector/alts_counter.cc
+)
+
+if(WIN32 AND MSVC)
+  set_target_properties(alts_counter PROPERTIES COMPILE_PDB_NAME "alts_counter"
+    COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+  )
+  if (gRPC_INSTALL)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/alts_counter.pdb
+      DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+    )
+  endif()
+endif()
+
+
+target_include_directories(alts_counter
+  PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+  PRIVATE ${_gRPC_SSL_INCLUDE_DIR}
+  PRIVATE ${_gRPC_PROTOBUF_INCLUDE_DIR}
+  PRIVATE ${_gRPC_ZLIB_INCLUDE_DIR}
+  PRIVATE ${_gRPC_BENCHMARK_INCLUDE_DIR}
+  PRIVATE ${_gRPC_CARES_INCLUDE_DIR}
+  PRIVATE ${_gRPC_GFLAGS_INCLUDE_DIR}
+  PRIVATE third_party/googletest/googletest/include
+  PRIVATE third_party/googletest/googletest
+  PRIVATE third_party/googletest/googlemock/include
+  PRIVATE third_party/googletest/googlemock
+  PRIVATE ${_gRPC_PROTO_GENS_DIR}
+)
+
+target_link_libraries(alts_counter
+  ${_gRPC_PROTOBUF_LIBRARIES}
+  ${_gRPC_ALLTARGETS_LIBRARIES}
+  gpr
+  grpc
+)
+
+
+endif (gRPC_BUILD_TESTS)
+if (gRPC_BUILD_TESTS)
+
+add_library(alts_crypt
+  src/core/tsi/alts/crypt/aes_gcm.cc
+  src/core/tsi/alts/crypt/gsec.cc
+)
+
+if(WIN32 AND MSVC)
+  set_target_properties(alts_crypt PROPERTIES COMPILE_PDB_NAME "alts_crypt"
+    COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+  )
+  if (gRPC_INSTALL)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/alts_crypt.pdb
+      DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+    )
+  endif()
+endif()
+
+
+target_include_directories(alts_crypt
+  PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+  PRIVATE ${_gRPC_SSL_INCLUDE_DIR}
+  PRIVATE ${_gRPC_PROTOBUF_INCLUDE_DIR}
+  PRIVATE ${_gRPC_ZLIB_INCLUDE_DIR}
+  PRIVATE ${_gRPC_BENCHMARK_INCLUDE_DIR}
+  PRIVATE ${_gRPC_CARES_INCLUDE_DIR}
+  PRIVATE ${_gRPC_GFLAGS_INCLUDE_DIR}
+  PRIVATE third_party/googletest/googletest/include
+  PRIVATE third_party/googletest/googletest
+  PRIVATE third_party/googletest/googlemock/include
+  PRIVATE third_party/googletest/googlemock
+  PRIVATE ${_gRPC_PROTO_GENS_DIR}
+)
+
+target_link_libraries(alts_crypt
+  ${_gRPC_SSL_LIBRARIES}
+  ${_gRPC_PROTOBUF_LIBRARIES}
+  ${_gRPC_ALLTARGETS_LIBRARIES}
+  gpr
+  grpc
+)
+
+
+endif (gRPC_BUILD_TESTS)
+if (gRPC_BUILD_TESTS)
+
+add_library(alts_crypt_test_util
+  test/core/tsi/alts/crypt/gsec_test_util.cc
+)
+
+if(WIN32 AND MSVC)
+  set_target_properties(alts_crypt_test_util PROPERTIES COMPILE_PDB_NAME "alts_crypt_test_util"
+    COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+  )
+  if (gRPC_INSTALL)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/alts_crypt_test_util.pdb
+      DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+    )
+  endif()
+endif()
+
+
+target_include_directories(alts_crypt_test_util
+  PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+  PRIVATE ${_gRPC_SSL_INCLUDE_DIR}
+  PRIVATE ${_gRPC_PROTOBUF_INCLUDE_DIR}
+  PRIVATE ${_gRPC_ZLIB_INCLUDE_DIR}
+  PRIVATE ${_gRPC_BENCHMARK_INCLUDE_DIR}
+  PRIVATE ${_gRPC_CARES_INCLUDE_DIR}
+  PRIVATE ${_gRPC_GFLAGS_INCLUDE_DIR}
+  PRIVATE third_party/googletest/googletest/include
+  PRIVATE third_party/googletest/googletest
+  PRIVATE third_party/googletest/googlemock/include
+  PRIVATE third_party/googletest/googlemock
+  PRIVATE ${_gRPC_PROTO_GENS_DIR}
+)
+
+target_link_libraries(alts_crypt_test_util
+  ${_gRPC_SSL_LIBRARIES}
+  ${_gRPC_PROTOBUF_LIBRARIES}
+  ${_gRPC_ALLTARGETS_LIBRARIES}
+)
+
+
+endif (gRPC_BUILD_TESTS)
+if (gRPC_BUILD_TESTS)
+
+add_library(alts_handshaker_service_api_test_lib
+  test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc
+)
+
+if(WIN32 AND MSVC)
+  set_target_properties(alts_handshaker_service_api_test_lib PROPERTIES COMPILE_PDB_NAME "alts_handshaker_service_api_test_lib"
+    COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+  )
+  if (gRPC_INSTALL)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/alts_handshaker_service_api_test_lib.pdb
+      DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+    )
+  endif()
+endif()
+
+
+target_include_directories(alts_handshaker_service_api_test_lib
+  PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+  PRIVATE ${_gRPC_SSL_INCLUDE_DIR}
+  PRIVATE ${_gRPC_PROTOBUF_INCLUDE_DIR}
+  PRIVATE ${_gRPC_ZLIB_INCLUDE_DIR}
+  PRIVATE ${_gRPC_BENCHMARK_INCLUDE_DIR}
+  PRIVATE ${_gRPC_CARES_INCLUDE_DIR}
+  PRIVATE ${_gRPC_GFLAGS_INCLUDE_DIR}
+  PRIVATE third_party/googletest/googletest/include
+  PRIVATE third_party/googletest/googletest
+  PRIVATE third_party/googletest/googlemock/include
+  PRIVATE third_party/googletest/googlemock
+  PRIVATE ${_gRPC_PROTO_GENS_DIR}
+)
+
+target_link_libraries(alts_handshaker_service_api_test_lib
+  ${_gRPC_PROTOBUF_LIBRARIES}
+  ${_gRPC_ALLTARGETS_LIBRARIES}
 )
 
 
@@ -8345,10 +8560,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(alts_counter_test
   test/core/tsi/alts/frame_protector/alts_counter_test.cc
-  src/core/tsi/alts/frame_protector/alts_counter.cc
-  src/core/tsi/alts/crypt/aes_gcm.cc
-  src/core/tsi/alts/crypt/gsec.cc
-  test/core/tsi/alts/crypt/gsec_test_util.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
 )
@@ -8373,8 +8584,9 @@ target_include_directories(alts_counter_test
 target_link_libraries(alts_counter_test
   ${_gRPC_PROTOBUF_LIBRARIES}
   ${_gRPC_ALLTARGETS_LIBRARIES}
-  gpr
+  alts_crypt_test_util
   grpc
+  gpr
   ${_gRPC_GFLAGS_LIBRARIES}
 )
 
@@ -8383,9 +8595,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(alts_crypt_test
   test/core/tsi/alts/crypt/aes_gcm_test.cc
-  src/core/tsi/alts/crypt/aes_gcm.cc
-  src/core/tsi/alts/crypt/gsec.cc
-  test/core/tsi/alts/crypt/gsec_test_util.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
 )
@@ -8411,6 +8620,7 @@ target_link_libraries(alts_crypt_test
   ${_gRPC_PROTOBUF_LIBRARIES}
   ${_gRPC_ALLTARGETS_LIBRARIES}
   gpr_test_util
+  alts_crypt_test_util
   gpr
   grpc
   ${_gRPC_GFLAGS_LIBRARIES}
@@ -8421,16 +8631,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(alts_crypter_test
   test/core/tsi/alts/frame_protector/alts_crypter_test.cc
-  src/core/tsi/alts/crypt/aes_gcm.cc
-  src/core/tsi/alts/crypt/gsec.cc
-  test/core/tsi/alts/crypt/gsec_test_util.cc
-  src/core/tsi/alts/frame_protector/alts_counter.cc
-  src/core/tsi/alts/frame_protector/alts_crypter.cc
-  src/core/tsi/alts/frame_protector/alts_frame_protector.cc
-  src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc
-  src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc
-  src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc
-  src/core/tsi/alts/frame_protector/frame_handler.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
 )
@@ -8455,6 +8655,7 @@ target_include_directories(alts_crypter_test
 target_link_libraries(alts_crypter_test
   ${_gRPC_PROTOBUF_LIBRARIES}
   ${_gRPC_ALLTARGETS_LIBRARIES}
+  alts_crypt_test_util
   gpr
   grpc
   ${_gRPC_GFLAGS_LIBRARIES}
@@ -8465,16 +8666,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(alts_frame_handler_test
   test/core/tsi/alts/frame_protector/frame_handler_test.cc
-  src/core/tsi/alts/frame_protector/alts_crypter.cc
-  src/core/tsi/alts/frame_protector/alts_frame_protector.cc
-  src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc
-  src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc
-  src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc
-  src/core/tsi/alts/frame_protector/frame_handler.cc
-  src/core/tsi/alts/crypt/aes_gcm.cc
-  src/core/tsi/alts/crypt/gsec.cc
-  src/core/tsi/alts/frame_protector/alts_counter.cc
-  test/core/tsi/alts/crypt/gsec_test_util.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
 )
@@ -8501,6 +8692,7 @@ target_link_libraries(alts_frame_handler_test
   ${_gRPC_ALLTARGETS_LIBRARIES}
   grpc
   gpr
+  alts_crypt_test_util
   ${_gRPC_GFLAGS_LIBRARIES}
 )
 
@@ -8509,16 +8701,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(alts_frame_protector_test
   test/core/tsi/alts/frame_protector/alts_frame_protector_test.cc
-  src/core/tsi/alts/frame_protector/alts_crypter.cc
-  src/core/tsi/alts/frame_protector/alts_frame_protector.cc
-  src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc
-  src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc
-  src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc
-  src/core/tsi/alts/frame_protector/frame_handler.cc
-  src/core/tsi/alts/crypt/aes_gcm.cc
-  src/core/tsi/alts/crypt/gsec.cc
-  src/core/tsi/alts/frame_protector/alts_counter.cc
-  test/core/tsi/alts/crypt/gsec_test_util.cc
   test/core/tsi/alts/frame_protector/alts_frame_protector_test_lib.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
@@ -8546,6 +8728,7 @@ target_link_libraries(alts_frame_protector_test
   ${_gRPC_ALLTARGETS_LIBRARIES}
   grpc
   gpr
+  alts_crypt_test_util
   ${_gRPC_GFLAGS_LIBRARIES}
 )
 
@@ -8554,15 +8737,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(alts_grpc_record_protocol_test
   test/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_test.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc
-  src/core/tsi/alts/crypt/aes_gcm.cc
-  src/core/tsi/alts/crypt/gsec.cc
-  src/core/tsi/alts/frame_protector/alts_counter.cc
-  test/core/tsi/alts/crypt/gsec_test_util.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
 )
@@ -8589,6 +8763,7 @@ target_link_libraries(alts_grpc_record_protocol_test
   ${_gRPC_ALLTARGETS_LIBRARIES}
   grpc
   gpr
+  alts_crypt_test_util
   ${_gRPC_GFLAGS_LIBRARIES}
 )
 
@@ -8597,29 +8772,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(alts_handshaker_client_test
   test/core/tsi/alts/handshaker/alts_handshaker_client_test.cc
-  src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc
-  src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc
-  src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc
-  src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc
-  src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc
-  src/core/tsi/alts/handshaker/handshaker.pb.cc
-  src/core/tsi/alts/handshaker/transport_security_common.pb.c
-  src/core/tsi/alts/handshaker/transport_security_common_api.cc
-  test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc
-  src/core/tsi/alts/frame_protector/alts_crypter.cc
-  src/core/tsi/alts/frame_protector/alts_frame_protector.cc
-  src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc
-  src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc
-  src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc
-  src/core/tsi/alts/frame_protector/frame_handler.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc
-  src/core/tsi/alts/crypt/aes_gcm.cc
-  src/core/tsi/alts/crypt/gsec.cc
-  src/core/tsi/alts/frame_protector/alts_counter.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
 )
@@ -8646,6 +8798,7 @@ target_link_libraries(alts_handshaker_client_test
   ${_gRPC_ALLTARGETS_LIBRARIES}
   grpc
   gpr
+  alts_handshaker_service_api_test_lib
   ${_gRPC_GFLAGS_LIBRARIES}
 )
 
@@ -8654,12 +8807,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(alts_handshaker_service_api_test
   test/core/tsi/alts/handshaker/alts_handshaker_service_api_test.cc
-  src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc
-  src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc
-  src/core/tsi/alts/handshaker/handshaker.pb.cc
-  src/core/tsi/alts/handshaker/transport_security_common.pb.c
-  src/core/tsi/alts/handshaker/transport_security_common_api.cc
-  test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
 )
@@ -8686,6 +8833,7 @@ target_link_libraries(alts_handshaker_service_api_test
   ${_gRPC_ALLTARGETS_LIBRARIES}
   grpc
   gpr
+  alts_handshaker_service_api_test_lib
   ${_gRPC_GFLAGS_LIBRARIES}
 )
 
@@ -8694,15 +8842,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(alts_iovec_record_protocol_test
   test/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol_test.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc
-  src/core/tsi/alts/crypt/aes_gcm.cc
-  src/core/tsi/alts/crypt/gsec.cc
-  src/core/tsi/alts/frame_protector/alts_counter.cc
-  test/core/tsi/alts/crypt/gsec_test_util.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
 )
@@ -8729,6 +8868,7 @@ target_link_libraries(alts_iovec_record_protocol_test
   ${_gRPC_ALLTARGETS_LIBRARIES}
   grpc
   gpr
+  alts_crypt_test_util
   ${_gRPC_GFLAGS_LIBRARIES}
 )
 
@@ -8737,28 +8877,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(alts_security_connector_test
   test/core/security/alts_security_connector_test.cc
-  src/core/tsi/alts/frame_protector/alts_crypter.cc
-  src/core/tsi/alts/frame_protector/alts_frame_protector.cc
-  src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc
-  src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc
-  src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc
-  src/core/tsi/alts/frame_protector/frame_handler.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc
-  src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc
-  src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc
-  src/core/tsi/alts/handshaker/handshaker.pb.cc
-  src/core/tsi/alts/handshaker/transport_security_common.pb.c
-  src/core/tsi/alts/handshaker/transport_security_common_api.cc
-  src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc
-  src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc
-  src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc
-  src/core/tsi/alts/crypt/aes_gcm.cc
-  src/core/tsi/alts/crypt/gsec.cc
-  src/core/tsi/alts/frame_protector/alts_counter.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
 )
@@ -8793,29 +8911,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(alts_tsi_handshaker_test
   test/core/tsi/alts/handshaker/alts_tsi_handshaker_test.cc
-  test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc
-  src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc
-  src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc
-  src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc
-  src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc
-  src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc
-  src/core/tsi/alts/handshaker/handshaker.pb.cc
-  src/core/tsi/alts/handshaker/transport_security_common.pb.c
-  src/core/tsi/alts/handshaker/transport_security_common_api.cc
-  src/core/tsi/alts/frame_protector/alts_crypter.cc
-  src/core/tsi/alts/frame_protector/alts_frame_protector.cc
-  src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.cc
-  src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc
-  src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc
-  src/core/tsi/alts/frame_protector/frame_handler.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc
-  src/core/tsi/alts/crypt/aes_gcm.cc
-  src/core/tsi/alts/crypt/gsec.cc
-  src/core/tsi/alts/frame_protector/alts_counter.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
 )
@@ -8842,6 +8937,7 @@ target_link_libraries(alts_tsi_handshaker_test
   ${_gRPC_ALLTARGETS_LIBRARIES}
   grpc
   gpr
+  alts_handshaker_service_api_test_lib
   ${_gRPC_GFLAGS_LIBRARIES}
 )
 
@@ -8850,12 +8946,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(alts_tsi_utils_test
   test/core/tsi/alts/handshaker/alts_tsi_utils_test.cc
-  test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc
-  src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc
-  src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc
-  src/core/tsi/alts/handshaker/handshaker.pb.cc
-  src/core/tsi/alts/handshaker/transport_security_common.pb.c
-  src/core/tsi/alts/handshaker/transport_security_common_api.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
 )
@@ -8880,6 +8970,7 @@ target_include_directories(alts_tsi_utils_test
 target_link_libraries(alts_tsi_utils_test
   ${_gRPC_PROTOBUF_LIBRARIES}
   ${_gRPC_ALLTARGETS_LIBRARIES}
+  alts_handshaker_service_api_test_lib
   grpc
   gpr
   ${_gRPC_GFLAGS_LIBRARIES}
@@ -8890,15 +8981,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(alts_zero_copy_grpc_protector_test
   test/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector_test.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_privacy_integrity_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc
-  src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc
-  src/core/tsi/alts/crypt/aes_gcm.cc
-  src/core/tsi/alts/crypt/gsec.cc
-  src/core/tsi/alts/frame_protector/alts_counter.cc
-  test/core/tsi/alts/crypt/gsec_test_util.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
 )
@@ -8925,6 +9007,7 @@ target_link_libraries(alts_zero_copy_grpc_protector_test
   ${_gRPC_ALLTARGETS_LIBRARIES}
   grpc
   gpr
+  alts_crypt_test_util
   ${_gRPC_GFLAGS_LIBRARIES}
 )
 
@@ -12803,12 +12886,6 @@ if (gRPC_BUILD_TESTS)
 
 add_executable(transport_security_common_api_test
   test/core/tsi/alts/handshaker/transport_security_common_api_test.cc
-  src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc
-  src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc
-  src/core/tsi/alts/handshaker/handshaker.pb.cc
-  src/core/tsi/alts/handshaker/transport_security_common.pb.c
-  src/core/tsi/alts/handshaker/transport_security_common_api.cc
-  test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc
   third_party/googletest/googletest/src/gtest-all.cc
   third_party/googletest/googlemock/src/gmock-all.cc
 )
@@ -12835,6 +12912,7 @@ target_link_libraries(transport_security_common_api_test
   ${_gRPC_ALLTARGETS_LIBRARIES}
   grpc
   gpr
+  alts_handshaker_service_api_test_lib
   ${_gRPC_GFLAGS_LIBRARIES}
 )
 

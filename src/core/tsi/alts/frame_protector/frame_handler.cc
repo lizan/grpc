@@ -6,7 +6,8 @@
 
 #include <grpc/support/alloc.h>
 #include <grpc/support/log.h>
-#include <grpc/support/useful.h>
+
+#include "src/core/lib/gpr/useful.h"
 
 /* Use little endian to interpret a string of bytes as uint32_t. */
 static uint32_t load_32_le(const unsigned char* buffer) {

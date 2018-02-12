@@ -7,8 +7,7 @@
 #include <string.h>
 
 #include <openssl/rand.h>
-
-#include "src/core/tsi/alts/crypt/gsec.h"
+#include <grpc/grpc.h>
 
 /**
  * This method returns random bytes of certain length.

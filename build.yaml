@@ -28,23 +28,12 @@ filegroups:
   - src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc
   - src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc
   - src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc
-  deps:
-  - grpc
 - name: alts_crypt
   headers:
   - src/core/tsi/alts/crypt/gsec.h
   src:
   - src/core/tsi/alts/crypt/aes_gcm.cc
   - src/core/tsi/alts/crypt/gsec.cc
-  deps:
-  - gpr
-  - grpc
-  secure: true
-- name: alts_crypt_test_util
-  headers:
-  - test/core/tsi/alts/crypt/gsec_test_util.h
-  src:
-  - test/core/tsi/alts/crypt/gsec_test_util.cc
 - name: alts_frame_protector
   headers:
   - src/core/tsi/alts/frame_protector/alts_crypter.h
@@ -58,13 +47,9 @@ filegroups:
   - src/core/tsi/alts/frame_protector/alts_seal_privacy_integrity_crypter.cc
   - src/core/tsi/alts/frame_protector/alts_unseal_privacy_integrity_crypter.cc
   - src/core/tsi/alts/frame_protector/frame_handler.cc
-  filegroups:
-  - tsi_interface
-- name: alts_frame_protector_test_lib
-  headers:
-  - test/core/tsi/alts/frame_protector/alts_frame_protector_test_lib.h
-  src:
-  - test/core/tsi/alts/frame_protector/alts_frame_protector_test_lib.cc
+  uses:
+  - alts_crypt
+  - alts_counter
 - name: alts_handshaker_service_api
   headers:
   - src/core/tsi/alts/handshaker/alts_handshaker_service_api.h
@@ -78,11 +63,6 @@ filegroups:
   - src/core/tsi/alts/handshaker/handshaker.pb.cc
   - src/core/tsi/alts/handshaker/transport_security_common.pb.c
   - src/core/tsi/alts/handshaker/transport_security_common_api.cc
-- name: alts_handshaker_service_api_test_lib
-  headers:
-  - test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.h
-  src:
-  - test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc
 - name: alts_zero_copy_frame_protector
   headers:
   - src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_integrity_only_record_protocol.h
@@ -97,9 +77,9 @@ filegroups:
   - src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol_common.cc
   - src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.cc
   - src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.cc
-  filegroups:
-  - tsi_interface
-  - tsi
+  uses:
+  - alts_crypt
+  - alts_counter
 - name: census
   public_headers:
   - include/grpc/census.h
@@ -1051,6 +1031,10 @@ filegroups:
   secure: true
   uses:
   - tsi_interface
+  - alts_handshaker_service_api
+  - alts_frame_protector
+  - alts_zero_copy_frame_protector
+  - alts_credentials_options
   - grpc_base
   - grpc_trace
 - name: tsi_interface
@@ -1406,6 +1390,43 @@ libs:
   - grpc
   - gpr_test_util
   - gpr
+- name: alts_counter
+  build: private
+  language: c++
+  headers:
+  - src/core/tsi/alts/frame_protector/alts_counter.h
+  src:
+  - src/core/tsi/alts/frame_protector/alts_counter.cc
+  deps:
+  - gpr
+  - grpc
+- name: alts_crypt
+  build: private
+  language: c++
+  headers:
+  - src/core/tsi/alts/crypt/gsec.h
+  src:
+  - src/core/tsi/alts/crypt/aes_gcm.cc
+  - src/core/tsi/alts/crypt/gsec.cc
+  deps:
+  - gpr
+  - grpc
+  secure: true
+- name: alts_crypt_test_util
+  build: private
+  language: c++
+  headers:
+  - test/core/tsi/alts/crypt/gsec_test_util.h
+  src:
+  - test/core/tsi/alts/crypt/gsec_test_util.cc
+  secure: true
+- name: alts_handshaker_service_api_test_lib
+  build: private
+  language: c++
+  headers:
+  - test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.h
+  src:
+  - test/core/tsi/alts/handshaker/alts_handshaker_service_api_test_lib.cc
 - name: grpc++
   build: all
   language: c++
@@ -3526,10 +3547,10 @@ targets:
   language: c++
   src:
   - test/core/tsi/alts/frame_protector/alts_counter_test.cc
-  filegroups:
-  - alts_counter
-  - alts_crypt
+  deps:
   - alts_crypt_test_util
+  - grpc
+  - gpr
 - name: alts_crypt_test
   build: test
   language: c++
@@ -3537,19 +3558,18 @@ targets:
   - test/core/tsi/alts/crypt/aes_gcm_test.cc
   deps:
   - gpr_test_util
-  filegroups:
-  - alts_crypt
   - alts_crypt_test_util
+  - gpr
+  - grpc
 - name: alts_crypter_test
   build: test
   language: c++
   src:
   - test/core/tsi/alts/frame_protector/alts_crypter_test.cc
-  filegroups:
-  - alts_crypt
+  deps:
   - alts_crypt_test_util
-  - alts_counter
-  - alts_frame_protector
+  - gpr
+  - grpc
 - name: alts_frame_handler_test
   build: test
   language: c++
@@ -3558,25 +3578,19 @@ targets:
   deps:
   - grpc
   - gpr
-  filegroups:
-  - alts_frame_protector
-  - alts_crypt
-  - alts_counter
   - alts_crypt_test_util
 - name: alts_frame_protector_test
   build: test
   language: c++
+  headers:
+  - test/core/tsi/alts/frame_protector/alts_frame_protector_test_lib.h
   src:
   - test/core/tsi/alts/frame_protector/alts_frame_protector_test.cc
+  - test/core/tsi/alts/frame_protector/alts_frame_protector_test_lib.cc
   deps:
   - grpc
   - gpr
-  filegroups:
-  - alts_frame_protector
-  - alts_crypt
-  - alts_counter
   - alts_crypt_test_util
-  - alts_frame_protector_test_lib
 - name: alts_grpc_record_protocol_test
   build: test
   language: c++
@@ -3585,10 +3599,6 @@ targets:
   deps:
   - grpc
   - gpr
-  filegroups:
-  - alts_zero_copy_frame_protector
-  - alts_crypt
-  - alts_counter
   - alts_crypt_test_util
 - name: alts_handshaker_client_test
   build: test
@@ -3598,14 +3608,7 @@ targets:
   deps:
   - grpc
   - gpr
-  filegroups:
-  - alts_credentials_options
-  - alts_handshaker_service_api
   - alts_handshaker_service_api_test_lib
-  - alts_frame_protector
-  - alts_zero_copy_frame_protector
-  - alts_crypt
-  - alts_counter
 - name: alts_handshaker_service_api_test
   build: test
   language: c++
@@ -3614,8 +3617,6 @@ targets:
   deps:
   - grpc
   - gpr
-  filegroups:
-  - alts_handshaker_service_api
   - alts_handshaker_service_api_test_lib
 - name: alts_iovec_record_protocol_test
   build: test
@@ -3625,10 +3626,6 @@ targets:
   deps:
   - grpc
   - gpr
-  filegroups:
-  - alts_zero_copy_frame_protector
-  - alts_crypt
-  - alts_counter
   - alts_crypt_test_util
 - name: alts_security_connector_test
   build: test
@@ -3638,13 +3635,6 @@ targets:
   deps:
   - grpc
   - gpr
-  filegroups:
-  - alts_frame_protector
-  - alts_zero_copy_frame_protector
-  - alts_handshaker_service_api
-  - alts_credentials_options
-  - alts_crypt
-  - alts_counter
 - name: alts_tsi_handshaker_test
   build: test
   language: c++
@@ -3653,25 +3643,16 @@ targets:
   deps:
   - grpc
   - gpr
-  filegroups:
   - alts_handshaker_service_api_test_lib
-  - alts_credentials_options
-  - alts_handshaker_service_api
-  - alts_frame_protector
-  - alts_zero_copy_frame_protector
-  - alts_crypt
-  - alts_counter
 - name: alts_tsi_utils_test
   build: test
   language: c++
   src:
   - test/core/tsi/alts/handshaker/alts_tsi_utils_test.cc
   deps:
+  - alts_handshaker_service_api_test_lib
   - grpc
   - gpr
-  filegroups:
-  - alts_handshaker_service_api_test_lib
-  - alts_handshaker_service_api
 - name: alts_zero_copy_grpc_protector_test
   build: test
   language: c++
@@ -3680,10 +3661,6 @@ targets:
   deps:
   - grpc
   - gpr
-  filegroups:
-  - alts_zero_copy_frame_protector
-  - alts_crypt
-  - alts_counter
   - alts_crypt_test_util
 - name: async_end2end_test
   gtest: true
@@ -5147,8 +5124,6 @@ targets:
   deps:
   - grpc
   - gpr
-  filegroups:
-  - alts_handshaker_service_api
   - alts_handshaker_service_api_test_lib
 - name: writes_per_rpc_test
   gtest: true

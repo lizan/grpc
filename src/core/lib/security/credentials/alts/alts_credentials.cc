@@ -43,7 +43,7 @@ static grpc_security_status alts_server_create_security_connector(
 }
 
 static grpc_channel_credentials_vtable alts_credentials_vtable = {
-    alts_credentials_destruct, alts_create_security_connector};
+    alts_credentials_destruct, alts_create_security_connector, nullptr};
 
 static grpc_server_credentials_vtable alts_server_credentials_vtable = {
     alts_server_credentials_destruct, alts_server_create_security_connector};

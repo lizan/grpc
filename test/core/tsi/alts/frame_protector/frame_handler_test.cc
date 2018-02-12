@@ -4,8 +4,8 @@
 
 #include <grpc/support/alloc.h>
 #include <grpc/support/log.h>
-#include <grpc/support/useful.h>
 
+#include "src/core/lib/gpr/useful.h"
 #include "src/core/tsi/alts/frame_protector/frame_handler.h"
 #include "test/core/tsi/alts/crypt/gsec_test_util.h"
 

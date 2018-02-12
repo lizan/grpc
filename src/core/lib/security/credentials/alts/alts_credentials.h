@@ -27,8 +27,8 @@ typedef struct grpc_alts_server_credentials {
  *
  * It returns the created ALTS channel credential object.
  */
-grpc_channel_credentials* grpc_alts_credentials_create(
-    const grpc_alts_credentials_options* options);
+//grpc_channel_credentials* grpc_alts_credentials_create(
+//    const grpc_alts_credentials_options* options);
 
 /**
  * This method creates an ALTS server credential object.
@@ -37,8 +37,8 @@ grpc_channel_credentials* grpc_alts_credentials_create(
  *
  * It returns the created ALTS server credential object.
  */
-grpc_server_credentials* grpc_alts_server_credentials_create(
-    const grpc_alts_credentials_options* options);
+//grpc_server_credentials* grpc_alts_server_credentials_create(
+//    const grpc_alts_credentials_options* options);
 
 /**
  * This method creates an ALTS channel credential object with customized

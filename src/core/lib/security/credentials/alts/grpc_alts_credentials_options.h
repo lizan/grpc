@@ -2,6 +2,7 @@
 #define GRPC_CORE_LIB_SECURITY_CREDENTIALS_ALTS_GRPC_ALTS_CREDENTIALS_OPTIONS_H
 
 #include <stdbool.h>
+#include <grpc/grpc_security.h>
 
 #include "src/core/tsi/alts/handshaker/transport_security_common_api.h"
 
@@ -12,7 +13,7 @@
  * implementation of this interface. The APIs listed in this header are
  * thread-compatible.
  */
-typedef struct grpc_alts_credentials_options grpc_alts_credentials_options;
+//typedef struct grpc_alts_credentials_options grpc_alts_credentials_options;
 
 /* V-table for grpc_alts_credentials_options */
 typedef struct grpc_alts_credentials_options_vtable {
@@ -67,14 +68,13 @@ grpc_alts_credentials_options* grpc_alts_credentials_options_copy(
  * - options: a grpc_alts_credentials_options instance that needs to be
  *   destroyed.
  */
-void grpc_alts_credentials_options_destroy(
-    grpc_alts_credentials_options* options);
+void grpc_alts_credentials_options_destroy(grpc_alts_credentials_options* options);
 
 /* This method creates a grpc ALTS credentials client options instance. */
-grpc_alts_credentials_options* grpc_alts_credentials_client_options_create();
+//grpc_alts_credentials_options* grpc_alts_credentials_client_options_create();
 
 /* This method creates a grpc ALTS credentials server options instance. */
-grpc_alts_credentials_options* grpc_alts_credentials_server_options_create();
+//grpc_alts_credentials_options* grpc_alts_credentials_server_options_create();
 
 /**
  * This method adds a target service account to grpc ALTS credentials client

@@ -83,6 +83,9 @@ struct SslServerCredentialsOptions {
 std::shared_ptr<ServerCredentials> SslServerCredentials(
     const SslServerCredentialsOptions& options);
 
+/// Builds ALTS ServerCredentials
+std::shared_ptr<ServerCredentials> AltsServerCredentials();
+
 /// Builds insecure server credentials.
 std::shared_ptr<ServerCredentials> InsecureServerCredentials();
 

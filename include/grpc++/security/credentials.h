@@ -124,6 +124,9 @@ std::shared_ptr<ChannelCredentials> GoogleDefaultCredentials();
 std::shared_ptr<ChannelCredentials> SslCredentials(
     const SslCredentialsOptions& options);
 
+/// Builds ALTS Credentials.
+std::shared_ptr<ChannelCredentials> AltsCredentials();
+
 /// Builds credentials for use when running in GCE
 ///
 /// \warning Only use these credentials when connecting to a Google endpoint.

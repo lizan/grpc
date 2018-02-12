@@ -87,6 +87,16 @@ std::shared_ptr<ChannelCredentials> SslCredentials(
   return WrapChannelCredentials(c_creds);
 }
 
+
+// Builds ALTS Credentials
+std::shared_ptr<ChannelCredentials> AltsCredentials() {
+  GrpcLibraryCodegen init;  // To call grpc_init().
+  grpc_alts_credentials_options* options =
+      grpc_alts_credentials_client_options_create();
+  grpc_channel_credentials* c_creds = grpc_alts_credentials_create(options);
+  return WrapChannelCredentials(c_creds);
+}
+
 // Builds credentials for use when running in GCE
 std::shared_ptr<CallCredentials> GoogleComputeEngineCredentials() {
   GrpcLibraryCodegen init;  // To call grpc_init().

@@ -461,6 +461,20 @@ typedef struct {
 GRPCAPI void grpc_server_credentials_set_auth_metadata_processor(
     grpc_server_credentials* creds, grpc_auth_metadata_processor processor);
 
+
+/** --- ALTS Credentials --- **/
+typedef struct grpc_alts_credentials_options grpc_alts_credentials_options;
+
+/* This method creates a grpc ALTS credentials client options instance. */
+grpc_alts_credentials_options* grpc_alts_credentials_client_options_create();
+
+/* This method creates a grpc ALTS credentials server options instance. */
+grpc_alts_credentials_options* grpc_alts_credentials_server_options_create();
+
+grpc_channel_credentials* grpc_alts_credentials_create(const grpc_alts_credentials_options* options);
+
+grpc_server_credentials* grpc_alts_server_credentials_create(const grpc_alts_credentials_options* options);
+
 #ifdef __cplusplus
 }
 #endif

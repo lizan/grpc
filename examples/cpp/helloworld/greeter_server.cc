@@ -21,6 +21,8 @@
 #include <string>
 
 #include <grpc++/grpc++.h>
+#include <grpc++/security/server_credentials.h>
+#include <grpc/grpc_security.h>
 
 #ifdef BAZEL_BUILD
 #include "examples/protos/helloworld.grpc.pb.h"
@@ -52,7 +54,8 @@ void RunServer() {
 
   ServerBuilder builder;
   // Listen on the given address without any authentication mechanism.
-  builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
+  auto server_creds = grpc::AltsServerCredentials();
+  builder.AddListeningPort(server_address, server_creds);
   // Register "service" as the instance through which we'll communicate with
   // clients. In this case it corresponds to an *synchronous* service.
   builder.RegisterService(&service);

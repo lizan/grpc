@@ -21,6 +21,8 @@
 #include <string>
 
 #include <grpc++/grpc++.h>
+#include <grpc++/security/credentials.h>
+#include <grpc/grpc_security.h>
 
 #ifdef BAZEL_BUILD
 #include "examples/protos/helloworld.grpc.pb.h"
@@ -76,8 +78,9 @@ int main(int argc, char** argv) {
   // are created. This channel models a connection to an endpoint (in this case,
   // localhost at port 50051). We indicate that the channel isn't authenticated
   // (use of InsecureChannelCredentials()).
+  auto channel_creds = grpc::AltsCredentials();
   GreeterClient greeter(grpc::CreateChannel(
-      "localhost:50051", grpc::InsecureChannelCredentials()));
+      "localhost:50051",channel_creds));
   std::string user("world");
   std::string reply = greeter.SayHello(user);
   std::cout << "Greeter received: " << reply << std::endl;

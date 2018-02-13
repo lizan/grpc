@@ -89,43 +89,43 @@ static void wait(notification* n) {
  */
 static grpc_byte_buffer* generate_handshaker_response(
     alts_handshaker_response_type type) {
-  grpc_alts_handshaker_resp* resp = grpc_alts_handshaker_resp_create();
-  GPR_ASSERT(grpc_alts_handshaker_resp_set_code(resp, 0));
+  grpc_gcp_handshaker_resp* resp = grpc_gcp_handshaker_resp_create();
+  GPR_ASSERT(grpc_gcp_handshaker_resp_set_code(resp, 0));
   switch (type) {
     case INVALID:
       break;
     case CLIENT_START:
     case SERVER_START:
-      GPR_ASSERT(grpc_alts_handshaker_resp_set_out_frames(
+      GPR_ASSERT(grpc_gcp_handshaker_resp_set_out_frames(
           resp, ALTS_TSI_HANDSHAKER_TEST_OUT_FRAME,
           strlen(ALTS_TSI_HANDSHAKER_TEST_OUT_FRAME)));
       break;
     case CLIENT_NEXT:
-      GPR_ASSERT(grpc_alts_handshaker_resp_set_out_frames(
+      GPR_ASSERT(grpc_gcp_handshaker_resp_set_out_frames(
           resp, ALTS_TSI_HANDSHAKER_TEST_OUT_FRAME,
           strlen(ALTS_TSI_HANDSHAKER_TEST_OUT_FRAME)));
-      GPR_ASSERT(grpc_alts_handshaker_resp_set_peer_identity_service_account(
+      GPR_ASSERT(grpc_gcp_handshaker_resp_set_peer_identity_service_account(
           resp, ALTS_TSI_HANDSHAKER_TEST_PEER_IDENTITY));
-      GPR_ASSERT(grpc_alts_handshaker_resp_set_bytes_consumed(
+      GPR_ASSERT(grpc_gcp_handshaker_resp_set_bytes_consumed(
           resp, strlen(ALTS_TSI_HANDSHAKER_TEST_CONSUMED_BYTES)));
-      GPR_ASSERT(grpc_alts_handshaker_resp_set_key_data(
+      GPR_ASSERT(grpc_gcp_handshaker_resp_set_key_data(
           resp, ALTS_TSI_HANDSHAKER_TEST_KEY_DATA,
           strlen(ALTS_TSI_HANDSHAKER_TEST_KEY_DATA)));
-      GPR_ASSERT(grpc_alts_handshaker_resp_set_peer_rpc_versions(
+      GPR_ASSERT(grpc_gcp_handshaker_resp_set_peer_rpc_versions(
           resp, ALTS_TSI_HANDSHAKER_TEST_MAX_RPC_VERSION_MAJOR,
           ALTS_TSI_HANDSHAKER_TEST_MAX_RPC_VERSION_MINOR,
           ALTS_TSI_HANDSHAKER_TEST_MIN_RPC_VERSION_MAJOR,
           ALTS_TSI_HANDSHAKER_TEST_MIN_RPC_VERSION_MINOR));
       break;
     case SERVER_NEXT:
-      GPR_ASSERT(grpc_alts_handshaker_resp_set_peer_identity_service_account(
+      GPR_ASSERT(grpc_gcp_handshaker_resp_set_peer_identity_service_account(
           resp, ALTS_TSI_HANDSHAKER_TEST_PEER_IDENTITY));
-      GPR_ASSERT(grpc_alts_handshaker_resp_set_bytes_consumed(
+      GPR_ASSERT(grpc_gcp_handshaker_resp_set_bytes_consumed(
           resp, strlen(ALTS_TSI_HANDSHAKER_TEST_OUT_FRAME)));
-      GPR_ASSERT(grpc_alts_handshaker_resp_set_key_data(
+      GPR_ASSERT(grpc_gcp_handshaker_resp_set_key_data(
           resp, ALTS_TSI_HANDSHAKER_TEST_KEY_DATA,
           strlen(ALTS_TSI_HANDSHAKER_TEST_KEY_DATA)));
-      GPR_ASSERT(grpc_alts_handshaker_resp_set_peer_rpc_versions(
+      GPR_ASSERT(grpc_gcp_handshaker_resp_set_peer_rpc_versions(
           resp, ALTS_TSI_HANDSHAKER_TEST_MAX_RPC_VERSION_MAJOR,
           ALTS_TSI_HANDSHAKER_TEST_MAX_RPC_VERSION_MINOR,
           ALTS_TSI_HANDSHAKER_TEST_MIN_RPC_VERSION_MAJOR,
@@ -133,11 +133,11 @@ static grpc_byte_buffer* generate_handshaker_response(
       break;
     case FAILED:
       GPR_ASSERT(
-          grpc_alts_handshaker_resp_set_code(resp, 3 /* INVALID ARGUMENT */));
+          grpc_gcp_handshaker_resp_set_code(resp, 3 /* INVALID ARGUMENT */));
       break;
   }
   grpc_slice slice;
-  GPR_ASSERT(grpc_alts_handshaker_resp_encode(resp, &slice));
+  GPR_ASSERT(grpc_gcp_handshaker_resp_encode(resp, &slice));
   if (type == INVALID) {
     grpc_slice bad_slice =
         grpc_slice_split_head(&slice, GRPC_SLICE_LENGTH(slice) - 1);
@@ -148,7 +148,7 @@ static grpc_byte_buffer* generate_handshaker_response(
   grpc_byte_buffer* buffer =
       grpc_raw_byte_buffer_create(&slice, 1 /* number of slices */);
   grpc_slice_unref(slice);
-  grpc_alts_handshaker_resp_destroy(resp);
+  grpc_gcp_handshaker_resp_destroy(resp);
   return buffer;
 }
 

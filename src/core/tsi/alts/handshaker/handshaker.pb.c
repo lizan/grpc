@@ -8,143 +8,143 @@
 #error Regenerate this file with the current version of nanopb generator.
 #endif
 
-const pb_field_t grpc_alts_Endpoint_fields[4] = {
-    PB_FIELD(1, STRING, OPTIONAL, CALLBACK, FIRST, grpc_alts_Endpoint,
+const pb_field_t grpc_gcp_Endpoint_fields[4] = {
+    PB_FIELD(1, STRING, OPTIONAL, CALLBACK, FIRST, grpc_gcp_Endpoint,
              ip_address, ip_address, NULL),
-    PB_FIELD(2, INT32, OPTIONAL, STATIC, OTHER, grpc_alts_Endpoint, port,
+    PB_FIELD(2, INT32, OPTIONAL, STATIC, OTHER, grpc_gcp_Endpoint, port,
              ip_address, NULL),
-    PB_FIELD(3, UENUM, OPTIONAL, STATIC, OTHER, grpc_alts_Endpoint, protocol,
+    PB_FIELD(3, UENUM, OPTIONAL, STATIC, OTHER, grpc_gcp_Endpoint, protocol,
              port, NULL),
     PB_LAST_FIELD};
 
-const pb_field_t grpc_alts_Identity_fields[3] = {
-    PB_FIELD(1, STRING, OPTIONAL, CALLBACK, FIRST, grpc_alts_Identity,
+const pb_field_t grpc_gcp_Identity_fields[3] = {
+    PB_FIELD(1, STRING, OPTIONAL, CALLBACK, FIRST, grpc_gcp_Identity,
              service_account, service_account, NULL),
-    PB_FIELD(2, STRING, OPTIONAL, CALLBACK, OTHER, grpc_alts_Identity, hostname,
+    PB_FIELD(2, STRING, OPTIONAL, CALLBACK, OTHER, grpc_gcp_Identity, hostname,
              service_account, NULL),
     PB_LAST_FIELD};
 
-const pb_field_t grpc_alts_StartClientHandshakeReq_fields[10] = {
+const pb_field_t grpc_gcp_StartClientHandshakeReq_fields[10] = {
     PB_FIELD(1, UENUM, OPTIONAL, STATIC, FIRST,
-             grpc_alts_StartClientHandshakeReq, handshake_security_protocol,
+             grpc_gcp_StartClientHandshakeReq, handshake_security_protocol,
              handshake_security_protocol, NULL),
     PB_FIELD(2, STRING, REPEATED, CALLBACK, OTHER,
-             grpc_alts_StartClientHandshakeReq, application_protocols,
+             grpc_gcp_StartClientHandshakeReq, application_protocols,
              handshake_security_protocol, NULL),
     PB_FIELD(3, STRING, REPEATED, CALLBACK, OTHER,
-             grpc_alts_StartClientHandshakeReq, record_protocols,
+             grpc_gcp_StartClientHandshakeReq, record_protocols,
              application_protocols, NULL),
     PB_FIELD(4, MESSAGE, REPEATED, CALLBACK, OTHER,
-             grpc_alts_StartClientHandshakeReq, target_identities,
-             record_protocols, &grpc_alts_Identity_fields),
+             grpc_gcp_StartClientHandshakeReq, target_identities,
+             record_protocols, &grpc_gcp_Identity_fields),
     PB_FIELD(5, MESSAGE, OPTIONAL, STATIC, OTHER,
-             grpc_alts_StartClientHandshakeReq, local_identity,
-             target_identities, &grpc_alts_Identity_fields),
+             grpc_gcp_StartClientHandshakeReq, local_identity,
+             target_identities, &grpc_gcp_Identity_fields),
     PB_FIELD(6, MESSAGE, OPTIONAL, STATIC, OTHER,
-             grpc_alts_StartClientHandshakeReq, local_endpoint, local_identity,
-             &grpc_alts_Endpoint_fields),
+             grpc_gcp_StartClientHandshakeReq, local_endpoint, local_identity,
+             &grpc_gcp_Endpoint_fields),
     PB_FIELD(7, MESSAGE, OPTIONAL, STATIC, OTHER,
-             grpc_alts_StartClientHandshakeReq, remote_endpoint, local_endpoint,
-             &grpc_alts_Endpoint_fields),
+             grpc_gcp_StartClientHandshakeReq, remote_endpoint, local_endpoint,
+             &grpc_gcp_Endpoint_fields),
     PB_FIELD(8, STRING, OPTIONAL, CALLBACK, OTHER,
-             grpc_alts_StartClientHandshakeReq, target_name, remote_endpoint,
+             grpc_gcp_StartClientHandshakeReq, target_name, remote_endpoint,
              NULL),
     PB_FIELD(9, MESSAGE, OPTIONAL, STATIC, OTHER,
-             grpc_alts_StartClientHandshakeReq, rpc_versions, target_name,
-             &grpc_alts_RpcProtocolVersions_fields),
+             grpc_gcp_StartClientHandshakeReq, rpc_versions, target_name,
+             &grpc_gcp_RpcProtocolVersions_fields),
     PB_LAST_FIELD};
 
-const pb_field_t grpc_alts_ServerHandshakeParameters_fields[3] = {
+const pb_field_t grpc_gcp_ServerHandshakeParameters_fields[3] = {
     PB_FIELD(1, STRING, REPEATED, CALLBACK, FIRST,
-             grpc_alts_ServerHandshakeParameters, record_protocols,
+             grpc_gcp_ServerHandshakeParameters, record_protocols,
              record_protocols, NULL),
     PB_FIELD(2, MESSAGE, REPEATED, CALLBACK, OTHER,
-             grpc_alts_ServerHandshakeParameters, local_identities,
-             record_protocols, &grpc_alts_Identity_fields),
+             grpc_gcp_ServerHandshakeParameters, local_identities,
+             record_protocols, &grpc_gcp_Identity_fields),
     PB_LAST_FIELD};
 
-const pb_field_t grpc_alts_StartServerHandshakeReq_fields[7] = {
+const pb_field_t grpc_gcp_StartServerHandshakeReq_fields[7] = {
     PB_FIELD(1, STRING, REPEATED, CALLBACK, FIRST,
-             grpc_alts_StartServerHandshakeReq, application_protocols,
+             grpc_gcp_StartServerHandshakeReq, application_protocols,
              application_protocols, NULL),
     PB_FIELD(2, MESSAGE, REPEATED, STATIC, OTHER,
-             grpc_alts_StartServerHandshakeReq, handshake_parameters,
+             grpc_gcp_StartServerHandshakeReq, handshake_parameters,
              application_protocols,
-             &grpc_alts_StartServerHandshakeReq_HandshakeParametersEntry_fields),
+             &grpc_gcp_StartServerHandshakeReq_HandshakeParametersEntry_fields),
     PB_FIELD(3, BYTES, OPTIONAL, CALLBACK, OTHER,
-             grpc_alts_StartServerHandshakeReq, in_bytes, handshake_parameters,
+             grpc_gcp_StartServerHandshakeReq, in_bytes, handshake_parameters,
              NULL),
     PB_FIELD(4, MESSAGE, OPTIONAL, STATIC, OTHER,
-             grpc_alts_StartServerHandshakeReq, local_endpoint, in_bytes,
-             &grpc_alts_Endpoint_fields),
+             grpc_gcp_StartServerHandshakeReq, local_endpoint, in_bytes,
+             &grpc_gcp_Endpoint_fields),
     PB_FIELD(5, MESSAGE, OPTIONAL, STATIC, OTHER,
-             grpc_alts_StartServerHandshakeReq, remote_endpoint, local_endpoint,
-             &grpc_alts_Endpoint_fields),
+             grpc_gcp_StartServerHandshakeReq, remote_endpoint, local_endpoint,
+             &grpc_gcp_Endpoint_fields),
     PB_FIELD(6, MESSAGE, OPTIONAL, STATIC, OTHER,
-             grpc_alts_StartServerHandshakeReq, rpc_versions, remote_endpoint,
-             &grpc_alts_RpcProtocolVersions_fields),
+             grpc_gcp_StartServerHandshakeReq, rpc_versions, remote_endpoint,
+             &grpc_gcp_RpcProtocolVersions_fields),
     PB_LAST_FIELD};
 
 const pb_field_t
-    grpc_alts_StartServerHandshakeReq_HandshakeParametersEntry_fields[3] = {
+    grpc_gcp_StartServerHandshakeReq_HandshakeParametersEntry_fields[3] = {
         PB_FIELD(1, INT32, OPTIONAL, STATIC, FIRST,
-                 grpc_alts_StartServerHandshakeReq_HandshakeParametersEntry, key,
+                 grpc_gcp_StartServerHandshakeReq_HandshakeParametersEntry, key,
                  key, NULL),
         PB_FIELD(2, MESSAGE, OPTIONAL, STATIC, OTHER,
-                 grpc_alts_StartServerHandshakeReq_HandshakeParametersEntry,
-                 value, key, &grpc_alts_ServerHandshakeParameters_fields),
+                 grpc_gcp_StartServerHandshakeReq_HandshakeParametersEntry,
+                 value, key, &grpc_gcp_ServerHandshakeParameters_fields),
         PB_LAST_FIELD};
 
-const pb_field_t grpc_alts_NextHandshakeMessageReq_fields[2] = {
+const pb_field_t grpc_gcp_NextHandshakeMessageReq_fields[2] = {
     PB_FIELD(1, BYTES, OPTIONAL, CALLBACK, FIRST,
-             grpc_alts_NextHandshakeMessageReq, in_bytes, in_bytes, NULL),
+             grpc_gcp_NextHandshakeMessageReq, in_bytes, in_bytes, NULL),
     PB_LAST_FIELD};
 
-const pb_field_t grpc_alts_HandshakerReq_fields[4] = {
-    PB_FIELD(1, MESSAGE, OPTIONAL, STATIC, FIRST, grpc_alts_HandshakerReq,
+const pb_field_t grpc_gcp_HandshakerReq_fields[4] = {
+    PB_FIELD(1, MESSAGE, OPTIONAL, STATIC, FIRST, grpc_gcp_HandshakerReq,
              client_start, client_start,
-             &grpc_alts_StartClientHandshakeReq_fields),
-    PB_FIELD(2, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_alts_HandshakerReq,
+             &grpc_gcp_StartClientHandshakeReq_fields),
+    PB_FIELD(2, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_gcp_HandshakerReq,
              server_start, client_start,
-             &grpc_alts_StartServerHandshakeReq_fields),
-    PB_FIELD(3, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_alts_HandshakerReq, next,
-             server_start, &grpc_alts_NextHandshakeMessageReq_fields),
+             &grpc_gcp_StartServerHandshakeReq_fields),
+    PB_FIELD(3, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_gcp_HandshakerReq, next,
+             server_start, &grpc_gcp_NextHandshakeMessageReq_fields),
     PB_LAST_FIELD};
 
-const pb_field_t grpc_alts_HandshakerResult_fields[8] = {
-    PB_FIELD(1, STRING, OPTIONAL, CALLBACK, FIRST, grpc_alts_HandshakerResult,
+const pb_field_t grpc_gcp_HandshakerResult_fields[8] = {
+    PB_FIELD(1, STRING, OPTIONAL, CALLBACK, FIRST, grpc_gcp_HandshakerResult,
              application_protocol, application_protocol, NULL),
-    PB_FIELD(2, STRING, OPTIONAL, CALLBACK, OTHER, grpc_alts_HandshakerResult,
+    PB_FIELD(2, STRING, OPTIONAL, CALLBACK, OTHER, grpc_gcp_HandshakerResult,
              record_protocol, application_protocol, NULL),
-    PB_FIELD(3, BYTES, OPTIONAL, CALLBACK, OTHER, grpc_alts_HandshakerResult,
+    PB_FIELD(3, BYTES, OPTIONAL, CALLBACK, OTHER, grpc_gcp_HandshakerResult,
              key_data, record_protocol, NULL),
-    PB_FIELD(4, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_alts_HandshakerResult,
-             peer_identity, key_data, &grpc_alts_Identity_fields),
-    PB_FIELD(5, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_alts_HandshakerResult,
-             local_identity, peer_identity, &grpc_alts_Identity_fields),
-    PB_FIELD(6, BOOL, OPTIONAL, STATIC, OTHER, grpc_alts_HandshakerResult,
+    PB_FIELD(4, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_gcp_HandshakerResult,
+             peer_identity, key_data, &grpc_gcp_Identity_fields),
+    PB_FIELD(5, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_gcp_HandshakerResult,
+             local_identity, peer_identity, &grpc_gcp_Identity_fields),
+    PB_FIELD(6, BOOL, OPTIONAL, STATIC, OTHER, grpc_gcp_HandshakerResult,
              keep_channel_open, local_identity, NULL),
-    PB_FIELD(7, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_alts_HandshakerResult,
+    PB_FIELD(7, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_gcp_HandshakerResult,
              peer_rpc_versions, keep_channel_open,
-             &grpc_alts_RpcProtocolVersions_fields),
+             &grpc_gcp_RpcProtocolVersions_fields),
     PB_LAST_FIELD};
 
-const pb_field_t grpc_alts_HandshakerStatus_fields[3] = {
-    PB_FIELD(1, UINT32, OPTIONAL, STATIC, FIRST, grpc_alts_HandshakerStatus,
+const pb_field_t grpc_gcp_HandshakerStatus_fields[3] = {
+    PB_FIELD(1, UINT32, OPTIONAL, STATIC, FIRST, grpc_gcp_HandshakerStatus,
              code, code, NULL),
-    PB_FIELD(2, STRING, OPTIONAL, CALLBACK, OTHER, grpc_alts_HandshakerStatus,
+    PB_FIELD(2, STRING, OPTIONAL, CALLBACK, OTHER, grpc_gcp_HandshakerStatus,
              details, code, NULL),
     PB_LAST_FIELD};
 
-const pb_field_t grpc_alts_HandshakerResp_fields[5] = {
-    PB_FIELD(1, BYTES, OPTIONAL, CALLBACK, FIRST, grpc_alts_HandshakerResp,
+const pb_field_t grpc_gcp_HandshakerResp_fields[5] = {
+    PB_FIELD(1, BYTES, OPTIONAL, CALLBACK, FIRST, grpc_gcp_HandshakerResp,
              out_frames, out_frames, NULL),
-    PB_FIELD(2, UINT32, OPTIONAL, STATIC, OTHER, grpc_alts_HandshakerResp,
+    PB_FIELD(2, UINT32, OPTIONAL, STATIC, OTHER, grpc_gcp_HandshakerResp,
              bytes_consumed, out_frames, NULL),
-    PB_FIELD(3, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_alts_HandshakerResp,
-             result, bytes_consumed, &grpc_alts_HandshakerResult_fields),
-    PB_FIELD(4, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_alts_HandshakerResp,
-             status, result, &grpc_alts_HandshakerStatus_fields),
+    PB_FIELD(3, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_gcp_HandshakerResp,
+             result, bytes_consumed, &grpc_gcp_HandshakerResult_fields),
+    PB_FIELD(4, MESSAGE, OPTIONAL, STATIC, OTHER, grpc_gcp_HandshakerResp,
+             status, result, &grpc_gcp_HandshakerStatus_fields),
     PB_LAST_FIELD};
 
 /* Check that field information fits in pb_field_t */
@@ -157,22 +157,22 @@ const pb_field_t grpc_alts_HandshakerResp_fields[5] = {
  * field descriptors.
  */
 PB_STATIC_ASSERT(
-    (pb_membersize(grpc_alts_StartClientHandshakeReq, local_identity) < 65536 &&
-     pb_membersize(grpc_alts_StartClientHandshakeReq, local_endpoint) < 65536 &&
-     pb_membersize(grpc_alts_StartClientHandshakeReq, remote_endpoint) < 65536 &&
-     pb_membersize(grpc_alts_StartServerHandshakeReq, handshake_parameters[0]) <
+    (pb_membersize(grpc_gcp_StartClientHandshakeReq, local_identity) < 65536 &&
+     pb_membersize(grpc_gcp_StartClientHandshakeReq, local_endpoint) < 65536 &&
+     pb_membersize(grpc_gcp_StartClientHandshakeReq, remote_endpoint) < 65536 &&
+     pb_membersize(grpc_gcp_StartServerHandshakeReq, handshake_parameters[0]) <
          65536 &&
-     pb_membersize(grpc_alts_StartServerHandshakeReq, local_endpoint) < 65536 &&
-     pb_membersize(grpc_alts_StartServerHandshakeReq, remote_endpoint) < 65536 &&
-     pb_membersize(grpc_alts_StartServerHandshakeReq_HandshakeParametersEntry,
+     pb_membersize(grpc_gcp_StartServerHandshakeReq, local_endpoint) < 65536 &&
+     pb_membersize(grpc_gcp_StartServerHandshakeReq, remote_endpoint) < 65536 &&
+     pb_membersize(grpc_gcp_StartServerHandshakeReq_HandshakeParametersEntry,
                    value) < 65536 &&
-     pb_membersize(grpc_alts_HandshakerReq, client_start) < 65536 &&
-     pb_membersize(grpc_alts_HandshakerReq, server_start) < 65536 &&
-     pb_membersize(grpc_alts_HandshakerReq, next) < 65536 &&
-     pb_membersize(grpc_alts_HandshakerResult, peer_identity) < 65536 &&
-     pb_membersize(grpc_alts_HandshakerResult, local_identity) < 65536 &&
-     pb_membersize(grpc_alts_HandshakerResp, result) < 65536 &&
-     pb_membersize(grpc_alts_HandshakerResp, status) < 65536),
+     pb_membersize(grpc_gcp_HandshakerReq, client_start) < 65536 &&
+     pb_membersize(grpc_gcp_HandshakerReq, server_start) < 65536 &&
+     pb_membersize(grpc_gcp_HandshakerReq, next) < 65536 &&
+     pb_membersize(grpc_gcp_HandshakerResult, peer_identity) < 65536 &&
+     pb_membersize(grpc_gcp_HandshakerResult, local_identity) < 65536 &&
+     pb_membersize(grpc_gcp_HandshakerResp, result) < 65536 &&
+     pb_membersize(grpc_gcp_HandshakerResp, status) < 65536),
     YOU_MUST_DEFINE_PB_FIELD_32BIT_FOR_MESSAGES)
 #endif
 
@@ -185,22 +185,22 @@ PB_STATIC_ASSERT(
  * 8 bit descriptors.
  */
 PB_STATIC_ASSERT(
-    (pb_membersize(grpc_alts_StartClientHandshakeReq, local_identity) < 256 &&
-     pb_membersize(grpc_alts_StartClientHandshakeReq, local_endpoint) < 256 &&
-     pb_membersize(grpc_alts_StartClientHandshakeReq, remote_endpoint) < 256 &&
-     pb_membersize(grpc_alts_StartServerHandshakeReq, handshake_parameters[0]) <
+    (pb_membersize(grpc_gcp_StartClientHandshakeReq, local_identity) < 256 &&
+     pb_membersize(grpc_gcp_StartClientHandshakeReq, local_endpoint) < 256 &&
+     pb_membersize(grpc_gcp_StartClientHandshakeReq, remote_endpoint) < 256 &&
+     pb_membersize(grpc_gcp_StartServerHandshakeReq, handshake_parameters[0]) <
          256 &&
-     pb_membersize(grpc_alts_StartServerHandshakeReq, local_endpoint) < 256 &&
-     pb_membersize(grpc_alts_StartServerHandshakeReq, remote_endpoint) < 256 &&
-     pb_membersize(grpc_alts_StartServerHandshakeReq_HandshakeParametersEntry,
+     pb_membersize(grpc_gcp_StartServerHandshakeReq, local_endpoint) < 256 &&
+     pb_membersize(grpc_gcp_StartServerHandshakeReq, remote_endpoint) < 256 &&
+     pb_membersize(grpc_gcp_StartServerHandshakeReq_HandshakeParametersEntry,
                    value) < 256 &&
-     pb_membersize(grpc_alts_HandshakerReq, client_start) < 256 &&
-     pb_membersize(grpc_alts_HandshakerReq, server_start) < 256 &&
-     pb_membersize(grpc_alts_HandshakerReq, next) < 256 &&
-     pb_membersize(grpc_alts_HandshakerResult, peer_identity) < 256 &&
-     pb_membersize(grpc_alts_HandshakerResult, local_identity) < 256 &&
-     pb_membersize(grpc_alts_HandshakerResp, result) < 256 &&
-     pb_membersize(grpc_alts_HandshakerResp, status) < 256),
+     pb_membersize(grpc_gcp_HandshakerReq, client_start) < 256 &&
+     pb_membersize(grpc_gcp_HandshakerReq, server_start) < 256 &&
+     pb_membersize(grpc_gcp_HandshakerReq, next) < 256 &&
+     pb_membersize(grpc_gcp_HandshakerResult, peer_identity) < 256 &&
+     pb_membersize(grpc_gcp_HandshakerResult, local_identity) < 256 &&
+     pb_membersize(grpc_gcp_HandshakerResp, result) < 256 &&
+     pb_membersize(grpc_gcp_HandshakerResp, status) < 256),
      YOU_MUST_DEFINE)
 #endif
 

@@ -107,15 +107,15 @@ static void test_alts_peer_to_auth_context_success() {
   GPR_ASSERT(tsi_construct_string_peer_property_from_cstring(
                  TSI_ALTS_SERVICE_ACCOUNT_PEER_PROPERTY, "alice",
                  &peer.properties[1]) == TSI_OK);
-  grpc_alts_rpc_protocol_versions peer_versions;
-  grpc_alts_rpc_protocol_versions_set_max(
+  grpc_gcp_rpc_protocol_versions peer_versions;
+  grpc_gcp_rpc_protocol_versions_set_max(
       &peer_versions, GRPC_PROTOCOL_VERSION_MAX_MAJOR,
       GRPC_PROTOCOL_VERSION_MAX_MINOR);
-  grpc_alts_rpc_protocol_versions_set_min(
+  grpc_gcp_rpc_protocol_versions_set_min(
       &peer_versions, GRPC_PROTOCOL_VERSION_MIN_MAJOR,
       GRPC_PROTOCOL_VERSION_MIN_MINOR);
   grpc_slice serialized_peer_versions;
-  GPR_ASSERT(grpc_alts_rpc_protocol_versions_encode(
+  GPR_ASSERT(grpc_gcp_rpc_protocol_versions_encode(
       &peer_versions, &serialized_peer_versions));
 
   GPR_ASSERT(tsi_construct_string_peer_property(

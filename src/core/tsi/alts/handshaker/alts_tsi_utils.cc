@@ -19,19 +19,19 @@ tsi_result alts_tsi_utils_convert_to_tsi_result(grpc_status_code code) {
   }
 }
 
-grpc_alts_handshaker_resp* alts_tsi_utils_deserialize_response(
+grpc_gcp_handshaker_resp* alts_tsi_utils_deserialize_response(
     grpc_byte_buffer* resp_buffer) {
   GPR_ASSERT(resp_buffer != nullptr);
   grpc_byte_buffer_reader bbr;
   grpc_byte_buffer_reader_init(&bbr, resp_buffer);
   grpc_slice slice = grpc_byte_buffer_reader_readall(&bbr);
-  grpc_alts_handshaker_resp* resp = grpc_alts_handshaker_resp_create();
-  bool ok = grpc_alts_handshaker_resp_decode(slice, resp);
+  grpc_gcp_handshaker_resp* resp = grpc_gcp_handshaker_resp_create();
+  bool ok = grpc_gcp_handshaker_resp_decode(slice, resp);
   grpc_slice_unref(slice);
   grpc_byte_buffer_reader_destroy(&bbr);
   if (!ok) {
-    grpc_alts_handshaker_resp_destroy(resp);
-    gpr_log(GPR_ERROR, "grpc_alts_handshaker_resp_decode() failed");
+    grpc_gcp_handshaker_resp_destroy(resp);
+    gpr_log(GPR_ERROR, "grpc_gcp_handshaker_resp_decode() failed");
     return nullptr;
   }
   return resp;

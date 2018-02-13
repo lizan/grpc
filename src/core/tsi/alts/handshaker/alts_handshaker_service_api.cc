@@ -6,10 +6,10 @@
 #include "src/core/tsi/alts/handshaker/transport_security_common_api.h"
 
 /* HandshakerReq */
-grpc_alts_handshaker_req* grpc_alts_handshaker_req_create(
-    grpc_alts_handshaker_req_type type) {
-  grpc_alts_handshaker_req* req =
-      static_cast<grpc_alts_handshaker_req*>(gpr_zalloc(sizeof(*req)));
+grpc_gcp_handshaker_req* grpc_gcp_handshaker_req_create(
+    grpc_gcp_handshaker_req_type type) {
+  grpc_gcp_handshaker_req* req =
+      static_cast<grpc_gcp_handshaker_req*>(gpr_zalloc(sizeof(*req)));
   switch (type) {
     case CLIENT_START_REQ:
       req->has_client_start = true;
@@ -24,7 +24,7 @@ grpc_alts_handshaker_req* grpc_alts_handshaker_req_create(
   return req;
 }
 
-void grpc_alts_handshaker_req_destroy(grpc_alts_handshaker_req* req) {
+void grpc_gcp_handshaker_req_destroy(grpc_gcp_handshaker_req* req) {
   if (req == nullptr) {
     return;
   }
@@ -80,13 +80,13 @@ void grpc_alts_handshaker_req_destroy(grpc_alts_handshaker_req* req) {
   gpr_free(req);
 }
 
-bool grpc_alts_handshaker_req_set_handshake_protocol(
-    grpc_alts_handshaker_req* req,
-    grpc_alts_handshake_protocol handshake_protocol) {
+bool grpc_gcp_handshaker_req_set_handshake_protocol(
+    grpc_gcp_handshaker_req* req,
+    grpc_gcp_handshake_protocol handshake_protocol) {
   if (req == nullptr || !req->has_client_start) {
     gpr_log(GPR_ERROR,
             "Invalid arguments to "
-            "grpc_alts_handshaker_req_set_handshake_protocol().");
+            "grpc_gcp_handshaker_req_set_handshake_protocol().");
     return false;
   }
   req->client_start.has_handshake_security_protocol = true;
@@ -94,12 +94,12 @@ bool grpc_alts_handshaker_req_set_handshake_protocol(
   return true;
 }
 
-bool grpc_alts_handshaker_req_set_target_name(grpc_alts_handshaker_req* req,
+bool grpc_gcp_handshaker_req_set_target_name(grpc_gcp_handshaker_req* req,
                                              const char* target_name) {
   if (req == nullptr || target_name == nullptr || !req->has_client_start) {
     gpr_log(GPR_ERROR,
             "Invalid arguments to "
-            "grpc_alts_handshaker_req_set_target_name().");
+            "grpc_gcp_handshaker_req_set_target_name().");
     return false;
   }
   grpc_slice* slice = create_slice(target_name, strlen(target_name));
@@ -108,12 +108,12 @@ bool grpc_alts_handshaker_req_set_target_name(grpc_alts_handshaker_req* req,
   return true;
 }
 
-bool grpc_alts_handshaker_req_add_application_protocol(
-    grpc_alts_handshaker_req* req, const char* application_protocol) {
+bool grpc_gcp_handshaker_req_add_application_protocol(
+    grpc_gcp_handshaker_req* req, const char* application_protocol) {
   if (req == nullptr || application_protocol == nullptr || req->has_next) {
     gpr_log(GPR_ERROR,
             "Invalid arguments to "
-            "grpc_alts_handshaker_req_add_application_protocol().");
+            "grpc_gcp_handshaker_req_add_application_protocol().");
     return false;
   }
   grpc_slice* slice =
@@ -134,12 +134,12 @@ bool grpc_alts_handshaker_req_add_application_protocol(
   return true;
 }
 
-bool grpc_alts_handshaker_req_add_record_protocol(grpc_alts_handshaker_req* req,
+bool grpc_gcp_handshaker_req_add_record_protocol(grpc_gcp_handshaker_req* req,
                                                  const char* record_protocol) {
   if (req == nullptr || record_protocol == nullptr || !req->has_client_start) {
     gpr_log(GPR_ERROR,
             "Invalid arguments to "
-            "grpc_alts_handshaker_req_add_record_protocol().");
+            "grpc_gcp_handshaker_req_add_record_protocol().");
     return false;
   }
   grpc_slice* slice = create_slice(record_protocol, strlen(record_protocol));
@@ -150,30 +150,30 @@ bool grpc_alts_handshaker_req_add_record_protocol(grpc_alts_handshaker_req* req,
   return true;
 }
 
-static void set_identity_hostname(grpc_alts_identity* identity,
+static void set_identity_hostname(grpc_gcp_identity* identity,
                                   const char* hostname) {
   grpc_slice* slice = create_slice(hostname, strlen(hostname));
   identity->hostname.arg = slice;
   identity->hostname.funcs.encode = encode_string_or_bytes_cb;
 }
 
-static void set_identity_service_account(grpc_alts_identity* identity,
+static void set_identity_service_account(grpc_gcp_identity* identity,
                                          const char* service_account) {
   grpc_slice* slice = create_slice(service_account, strlen(service_account));
   identity->service_account.arg = slice;
   identity->service_account.funcs.encode = encode_string_or_bytes_cb;
 }
 
-bool grpc_alts_handshaker_req_add_target_identity_hostname(
-    grpc_alts_handshaker_req* req, const char* hostname) {
+bool grpc_gcp_handshaker_req_add_target_identity_hostname(
+    grpc_gcp_handshaker_req* req, const char* hostname) {
   if (req == nullptr || hostname == nullptr || !req->has_client_start) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr arguments to "
-            "grpc_alts_handshaker_req_add_target_identity_hostname().");
+            "grpc_gcp_handshaker_req_add_target_identity_hostname().");
     return false;
   }
-  grpc_alts_identity* target_identity =
-      static_cast<grpc_alts_identity*>(gpr_zalloc(sizeof(*target_identity)));
+  grpc_gcp_identity* target_identity =
+      static_cast<grpc_gcp_identity*>(gpr_zalloc(sizeof(*target_identity)));
   set_identity_hostname(target_identity, hostname);
   req->client_start.target_identities.funcs.encode =
       encode_repeated_identity_cb;
@@ -183,16 +183,16 @@ bool grpc_alts_handshaker_req_add_target_identity_hostname(
   return true;
 }
 
-bool grpc_alts_handshaker_req_add_target_identity_service_account(
-    grpc_alts_handshaker_req* req, const char* service_account) {
+bool grpc_gcp_handshaker_req_add_target_identity_service_account(
+    grpc_gcp_handshaker_req* req, const char* service_account) {
   if (req == nullptr || service_account == nullptr || !req->has_client_start) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr arguments to "
-            "grpc_alts_handshaker_req_add_target_identity_service_account().");
+            "grpc_gcp_handshaker_req_add_target_identity_service_account().");
     return false;
   }
-  grpc_alts_identity* target_identity =
-      static_cast<grpc_alts_identity*>(gpr_zalloc(sizeof(*target_identity)));
+  grpc_gcp_identity* target_identity =
+      static_cast<grpc_gcp_identity*>(gpr_zalloc(sizeof(*target_identity)));
   set_identity_service_account(target_identity, service_account);
   req->client_start.target_identities.funcs.encode =
       encode_repeated_identity_cb;
@@ -202,12 +202,12 @@ bool grpc_alts_handshaker_req_add_target_identity_service_account(
   return true;
 }
 
-bool grpc_alts_handshaker_req_set_local_identity_hostname(
-    grpc_alts_handshaker_req* req, const char* hostname) {
+bool grpc_gcp_handshaker_req_set_local_identity_hostname(
+    grpc_gcp_handshaker_req* req, const char* hostname) {
   if (req == nullptr || hostname == nullptr || !req->has_client_start) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr arguments to "
-            "grpc_alts_handshaker_req_set_local_identity_hostname().");
+            "grpc_gcp_handshaker_req_set_local_identity_hostname().");
     return false;
   }
   req->client_start.has_local_identity = true;
@@ -215,12 +215,12 @@ bool grpc_alts_handshaker_req_set_local_identity_hostname(
   return true;
 }
 
-bool grpc_alts_handshaker_req_set_local_identity_service_account(
-    grpc_alts_handshaker_req* req, const char* service_account) {
+bool grpc_gcp_handshaker_req_set_local_identity_service_account(
+    grpc_gcp_handshaker_req* req, const char* service_account) {
   if (req == nullptr || service_account == nullptr || !req->has_client_start) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr arguments to "
-            "grpc_alts_handshaker_req_set_local_identity_service_account().");
+            "grpc_gcp_handshaker_req_set_local_identity_service_account().");
     return false;
   }
   req->client_start.has_local_identity = true;
@@ -229,8 +229,8 @@ bool grpc_alts_handshaker_req_set_local_identity_service_account(
   return true;
 }
 
-static void set_endpoint(grpc_alts_endpoint* endpoint, const char* ip_address,
-                         size_t port, grpc_alts_network_protocol protocol) {
+static void set_endpoint(grpc_gcp_endpoint* endpoint, const char* ip_address,
+                         size_t port, grpc_gcp_network_protocol protocol) {
   grpc_slice* slice = create_slice(ip_address, strlen(ip_address));
   endpoint->ip_address.arg = slice;
   endpoint->ip_address.funcs.encode = encode_string_or_bytes_cb;
@@ -240,7 +240,7 @@ static void set_endpoint(grpc_alts_endpoint* endpoint, const char* ip_address,
   endpoint->protocol = protocol;
 }
 
-bool grpc_alts_handshaker_req_set_rpc_versions(grpc_alts_handshaker_req* req,
+bool grpc_gcp_handshaker_req_set_rpc_versions(grpc_gcp_handshaker_req* req,
                                               uint32_t max_major,
                                               uint32_t max_minor,
                                               uint32_t min_major,
@@ -248,33 +248,33 @@ bool grpc_alts_handshaker_req_set_rpc_versions(grpc_alts_handshaker_req* req,
   if (req == nullptr || req->has_next) {
     gpr_log(GPR_ERROR,
             "Invalid arguments to "
-            "grpc_alts_handshaker_req_set_rpc_versions().");
+            "grpc_gcp_handshaker_req_set_rpc_versions().");
     return false;
   }
   if (req->has_client_start) {
     req->client_start.has_rpc_versions = true;
-    grpc_alts_rpc_protocol_versions_set_max(
+    grpc_gcp_rpc_protocol_versions_set_max(
         &req->client_start.rpc_versions, max_major, max_minor);
-    grpc_alts_rpc_protocol_versions_set_min(
+    grpc_gcp_rpc_protocol_versions_set_min(
         &req->client_start.rpc_versions, min_major, min_minor);
   } else {
     req->server_start.has_rpc_versions = true;
-    grpc_alts_rpc_protocol_versions_set_max(
+    grpc_gcp_rpc_protocol_versions_set_max(
         &req->server_start.rpc_versions, max_major, max_minor);
-    grpc_alts_rpc_protocol_versions_set_min(
+    grpc_gcp_rpc_protocol_versions_set_min(
         &req->server_start.rpc_versions, min_major, min_minor);
   }
   return true;
 }
 
-bool grpc_alts_handshaker_req_set_local_endpoint(
-    grpc_alts_handshaker_req* req, const char* ip_address, size_t port,
-    grpc_alts_network_protocol protocol) {
+bool grpc_gcp_handshaker_req_set_local_endpoint(
+    grpc_gcp_handshaker_req* req, const char* ip_address, size_t port,
+    grpc_gcp_network_protocol protocol) {
   if (req == nullptr || ip_address == nullptr || port > 65535 ||
       req->has_next) {
     gpr_log(GPR_ERROR,
             "Invalid arguments to "
-            "grpc_alts_handshaker_req_set_local_endpoint().");
+            "grpc_gcp_handshaker_req_set_local_endpoint().");
     return false;
   }
   if (req->has_client_start) {
@@ -287,14 +287,14 @@ bool grpc_alts_handshaker_req_set_local_endpoint(
   return true;
 }
 
-bool grpc_alts_handshaker_req_set_remote_endpoint(
-    grpc_alts_handshaker_req* req, const char* ip_address, size_t port,
-    grpc_alts_network_protocol protocol) {
+bool grpc_gcp_handshaker_req_set_remote_endpoint(
+    grpc_gcp_handshaker_req* req, const char* ip_address, size_t port,
+    grpc_gcp_network_protocol protocol) {
   if (req == nullptr || ip_address == nullptr || port > 65535 ||
       req->has_next) {
     gpr_log(GPR_ERROR,
             "Invalid arguments to "
-            "grpc_alts_handshaker_req_set_remote_endpoint().");
+            "grpc_gcp_handshaker_req_set_remote_endpoint().");
     return false;
   }
   if (req->has_client_start) {
@@ -309,12 +309,12 @@ bool grpc_alts_handshaker_req_set_remote_endpoint(
   return true;
 }
 
-bool grpc_alts_handshaker_req_set_in_bytes(grpc_alts_handshaker_req* req,
+bool grpc_gcp_handshaker_req_set_in_bytes(grpc_gcp_handshaker_req* req,
                                           const char* in_bytes, size_t size) {
   if (req == nullptr || in_bytes == nullptr || req->has_client_start) {
     gpr_log(GPR_ERROR,
             "Invalid arguments to "
-            "grpc_alts_handshaker_req_set_in_bytes().");
+            "grpc_gcp_handshaker_req_set_in_bytes().");
     return false;
   }
   grpc_slice* slice = create_slice(in_bytes, size);
@@ -328,8 +328,8 @@ bool grpc_alts_handshaker_req_set_in_bytes(grpc_alts_handshaker_req* req,
   return true;
 }
 
-static grpc_alts_server_handshake_parameters* server_start_find_param(
-    grpc_alts_handshaker_req* req, int32_t key) {
+static grpc_gcp_server_handshake_parameters* server_start_find_param(
+    grpc_gcp_handshaker_req* req, int32_t key) {
   size_t i = 0;
   for (i = 0; i < req->server_start.handshake_parameters_count; i++) {
     if (req->server_start.handshake_parameters[i].key == key) {
@@ -351,16 +351,16 @@ static grpc_alts_server_handshake_parameters* server_start_find_param(
               .value;
 }
 
-bool grpc_alts_handshaker_req_param_add_record_protocol(
-    grpc_alts_handshaker_req* req, grpc_alts_handshake_protocol key,
+bool grpc_gcp_handshaker_req_param_add_record_protocol(
+    grpc_gcp_handshaker_req* req, grpc_gcp_handshake_protocol key,
     const char* record_protocol) {
   if (req == nullptr || record_protocol == nullptr || !req->has_server_start) {
     gpr_log(GPR_ERROR,
             "Invalid arguments to "
-            "grpc_alts_handshaker_req_param_add_record_protocol().");
+            "grpc_gcp_handshaker_req_param_add_record_protocol().");
     return false;
   }
-  grpc_alts_server_handshake_parameters* param =
+  grpc_gcp_server_handshake_parameters* param =
       server_start_find_param(req, key);
   grpc_slice* slice = create_slice(record_protocol, strlen(record_protocol));
   add_repeated_field(
@@ -369,19 +369,19 @@ bool grpc_alts_handshaker_req_param_add_record_protocol(
   return true;
 }
 
-bool grpc_alts_handshaker_req_param_add_local_identity_hostname(
-    grpc_alts_handshaker_req* req, grpc_alts_handshake_protocol key,
+bool grpc_gcp_handshaker_req_param_add_local_identity_hostname(
+    grpc_gcp_handshaker_req* req, grpc_gcp_handshake_protocol key,
     const char* hostname) {
   if (req == nullptr || hostname == nullptr || !req->has_server_start) {
     gpr_log(GPR_ERROR,
             "Invalid arguments to "
-            "grpc_alts_handshaker_req_param_add_local_identity_hostname().");
+            "grpc_gcp_handshaker_req_param_add_local_identity_hostname().");
     return false;
   }
-  grpc_alts_server_handshake_parameters* param =
+  grpc_gcp_server_handshake_parameters* param =
       server_start_find_param(req, key);
-  grpc_alts_identity* local_identity =
-      static_cast<grpc_alts_identity*>(gpr_zalloc(sizeof(*local_identity)));
+  grpc_gcp_identity* local_identity =
+      static_cast<grpc_gcp_identity*>(gpr_zalloc(sizeof(*local_identity)));
   set_identity_hostname(local_identity, hostname);
   add_repeated_field(
       reinterpret_cast<repeated_field**>(&param->local_identities.arg),
@@ -390,20 +390,20 @@ bool grpc_alts_handshaker_req_param_add_local_identity_hostname(
   return true;
 }
 
-bool grpc_alts_handshaker_req_param_add_local_identity_service_account(
-    grpc_alts_handshaker_req* req, grpc_alts_handshake_protocol key,
+bool grpc_gcp_handshaker_req_param_add_local_identity_service_account(
+    grpc_gcp_handshaker_req* req, grpc_gcp_handshake_protocol key,
     const char* service_account) {
   if (req == nullptr || service_account == nullptr || !req->has_server_start) {
     gpr_log(
         GPR_ERROR,
         "Invalid arguments to "
-        "grpc_alts_handshaker_req_param_add_local_identity_service_account().");
+        "grpc_gcp_handshaker_req_param_add_local_identity_service_account().");
     return false;
   }
-  grpc_alts_server_handshake_parameters* param =
+  grpc_gcp_server_handshake_parameters* param =
       server_start_find_param(req, key);
-  grpc_alts_identity* local_identity =
-      static_cast<grpc_alts_identity*>(gpr_zalloc(sizeof(*local_identity)));
+  grpc_gcp_identity* local_identity =
+      static_cast<grpc_gcp_identity*>(gpr_zalloc(sizeof(*local_identity)));
   set_identity_service_account(local_identity, service_account);
   add_repeated_field(
       reinterpret_cast<repeated_field**>(&param->local_identities.arg),
@@ -412,16 +412,16 @@ bool grpc_alts_handshaker_req_param_add_local_identity_service_account(
   return true;
 }
 
-bool grpc_alts_handshaker_req_encode(grpc_alts_handshaker_req* req,
+bool grpc_gcp_handshaker_req_encode(grpc_gcp_handshaker_req* req,
                                     grpc_slice* slice) {
   if (req == nullptr || slice == nullptr) {
     gpr_log(GPR_ERROR,
-            "Invalid nullptr arguments to grpc_alts_handshaker_req_encode().");
+            "Invalid nullptr arguments to grpc_gcp_handshaker_req_encode().");
     return false;
   }
   pb_ostream_t size_stream;
   memset(&size_stream, 0, sizeof(pb_ostream_t));
-  if (!pb_encode(&size_stream, grpc_alts_HandshakerReq_fields, req)) {
+  if (!pb_encode(&size_stream, grpc_gcp_HandshakerReq_fields, req)) {
     gpr_log(GPR_ERROR, "nanopb error: %s", PB_GET_ERROR(&size_stream));
     return false;
   }
@@ -429,7 +429,7 @@ bool grpc_alts_handshaker_req_encode(grpc_alts_handshaker_req* req,
   *slice = grpc_slice_malloc(encoded_length);
   pb_ostream_t output_stream =
       pb_ostream_from_buffer(GRPC_SLICE_START_PTR(*slice), encoded_length);
-  if (!pb_encode(&output_stream, grpc_alts_HandshakerReq_fields, req) != 0) {
+  if (!pb_encode(&output_stream, grpc_gcp_HandshakerReq_fields, req) != 0) {
     gpr_log(GPR_ERROR, "nanopb error: %s", PB_GET_ERROR(&output_stream));
     return false;
   }
@@ -437,13 +437,13 @@ bool grpc_alts_handshaker_req_encode(grpc_alts_handshaker_req* req,
 }
 
 /* HandshakerResp. */
-grpc_alts_handshaker_resp* grpc_alts_handshaker_resp_create(void) {
-  grpc_alts_handshaker_resp* resp =
-      static_cast<grpc_alts_handshaker_resp*>(gpr_zalloc(sizeof(*resp)));
+grpc_gcp_handshaker_resp* grpc_gcp_handshaker_resp_create(void) {
+  grpc_gcp_handshaker_resp* resp =
+      static_cast<grpc_gcp_handshaker_resp*>(gpr_zalloc(sizeof(*resp)));
   return resp;
 }
 
-void grpc_alts_handshaker_resp_destroy(grpc_alts_handshaker_resp* resp) {
+void grpc_gcp_handshaker_resp_destroy(grpc_gcp_handshaker_resp* resp) {
   if (resp != nullptr) {
     destroy_slice(static_cast<grpc_slice*>(resp->out_frames.arg));
     if (resp->has_status) {
@@ -471,11 +471,11 @@ void grpc_alts_handshaker_resp_destroy(grpc_alts_handshaker_resp* resp) {
   }
 }
 
-bool grpc_alts_handshaker_resp_decode(grpc_slice encoded_handshaker_resp,
-                                     grpc_alts_handshaker_resp* resp) {
+bool grpc_gcp_handshaker_resp_decode(grpc_slice encoded_handshaker_resp,
+                                     grpc_gcp_handshaker_resp* resp) {
   if (resp == nullptr) {
     gpr_log(GPR_ERROR,
-            "Invalid nullptr argument to grpc_alts_handshaker_resp_decode().");
+            "Invalid nullptr argument to grpc_gcp_handshaker_resp_decode().");
     return false;
   }
   pb_istream_t stream =
@@ -492,7 +492,7 @@ bool grpc_alts_handshaker_resp_decode(grpc_slice encoded_handshaker_resp,
   resp->result.local_identity.hostname.funcs.decode = decode_string_or_bytes_cb;
   resp->result.local_identity.service_account.funcs.decode =
       decode_string_or_bytes_cb;
-  if (!pb_decode(&stream, grpc_alts_HandshakerResp_fields, resp)) {
+  if (!pb_decode(&stream, grpc_gcp_HandshakerResp_fields, resp)) {
     gpr_log(GPR_ERROR, "nanopb error: %s", PB_GET_ERROR(&stream));
     return false;
   }

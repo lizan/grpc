@@ -13,21 +13,21 @@
  * -----------------------------------------------------------------------------
  * // Create, populate, and serialize an ALTS client_start handshake request to
  * // send to the server.
- * grpc_alts_handshaker_req* req =
- *     grpc_alts_handshaker_req_create(CLIENT_START_REQ);
- * grpc_alts_handshaker_req_set_handshake_protocol(
-       req, grpc_alts_HandshakeProtocol_ALTS);
- * grpc_alts_handshaker_req_add_application_protocol(req, "grpc");
- * grpc_alts_handshaker_req_add_record_protocol(req, "ALTSRP_GCM_AES128");
+ * grpc_gcp_handshaker_req* req =
+ *     grpc_gcp_handshaker_req_create(CLIENT_START_REQ);
+ * grpc_gcp_handshaker_req_set_handshake_protocol(
+       req, grpc_gcp_HandshakeProtocol_ALTS);
+ * grpc_gcp_handshaker_req_add_application_protocol(req, "grpc");
+ * grpc_gcp_handshaker_req_add_record_protocol(req, "ALTSRP_GCM_AES128");
  * grpc_slice client_slice;
- * if (!grpc_alts_handshaker_req_encode(req, &client_slice)) {
+ * if (!grpc_gcp_handshaker_req_encode(req, &client_slice)) {
  *   fprintf(stderr, "ALTS handshake request encoding failed.";
  * }
  *
  * // De-serialize a data stream received from the server, and store the result
  * // at ALTS handshake response.
- * grpc_alts_handshaker_resp* resp = grpc_alts_handshaker_resp_create();
- * if (!grpc_alts_handshaker_resp_decode(server_slice, resp)) {
+ * grpc_gcp_handshaker_resp* resp = grpc_gcp_handshaker_resp_create();
+ * if (!grpc_gcp_handshaker_resp_decode(server_slice, resp)) {
  *    fprintf(stderr, "ALTS handshake response decoding failed.");
  * }
  * // To access a variable-length datatype field (i.e., pb_callback_t),
@@ -53,8 +53,8 @@
  *
  * The method returns a pointer to the created instance.
  */
-grpc_alts_handshaker_req* grpc_alts_handshaker_req_create(
-    grpc_alts_handshaker_req_type type);
+grpc_gcp_handshaker_req* grpc_gcp_handshaker_req_create(
+    grpc_gcp_handshaker_req_type type);
 
 /**
  * This method sets the value for handshake_security_protocol field of ALTS
@@ -66,9 +66,9 @@ grpc_alts_handshaker_req* grpc_alts_handshaker_req_create(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_set_handshake_protocol(
-    grpc_alts_handshaker_req* req,
-    grpc_alts_handshake_protocol handshake_protocol);
+bool grpc_gcp_handshaker_req_set_handshake_protocol(
+    grpc_gcp_handshaker_req* req,
+    grpc_gcp_handshake_protocol handshake_protocol);
 
 /**
  * This method sets the value for target_name field of ALTS client_start
@@ -79,7 +79,7 @@ bool grpc_alts_handshaker_req_set_handshake_protocol(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_set_target_name(grpc_alts_handshaker_req* req,
+bool grpc_gcp_handshaker_req_set_target_name(grpc_gcp_handshaker_req* req,
                                              const char* target_name);
 
 /**
@@ -91,8 +91,8 @@ bool grpc_alts_handshaker_req_set_target_name(grpc_alts_handshaker_req* req,
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_add_application_protocol(
-    grpc_alts_handshaker_req* req, const char* application_protocol);
+bool grpc_gcp_handshaker_req_add_application_protocol(
+    grpc_gcp_handshaker_req* req, const char* application_protocol);
 
 /**
  * This method adds a record protocol supported by the client to ALTS
@@ -104,7 +104,7 @@ bool grpc_alts_handshaker_req_add_application_protocol(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_add_record_protocol(grpc_alts_handshaker_req* req,
+bool grpc_gcp_handshaker_req_add_record_protocol(grpc_gcp_handshaker_req* req,
                                                  const char* record_protocol);
 
 /**
@@ -117,8 +117,8 @@ bool grpc_alts_handshaker_req_add_record_protocol(grpc_alts_handshaker_req* req,
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_add_target_identity_hostname(
-    grpc_alts_handshaker_req* req, const char* hostname);
+bool grpc_gcp_handshaker_req_add_target_identity_hostname(
+    grpc_gcp_handshaker_req* req, const char* hostname);
 
 /**
  * This method adds a target server identity represented as service account and
@@ -130,8 +130,8 @@ bool grpc_alts_handshaker_req_add_target_identity_hostname(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_add_target_identity_service_account(
-    grpc_alts_handshaker_req* req, const char* service_account);
+bool grpc_gcp_handshaker_req_add_target_identity_service_account(
+    grpc_gcp_handshaker_req* req, const char* service_account);
 
 /**
  * This method sets the hostname for local_identity field of ALTS client_start
@@ -142,8 +142,8 @@ bool grpc_alts_handshaker_req_add_target_identity_service_account(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_set_local_identity_hostname(
-    grpc_alts_handshaker_req* req, const char* hostname);
+bool grpc_gcp_handshaker_req_set_local_identity_hostname(
+    grpc_gcp_handshaker_req* req, const char* hostname);
 
 /**
  * This method sets the service account for local_identity field of ALTS
@@ -154,8 +154,8 @@ bool grpc_alts_handshaker_req_set_local_identity_hostname(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_set_local_identity_service_account(
-    grpc_alts_handshaker_req* req, const char* service_account);
+bool grpc_gcp_handshaker_req_set_local_identity_service_account(
+    grpc_gcp_handshaker_req* req, const char* service_account);
 
 /**
  * This method sets the value for local_endpoint field of either ALTS
@@ -170,9 +170,9 @@ bool grpc_alts_handshaker_req_set_local_identity_service_account(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_set_local_endpoint(
-    grpc_alts_handshaker_req* req, const char* ip_address, size_t port,
-    grpc_alts_network_protocol protocol);
+bool grpc_gcp_handshaker_req_set_local_endpoint(
+    grpc_gcp_handshaker_req* req, const char* ip_address, size_t port,
+    grpc_gcp_network_protocol protocol);
 
 /**
  * This method sets the value for remote_endpoint field of either ALTS
@@ -187,9 +187,9 @@ bool grpc_alts_handshaker_req_set_local_endpoint(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_set_remote_endpoint(
-    grpc_alts_handshaker_req* req, const char* ip_address, size_t port,
-    grpc_alts_network_protocol protocol);
+bool grpc_gcp_handshaker_req_set_remote_endpoint(
+    grpc_gcp_handshaker_req* req, const char* ip_address, size_t port,
+    grpc_gcp_network_protocol protocol);
 
 /**
  * This method sets the value for in_bytes field of either ALTS server_start or
@@ -203,7 +203,7 @@ bool grpc_alts_handshaker_req_set_remote_endpoint(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_set_in_bytes(grpc_alts_handshaker_req* req,
+bool grpc_gcp_handshaker_req_set_in_bytes(grpc_gcp_handshaker_req* req,
                                           const char* in_bytes, size_t size);
 
 /**
@@ -216,8 +216,8 @@ bool grpc_alts_handshaker_req_set_in_bytes(grpc_alts_handshaker_req* req,
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_param_add_record_protocol(
-    grpc_alts_handshaker_req* req, grpc_alts_handshake_protocol key,
+bool grpc_gcp_handshaker_req_param_add_record_protocol(
+    grpc_gcp_handshaker_req* req, grpc_gcp_handshake_protocol key,
     const char* record_protocol);
 
 /**
@@ -231,8 +231,8 @@ bool grpc_alts_handshaker_req_param_add_record_protocol(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_param_add_local_identity_hostname(
-    grpc_alts_handshaker_req* req, grpc_alts_handshake_protocol key,
+bool grpc_gcp_handshaker_req_param_add_local_identity_hostname(
+    grpc_gcp_handshaker_req* req, grpc_gcp_handshake_protocol key,
     const char* hostname);
 
 /**
@@ -246,8 +246,8 @@ bool grpc_alts_handshaker_req_param_add_local_identity_hostname(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_param_add_local_identity_service_account(
-    grpc_alts_handshaker_req* req, grpc_alts_handshake_protocol key,
+bool grpc_gcp_handshaker_req_param_add_local_identity_service_account(
+    grpc_gcp_handshaker_req* req, grpc_gcp_handshake_protocol key,
     const char* service_account);
 
 /**
@@ -262,7 +262,7 @@ bool grpc_alts_handshaker_req_param_add_local_identity_service_account(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_set_rpc_versions(grpc_alts_handshaker_req* req,
+bool grpc_gcp_handshaker_req_set_rpc_versions(grpc_gcp_handshaker_req* req,
                                               uint32_t max_major,
                                               uint32_t max_minor,
                                               uint32_t min_major,
@@ -276,14 +276,14 @@ bool grpc_alts_handshaker_req_set_rpc_versions(grpc_alts_handshaker_req* req,
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_req_encode(grpc_alts_handshaker_req* req,
+bool grpc_gcp_handshaker_req_encode(grpc_gcp_handshaker_req* req,
                                     grpc_slice* slice);
 
 /* This method destroys an ALTS handshake request. */
-void grpc_alts_handshaker_req_destroy(grpc_alts_handshaker_req* req);
+void grpc_gcp_handshaker_req_destroy(grpc_gcp_handshaker_req* req);
 
 /* This method creates an ALTS handshake response. */
-grpc_alts_handshaker_resp* grpc_alts_handshaker_resp_create(void);
+grpc_gcp_handshaker_resp* grpc_gcp_handshaker_resp_create(void);
 
 /**
  * This method de-serializes a data stream and stores the result
@@ -294,11 +294,11 @@ grpc_alts_handshaker_resp* grpc_alts_handshaker_resp_create(void);
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_handshaker_resp_decode(grpc_slice slice,
-                                     grpc_alts_handshaker_resp* resp);
+bool grpc_gcp_handshaker_resp_decode(grpc_slice slice,
+                                     grpc_gcp_handshaker_resp* resp);
 
 /* This method destroys an ALTS handshake response. */
-void grpc_alts_handshaker_resp_destroy(grpc_alts_handshaker_resp* resp);
+void grpc_gcp_handshaker_resp_destroy(grpc_gcp_handshaker_resp* resp);
 
 #endif  // GRPC_CORE_TSI_ALTS_HANDSHAKER_ALTS_HANDSHAKER_SERVICE_API_H
 

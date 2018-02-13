@@ -11,11 +11,11 @@
 
 #include "src/core/tsi/alts/handshaker/transport_security_common.pb.h"
 
-typedef grpc_alts_RpcProtocolVersions
-    grpc_alts_rpc_protocol_versions;
+typedef grpc_gcp_RpcProtocolVersions
+    grpc_gcp_rpc_protocol_versions;
 
-typedef grpc_alts_RpcProtocolVersions_Version
-    grpc_alts_rpc_protocol_versions_version;
+typedef grpc_gcp_RpcProtocolVersions_Version
+    grpc_gcp_rpc_protocol_versions_version;
 
 /**
  * This method sets the value for max_rpc_versions field of rpc protocol
@@ -27,8 +27,8 @@ typedef grpc_alts_RpcProtocolVersions_Version
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_rpc_protocol_versions_set_max(
-    grpc_alts_rpc_protocol_versions* versions, uint32_t max_major,
+bool grpc_gcp_rpc_protocol_versions_set_max(
+    grpc_gcp_rpc_protocol_versions* versions, uint32_t max_major,
     uint32_t max_minor);
 
 /**
@@ -41,8 +41,8 @@ bool grpc_alts_rpc_protocol_versions_set_max(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_rpc_protocol_versions_set_min(
-    grpc_alts_rpc_protocol_versions* versions, uint32_t min_major,
+bool grpc_gcp_rpc_protocol_versions_set_min(
+    grpc_gcp_rpc_protocol_versions* versions, uint32_t min_major,
     uint32_t min_minor);
 
 /**
@@ -52,8 +52,8 @@ bool grpc_alts_rpc_protocol_versions_set_min(
  *
  * The method returns serialized byte length. It returns 0 on failure.
  */
-size_t grpc_alts_rpc_protocol_versions_encode_length(
-    const grpc_alts_rpc_protocol_versions* versions);
+size_t grpc_gcp_rpc_protocol_versions_encode_length(
+    const grpc_gcp_rpc_protocol_versions* versions);
 
 /**
  * This method serializes rpc protocol versions and writes the result to
@@ -66,8 +66,8 @@ size_t grpc_alts_rpc_protocol_versions_encode_length(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_rpc_protocol_versions_encode_to_raw_bytes(
-    const grpc_alts_rpc_protocol_versions* versions, uint8_t* bytes,
+bool grpc_gcp_rpc_protocol_versions_encode_to_raw_bytes(
+    const grpc_gcp_rpc_protocol_versions* versions, uint8_t* bytes,
     size_t bytes_length);
 
 /**
@@ -79,8 +79,8 @@ bool grpc_alts_rpc_protocol_versions_encode_to_raw_bytes(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_rpc_protocol_versions_encode(
-    const grpc_alts_rpc_protocol_versions* versions,
+bool grpc_gcp_rpc_protocol_versions_encode(
+    const grpc_gcp_rpc_protocol_versions* versions,
     grpc_slice* slice);
 
 /**
@@ -93,8 +93,8 @@ bool grpc_alts_rpc_protocol_versions_encode(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_rpc_protocol_versions_decode(
-    grpc_slice slice, grpc_alts_rpc_protocol_versions* versions);
+bool grpc_gcp_rpc_protocol_versions_decode(
+    grpc_slice slice, grpc_gcp_rpc_protocol_versions* versions);
 
 /**
  * This method performs a deep copy operation on rpc protocol versions
@@ -105,9 +105,9 @@ bool grpc_alts_rpc_protocol_versions_decode(
  *
  * The method returns true on success and false otherwise.
  */
-bool grpc_alts_rpc_protocol_versions_copy(
-    const grpc_alts_rpc_protocol_versions* src,
-    grpc_alts_rpc_protocol_versions* dst);
+bool grpc_gcp_rpc_protocol_versions_copy(
+    const grpc_gcp_rpc_protocol_versions* src,
+    grpc_gcp_rpc_protocol_versions* dst);
 
 /**
  * This method performs a version check between local and peer rpc protocol
@@ -121,10 +121,10 @@ bool grpc_alts_rpc_protocol_versions_copy(
  * The method returns true if the check passes which means both parties agreed
  * on a common rpc protocol to use, and false otherwise.
  */
-bool grpc_alts_rpc_protocol_versions_check(
-    const grpc_alts_rpc_protocol_versions* local_versions,
-    const grpc_alts_rpc_protocol_versions* peer_versions,
-    grpc_alts_rpc_protocol_versions_version* highest_common_version);
+bool grpc_gcp_rpc_protocol_versions_check(
+    const grpc_gcp_rpc_protocol_versions* local_versions,
+    const grpc_gcp_rpc_protocol_versions* peer_versions,
+    grpc_gcp_rpc_protocol_versions_version* highest_common_version);
 
 /**
  * Exposed for testing only.
@@ -132,9 +132,9 @@ bool grpc_alts_rpc_protocol_versions_check(
  *            returns 1 if v1 > v2,
  *            returns -1 if v1 < v2.
  */
-int grpc_alts_rpc_protocol_version_compare(
-    const grpc_alts_rpc_protocol_versions_version* v1,
-    const grpc_alts_rpc_protocol_versions_version* v2);
+int grpc_gcp_rpc_protocol_version_compare(
+    const grpc_gcp_rpc_protocol_versions_version* v1,
+    const grpc_gcp_rpc_protocol_versions_version* v2);
 
 #endif  // GRPC_CORE_TSI_ALTS_HANDSHAKER_TRANSPORT_SECURITY_COMMON_API_H
 

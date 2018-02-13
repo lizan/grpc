@@ -20,19 +20,19 @@ static void convert_to_tsi_result_test() {
 }
 
 static void deserialize_response_test() {
-  grpc_alts_handshaker_resp* resp = grpc_alts_handshaker_resp_create();
-  GPR_ASSERT(grpc_alts_handshaker_resp_set_out_frames(
+  grpc_gcp_handshaker_resp* resp = grpc_gcp_handshaker_resp_create();
+  GPR_ASSERT(grpc_gcp_handshaker_resp_set_out_frames(
       resp, ALTS_TSI_UTILS_TEST_OUT_FRAME,
       strlen(ALTS_TSI_UTILS_TEST_OUT_FRAME)));
   grpc_slice slice;
-  GPR_ASSERT(grpc_alts_handshaker_resp_encode(resp, &slice));
+  GPR_ASSERT(grpc_gcp_handshaker_resp_encode(resp, &slice));
 
   /* Valid serialization. */
   grpc_byte_buffer* buffer =
       grpc_raw_byte_buffer_create(&slice, 1 /* number of slices */);
-  grpc_alts_handshaker_resp* decoded_resp =
+  grpc_gcp_handshaker_resp* decoded_resp =
       alts_tsi_utils_deserialize_response(buffer);
-  GPR_ASSERT(grpc_alts_handshaker_resp_equals(resp, decoded_resp));
+  GPR_ASSERT(grpc_gcp_handshaker_resp_equals(resp, decoded_resp));
   grpc_byte_buffer_destroy(buffer);
 
   /* Invalid serializaiton. */
@@ -45,8 +45,8 @@ static void deserialize_response_test() {
   grpc_slice_unref(slice);
   grpc_slice_unref(bad_slice);
   grpc_byte_buffer_destroy(buffer);
-  grpc_alts_handshaker_resp_destroy(resp);
-  grpc_alts_handshaker_resp_destroy(decoded_resp);
+  grpc_gcp_handshaker_resp_destroy(resp);
+  grpc_gcp_handshaker_resp_destroy(decoded_resp);
 }
 
 int main(int argc, char** argv) {

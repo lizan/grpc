@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package grpc.alts;
+package grpc.gcp;
 
 option java_package = "io.grpc.alts";
 

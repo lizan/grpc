@@ -24,7 +24,7 @@ typedef struct grpc_alts_credentials_options_vtable {
 
 struct grpc_alts_credentials_options {
   const struct grpc_alts_credentials_options_vtable* vtable;
-  grpc_alts_rpc_protocol_versions rpc_versions;
+  grpc_gcp_rpc_protocol_versions rpc_versions;
 };
 
 typedef struct target_service_account {

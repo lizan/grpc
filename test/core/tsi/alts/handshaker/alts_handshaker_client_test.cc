@@ -40,11 +40,11 @@ static alts_tsi_event* alts_tsi_event_create_for_testing(bool is_client) {
         reinterpret_cast<grpc_alts_credentials_client_options*>(e->options),
         ALTS_HANDSHAKER_CLIENT_TEST_TARGET_SERVICE_ACCOUNT2);
   }
-  grpc_alts_rpc_protocol_versions* versions =
+  grpc_gcp_rpc_protocol_versions* versions =
       &e->options->rpc_versions;
-  GPR_ASSERT(grpc_alts_rpc_protocol_versions_set_max(
+  GPR_ASSERT(grpc_gcp_rpc_protocol_versions_set_max(
       versions, kMaxRpcVersionMajor, kMaxRpcVersionMinor));
-  GPR_ASSERT(grpc_alts_rpc_protocol_versions_set_min(
+  GPR_ASSERT(grpc_gcp_rpc_protocol_versions_set_min(
       versions, kMinRpcVersionMajor, kMinRpcVersionMinor));
   e->target_name =
       grpc_slice_from_static_string(ALTS_HANDSHAKER_CLIENT_TEST_TARGET_NAME);
@@ -52,7 +52,7 @@ static alts_tsi_event* alts_tsi_event_create_for_testing(bool is_client) {
 }
 
 static void validate_rpc_protocol_versions(
-    grpc_alts_rpc_protocol_versions* versions) {
+    grpc_gcp_rpc_protocol_versions* versions) {
   GPR_ASSERT(versions != nullptr);
   GPR_ASSERT(versions->max_rpc_version.major == kMaxRpcVersionMajor);
   GPR_ASSERT(versions->max_rpc_version.minor == kMaxRpcVersionMinor);
@@ -62,9 +62,9 @@ static void validate_rpc_protocol_versions(
 
 static void validate_target_identities(
     const repeated_field* target_identity_head) {
-  grpc_alts_identity* target_identity1 = static_cast<grpc_alts_identity*>(
+  grpc_gcp_identity* target_identity1 = static_cast<grpc_gcp_identity*>(
       const_cast<void*>(target_identity_head->next->data));
-  grpc_alts_identity* target_identity2 = static_cast<grpc_alts_identity*>(
+  grpc_gcp_identity* target_identity2 = static_cast<grpc_gcp_identity*>(
       const_cast<void*>(target_identity_head->data));
   grpc_slice* service_account1 =
       static_cast<grpc_slice*>(target_identity1->service_account.arg);
@@ -116,14 +116,14 @@ static bool validate_op(alts_tsi_event* event, const grpc_op* op, size_t nops,
   return ok;
 }
 
-static grpc_alts_handshaker_req* deserialize_handshaker_req(
-    grpc_alts_handshaker_req_type type, grpc_byte_buffer* buffer) {
+static grpc_gcp_handshaker_req* deserialize_handshaker_req(
+    grpc_gcp_handshaker_req_type type, grpc_byte_buffer* buffer) {
   GPR_ASSERT(buffer != nullptr);
-  grpc_alts_handshaker_req* req = grpc_alts_handshaker_decoded_req_create(type);
+  grpc_gcp_handshaker_req* req = grpc_gcp_handshaker_decoded_req_create(type);
   grpc_byte_buffer_reader bbr;
   GPR_ASSERT(grpc_byte_buffer_reader_init(&bbr, buffer));
   grpc_slice slice = grpc_byte_buffer_reader_readall(&bbr);
-  GPR_ASSERT(grpc_alts_handshaker_req_decode(slice, req));
+  GPR_ASSERT(grpc_gcp_handshaker_req_decode(slice, req));
   grpc_slice_unref(slice);
   grpc_byte_buffer_reader_destroy(&bbr);
   return req;
@@ -149,10 +149,10 @@ static grpc_call_error check_client_start_success(grpc_call* call,
                                                   const grpc_op* op,
                                                   size_t nops, void* tag) {
   alts_tsi_event* event = static_cast<alts_tsi_event*>(tag);
-  grpc_alts_handshaker_req* req =
+  grpc_gcp_handshaker_req* req =
       deserialize_handshaker_req(CLIENT_START_REQ, event->send_buffer);
   GPR_ASSERT(req->client_start.handshake_security_protocol ==
-             grpc_alts_HandshakeProtocol_ALTS);
+             grpc_gcp_HandshakeProtocol_ALTS);
   const void* data = (static_cast<repeated_field*>(
                           req->client_start.application_protocols.arg))
                          ->data;
@@ -178,7 +178,7 @@ static grpc_call_error check_client_start_success(grpc_call* call,
   GPR_ASSERT(GRPC_SLICE_LENGTH(*target_name) ==
              strlen(ALTS_HANDSHAKER_CLIENT_TEST_TARGET_NAME));
   GPR_ASSERT(validate_op(event, op, nops, true /* is_start */));
-  grpc_alts_handshaker_req_destroy(req);
+  grpc_gcp_handshaker_req_destroy(req);
   return GRPC_CALL_OK;
 }
 
@@ -192,7 +192,7 @@ static grpc_call_error check_server_start_success(grpc_call* call,
                                                   const grpc_op* op,
                                                   size_t nops, void* tag) {
   alts_tsi_event* event = static_cast<alts_tsi_event*>(tag);
-  grpc_alts_handshaker_req* req =
+  grpc_gcp_handshaker_req* req =
       deserialize_handshaker_req(SERVER_START_REQ, event->send_buffer);
   const void* data = (static_cast<repeated_field*>(
                           req->server_start.application_protocols.arg))
@@ -204,7 +204,7 @@ static grpc_call_error check_server_start_success(grpc_call* call,
                     GRPC_SLICE_LENGTH(*application_protocol)) == 0);
   GPR_ASSERT(req->server_start.handshake_parameters_count == 1);
   GPR_ASSERT(req->server_start.handshake_parameters[0].key ==
-             grpc_alts_HandshakeProtocol_ALTS);
+             grpc_gcp_HandshakeProtocol_ALTS);
   data = (static_cast<repeated_field*>(req->server_start.handshake_parameters[0]
                                            .value.record_protocols.arg))
              ->data;
@@ -215,7 +215,7 @@ static grpc_call_error check_server_start_success(grpc_call* call,
                     GRPC_SLICE_LENGTH(*record_protocol)) == 0);
   validate_rpc_protocol_versions(&req->server_start.rpc_versions);
   GPR_ASSERT(validate_op(event, op, nops, true /* is_start */));
-  grpc_alts_handshaker_req_destroy(req);
+  grpc_gcp_handshaker_req_destroy(req);
   return GRPC_CALL_OK;
 }
 
@@ -227,7 +227,7 @@ static grpc_call_error check_server_start_success(grpc_call* call,
 static grpc_call_error check_next_success(grpc_call* call, const grpc_op* op,
                                           size_t nops, void* tag) {
   alts_tsi_event* event = static_cast<alts_tsi_event*>(tag);
-  grpc_alts_handshaker_req* req =
+  grpc_gcp_handshaker_req* req =
       deserialize_handshaker_req(NEXT_REQ, event->send_buffer);
   grpc_slice* in_bytes = static_cast<grpc_slice*>(req->next.in_bytes.arg);
   GPR_ASSERT(in_bytes != nullptr);
@@ -235,7 +235,7 @@ static grpc_call_error check_next_success(grpc_call* call, const grpc_op* op,
                     ALTS_HANDSHAKER_CLIENT_TEST_OUT_FRAME,
                     GRPC_SLICE_LENGTH(*in_bytes)) == 0);
   GPR_ASSERT(validate_op(event, op, nops, false /* is_start */));
-  grpc_alts_handshaker_req_destroy(req);
+  grpc_gcp_handshaker_req_destroy(req);
   return GRPC_CALL_OK;
 }
 /**

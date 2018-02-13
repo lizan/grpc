@@ -170,7 +170,7 @@ static const tsi_handshaker_result_vtable result_vtable = {
     handshaker_result_create_frame_protector,
     handshaker_result_get_unused_bytes, handshaker_result_destroy};
 
-static tsi_result create_handshaker_result(grpc_alts_handshaker_resp* resp,
+static tsi_result create_handshaker_result(grpc_gcp_handshaker_resp* resp,
                                            bool is_client,
                                            tsi_handshaker_result** self) {
   if (self == nullptr || resp == nullptr) {
@@ -200,7 +200,7 @@ static tsi_result create_handshaker_result(grpc_alts_handshaker_resp* resp,
     gpr_log(GPR_ERROR, "Peer does not set RPC protocol versions.");
     return TSI_FAILED_PRECONDITION;
   }
-  if (!grpc_alts_rpc_protocol_versions_encode(
+  if (!grpc_gcp_rpc_protocol_versions_encode(
           &resp->result.peer_rpc_versions, &result->rpc_versions)) {
     gpr_log(GPR_ERROR, "Failed to serialize peer's RPC protocol versions.");
     return TSI_FAILED_PRECONDITION;
@@ -216,6 +216,7 @@ static tsi_result handshaker_next(
     size_t received_bytes_size, const unsigned char** bytes_to_send,
     size_t* bytes_to_send_size, tsi_handshaker_result** result,
     tsi_handshaker_on_next_done_cb cb, void* user_data) {
+  
   if (self == nullptr || cb == nullptr) {
     gpr_log(GPR_ERROR, "Invalid arguments to handshaker_next()");
     return TSI_INVALID_ARGUMENT;
@@ -241,12 +242,18 @@ static tsi_result handshaker_next(
              : alts_handshaker_client_start_server(handshaker->client, event,
                                                    &slice);
     handshaker->has_sent_start_message = true;
+    if(handshaker->is_client) {
+      gpr_log(GPR_ERROR, "scheduled clientInit msg.");
+    } else {
+      gpr_log(GPR_ERROR, "scheduled serverInit msg.");
+    }
   } else {
     if (!GRPC_SLICE_IS_EMPTY(handshaker->recv_bytes)) {
       grpc_slice_unref(handshaker->recv_bytes);
     }
     handshaker->recv_bytes = grpc_slice_ref(slice);
     ok = alts_handshaker_client_next(handshaker->client, event, &slice);
+    gpr_log(GPR_ERROR, "scheduled next msg.");
   }
   grpc_slice_unref(slice);
   if (ok != TSI_OK) {
@@ -339,7 +346,7 @@ tsi_result alts_tsi_handshaker_create(
   return TSI_OK;
 }
 
-static bool is_handshake_finished_properly(grpc_alts_handshaker_resp* resp) {
+static bool is_handshake_finished_properly(grpc_gcp_handshaker_resp* resp) {
   GPR_ASSERT(resp != nullptr);
   if (resp->has_result) {
     return true;
@@ -369,6 +376,7 @@ void alts_tsi_handshaker_handle_response(alts_tsi_handshaker* handshaker,
                                          grpc_slice* details,
                                          tsi_handshaker_on_next_done_cb cb,
                                          void* user_data, bool is_ok) {
+  gpr_log(GPR_ERROR, "entered handle_response %d, %d", is_ok, status);
   /* Invalid input check. */
   if (cb == nullptr) {
     gpr_log(GPR_ERROR,
@@ -392,7 +400,7 @@ void alts_tsi_handshaker_handle_response(alts_tsi_handshaker* handshaker,
     cb(TSI_INTERNAL_ERROR, user_data, nullptr, 0, nullptr);
     return;
   }
-  grpc_alts_handshaker_resp* resp =
+  grpc_gcp_handshaker_resp* resp =
       alts_tsi_utils_deserialize_response(recv_buffer);
   /* Invalid handshaker response check. */
   if (resp == nullptr) {
@@ -420,7 +428,7 @@ void alts_tsi_handshaker_handle_response(alts_tsi_handshaker* handshaker,
     set_unused_bytes(result, &handshaker->recv_bytes, resp->bytes_consumed);
   }
   grpc_status_code code = static_cast<grpc_status_code>(resp->status.code);
-  grpc_alts_handshaker_resp_destroy(resp);
+  grpc_gcp_handshaker_resp_destroy(resp);
   cb(alts_tsi_utils_convert_to_tsi_result(code), user_data, bytes_to_send,
      bytes_to_send_size, result);
 }

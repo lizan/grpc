@@ -85,7 +85,7 @@ static grpc_alts_credentials_options* alts_client_options_copy(
     node = node->next;
   }
   /* Copy rpc protocol versions. */
-  grpc_alts_rpc_protocol_versions_copy(&options->rpc_versions,
+  grpc_gcp_rpc_protocol_versions_copy(&options->rpc_versions,
                                                 &new_options->rpc_versions);
   return new_options;
 }

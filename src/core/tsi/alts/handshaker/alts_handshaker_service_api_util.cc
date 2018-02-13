@@ -17,8 +17,8 @@ void destroy_repeated_field_list_identity(repeated_field* head) {
   repeated_field* field = head;
   while (field != nullptr) {
     repeated_field* next_field = field->next;
-    const grpc_alts_identity* identity =
-        static_cast<const grpc_alts_identity*>(field->data);
+    const grpc_gcp_identity* identity =
+        static_cast<const grpc_gcp_identity*>(field->data);
     destroy_slice(static_cast<grpc_slice*>(identity->hostname.arg));
     destroy_slice(static_cast<grpc_slice*>(identity->service_account.arg));
     gpr_free((void*)identity);
@@ -65,8 +65,8 @@ bool encode_repeated_identity_cb(pb_ostream_t* stream, const pb_field_t* field,
   repeated_field* var = static_cast<repeated_field*>(*arg);
   while (var != nullptr) {
     if (!pb_encode_tag_for_field(stream, field)) return false;
-    if (!pb_encode_submessage(stream, grpc_alts_Identity_fields,
-                              (grpc_alts_identity*)var->data))
+    if (!pb_encode_submessage(stream, grpc_gcp_Identity_fields,
+                              (grpc_gcp_identity*)var->data))
       return false;
     var = var->next;
   }
@@ -101,12 +101,12 @@ bool decode_string_or_bytes_cb(pb_istream_t* stream, const pb_field_t* field,
 
 bool decode_repeated_identity_cb(pb_istream_t* stream, const pb_field_t* field,
                                  void** arg) {
-  grpc_alts_identity* identity =
-      static_cast<grpc_alts_identity*>(gpr_zalloc(sizeof(*identity)));
+  grpc_gcp_identity* identity =
+      static_cast<grpc_gcp_identity*>(gpr_zalloc(sizeof(*identity)));
   identity->hostname.funcs.decode = decode_string_or_bytes_cb;
   identity->service_account.funcs.decode = decode_string_or_bytes_cb;
   add_repeated_field(reinterpret_cast<repeated_field**>(arg), identity);
-  if (!pb_decode(stream, grpc_alts_Identity_fields, identity)) return false;
+  if (!pb_decode(stream, grpc_gcp_Identity_fields, identity)) return false;
   return true;
 }
 

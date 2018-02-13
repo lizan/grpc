@@ -32,7 +32,7 @@ static grpc_alts_credentials_options* alts_server_options_copy(
   grpc_alts_credentials_options* new_options =
       grpc_alts_credentials_server_options_create();
   /* Copy rpc protocol versions. */
-  grpc_alts_rpc_protocol_versions_copy(&options->rpc_versions,
+  grpc_gcp_rpc_protocol_versions_copy(&options->rpc_versions,
                                                 &new_options->rpc_versions);
   return new_options;
 }

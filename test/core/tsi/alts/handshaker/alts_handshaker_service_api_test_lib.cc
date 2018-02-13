@@ -2,10 +2,10 @@
 
 const size_t kHandshakeProtocolNum = 3;
 
-grpc_alts_handshaker_req* grpc_alts_handshaker_decoded_req_create(
-    grpc_alts_handshaker_req_type type) {
-  grpc_alts_handshaker_req* req =
-      static_cast<grpc_alts_handshaker_req*>(gpr_zalloc(sizeof(*req)));
+grpc_gcp_handshaker_req* grpc_gcp_handshaker_decoded_req_create(
+    grpc_gcp_handshaker_req_type type) {
+  grpc_gcp_handshaker_req* req =
+      static_cast<grpc_gcp_handshaker_req*>(gpr_zalloc(sizeof(*req)));
   switch (type) {
     case CLIENT_START_REQ:
       req->has_client_start = true;
@@ -48,8 +48,8 @@ grpc_alts_handshaker_req* grpc_alts_handshaker_decoded_req_create(
   return req;
 }
 
-bool grpc_alts_handshaker_resp_set_application_protocol(
-    grpc_alts_handshaker_resp* resp, const char* application_protocol) {
+bool grpc_gcp_handshaker_resp_set_application_protocol(
+    grpc_gcp_handshaker_resp* resp, const char* application_protocol) {
   if (resp == nullptr || application_protocol == nullptr) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr arguments to "
@@ -64,8 +64,8 @@ bool grpc_alts_handshaker_resp_set_application_protocol(
   return true;
 }
 
-bool grpc_alts_handshaker_resp_set_record_protocol(
-    grpc_alts_handshaker_resp* resp, const char* record_protocol) {
+bool grpc_gcp_handshaker_resp_set_record_protocol(
+    grpc_gcp_handshaker_resp* resp, const char* record_protocol) {
   if (resp == nullptr || record_protocol == nullptr) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr arguments to "
@@ -79,7 +79,7 @@ bool grpc_alts_handshaker_resp_set_record_protocol(
   return true;
 }
 
-bool grpc_alts_handshaker_resp_set_key_data(grpc_alts_handshaker_resp* resp,
+bool grpc_gcp_handshaker_resp_set_key_data(grpc_gcp_handshaker_resp* resp,
                                            const char* key_data, size_t size) {
   if (resp == nullptr || key_data == nullptr) {
     gpr_log(GPR_ERROR,
@@ -93,26 +93,26 @@ bool grpc_alts_handshaker_resp_set_key_data(grpc_alts_handshaker_resp* resp,
   return true;
 }
 
-static void set_identity_hostname(grpc_alts_identity* identity,
+static void set_identity_hostname(grpc_gcp_identity* identity,
                                   const char* hostname) {
   grpc_slice* slice = create_slice(hostname, strlen(hostname));
   identity->hostname.arg = slice;
   identity->hostname.funcs.encode = encode_string_or_bytes_cb;
 }
 
-static void set_identity_service_account(grpc_alts_identity* identity,
+static void set_identity_service_account(grpc_gcp_identity* identity,
                                          const char* service_account) {
   grpc_slice* slice = create_slice(service_account, strlen(service_account));
   identity->service_account.arg = slice;
   identity->service_account.funcs.encode = encode_string_or_bytes_cb;
 }
 
-bool grpc_alts_handshaker_resp_set_local_identity_hostname(
-    grpc_alts_handshaker_resp* resp, const char* hostname) {
+bool grpc_gcp_handshaker_resp_set_local_identity_hostname(
+    grpc_gcp_handshaker_resp* resp, const char* hostname) {
   if (resp == nullptr || hostname == nullptr) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr arguments to "
-            "grpc_alts_handshaker_resp_set_local_identity_hostname().");
+            "grpc_gcp_handshaker_resp_set_local_identity_hostname().");
     return false;
   }
   resp->has_result = true;
@@ -121,12 +121,12 @@ bool grpc_alts_handshaker_resp_set_local_identity_hostname(
   return true;
 }
 
-bool grpc_alts_handshaker_resp_set_local_identity_service_account(
-    grpc_alts_handshaker_resp* resp, const char* service_account) {
+bool grpc_gcp_handshaker_resp_set_local_identity_service_account(
+    grpc_gcp_handshaker_resp* resp, const char* service_account) {
   if (resp == nullptr || service_account == nullptr) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr arguments to "
-            "grpc_alts_handshaker_resp_set_local_identity_service_account().");
+            "grpc_gcp_handshaker_resp_set_local_identity_service_account().");
     return false;
   }
   resp->has_result = true;
@@ -135,12 +135,12 @@ bool grpc_alts_handshaker_resp_set_local_identity_service_account(
   return true;
 }
 
-bool grpc_alts_handshaker_resp_set_peer_identity_hostname(
-    grpc_alts_handshaker_resp* resp, const char* hostname) {
+bool grpc_gcp_handshaker_resp_set_peer_identity_hostname(
+    grpc_gcp_handshaker_resp* resp, const char* hostname) {
   if (resp == nullptr || hostname == nullptr) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr arguments to "
-            "grpc_alts_handshaker_resp_set_peer_identity_hostname().");
+            "grpc_gcp_handshaker_resp_set_peer_identity_hostname().");
     return false;
   }
   resp->has_result = true;
@@ -149,12 +149,12 @@ bool grpc_alts_handshaker_resp_set_peer_identity_hostname(
   return true;
 }
 
-bool grpc_alts_handshaker_resp_set_peer_identity_service_account(
-    grpc_alts_handshaker_resp* resp, const char* service_account) {
+bool grpc_gcp_handshaker_resp_set_peer_identity_service_account(
+    grpc_gcp_handshaker_resp* resp, const char* service_account) {
   if (resp == nullptr || service_account == nullptr) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr arguments to "
-            "grpc_alts_handshaker_resp_set_peer_identity_service_account().");
+            "grpc_gcp_handshaker_resp_set_peer_identity_service_account().");
     return false;
   }
   resp->has_result = true;
@@ -163,12 +163,12 @@ bool grpc_alts_handshaker_resp_set_peer_identity_service_account(
   return true;
 }
 
-bool grpc_alts_handshaker_resp_set_channel_open(grpc_alts_handshaker_resp* resp,
+bool grpc_gcp_handshaker_resp_set_channel_open(grpc_gcp_handshaker_resp* resp,
                                                bool keep_channel_open) {
   if (resp == nullptr) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr argument to "
-            "grpc_alts_handshaker_resp_set_channel_open().");
+            "grpc_gcp_handshaker_resp_set_channel_open().");
     return false;
   }
   resp->has_result = true;
@@ -177,11 +177,11 @@ bool grpc_alts_handshaker_resp_set_channel_open(grpc_alts_handshaker_resp* resp,
   return true;
 }
 
-bool grpc_alts_handshaker_resp_set_code(grpc_alts_handshaker_resp* resp,
+bool grpc_gcp_handshaker_resp_set_code(grpc_gcp_handshaker_resp* resp,
                                        uint32_t code) {
   if (resp == nullptr) {
     gpr_log(GPR_ERROR,
-            "Invalid nullptr argument to grpc_alts_handshaker_resp_set_code().");
+            "Invalid nullptr argument to grpc_gcp_handshaker_resp_set_code().");
     return false;
   }
   resp->has_status = true;
@@ -190,12 +190,12 @@ bool grpc_alts_handshaker_resp_set_code(grpc_alts_handshaker_resp* resp,
   return true;
 }
 
-bool grpc_alts_handshaker_resp_set_details(grpc_alts_handshaker_resp* resp,
+bool grpc_gcp_handshaker_resp_set_details(grpc_gcp_handshaker_resp* resp,
                                           const char* details) {
   if (resp == nullptr || details == nullptr) {
     gpr_log(
         GPR_ERROR,
-        "Invalid nullptr arguments to grpc_alts_handshaker_resp_set_details().");
+        "Invalid nullptr arguments to grpc_gcp_handshaker_resp_set_details().");
     return false;
   }
   resp->has_status = true;
@@ -205,13 +205,13 @@ bool grpc_alts_handshaker_resp_set_details(grpc_alts_handshaker_resp* resp,
   return true;
 }
 
-bool grpc_alts_handshaker_resp_set_out_frames(grpc_alts_handshaker_resp* resp,
+bool grpc_gcp_handshaker_resp_set_out_frames(grpc_gcp_handshaker_resp* resp,
                                              const char* out_frames,
                                              size_t size) {
   if (resp == nullptr || out_frames == nullptr) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr arguments to "
-            "grpc_alts_handshaker_resp_set_out_frames().");
+            "grpc_gcp_handshaker_resp_set_out_frames().");
     return false;
   }
   grpc_slice* slice = create_slice(out_frames, size);
@@ -220,12 +220,12 @@ bool grpc_alts_handshaker_resp_set_out_frames(grpc_alts_handshaker_resp* resp,
   return true;
 }
 
-bool grpc_alts_handshaker_resp_set_bytes_consumed(grpc_alts_handshaker_resp* resp,
+bool grpc_gcp_handshaker_resp_set_bytes_consumed(grpc_gcp_handshaker_resp* resp,
                                                  int32_t bytes_consumed) {
   if (resp == nullptr) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr argument to "
-            "grpc_alts_handshaker_resp_set_bytes_consumed().");
+            "grpc_gcp_handshaker_resp_set_bytes_consumed().");
     return false;
   }
   resp->has_bytes_consumed = true;
@@ -233,18 +233,18 @@ bool grpc_alts_handshaker_resp_set_bytes_consumed(grpc_alts_handshaker_resp* res
   return true;
 }
 
-bool grpc_alts_handshaker_resp_set_peer_rpc_versions(
-    grpc_alts_handshaker_resp* resp, uint32_t max_major, uint32_t max_minor,
+bool grpc_gcp_handshaker_resp_set_peer_rpc_versions(
+    grpc_gcp_handshaker_resp* resp, uint32_t max_major, uint32_t max_minor,
     uint32_t min_major, uint32_t min_minor) {
   if (resp == nullptr) {
     gpr_log(GPR_ERROR,
             "Invalid nullptr argument to "
-            "grpc_alts_handshaker_resp_set_peer_rpc_versions().");
+            "grpc_gcp_handshaker_resp_set_peer_rpc_versions().");
     return false;
   }
   resp->has_result = true;
   resp->result.has_peer_rpc_versions = true;
-  grpc_alts_rpc_protocol_versions* versions =
+  grpc_gcp_rpc_protocol_versions* versions =
       &resp->result.peer_rpc_versions;
   versions->has_max_rpc_version = true;
   versions->has_min_rpc_version = true;
@@ -259,16 +259,16 @@ bool grpc_alts_handshaker_resp_set_peer_rpc_versions(
   return true;
 }
 
-bool grpc_alts_handshaker_resp_encode(grpc_alts_handshaker_resp* resp,
+bool grpc_gcp_handshaker_resp_encode(grpc_gcp_handshaker_resp* resp,
                                      grpc_slice* slice) {
   if (resp == nullptr || slice == nullptr) {
     gpr_log(GPR_ERROR,
-            "Invalid nullptr arguments to grpc_alts_handshaker_resp_encode().");
+            "Invalid nullptr arguments to grpc_gcp_handshaker_resp_encode().");
     return false;
   }
   pb_ostream_t size_stream;
   memset(&size_stream, 0, sizeof(pb_ostream_t));
-  if (!pb_encode(&size_stream, grpc_alts_HandshakerResp_fields, resp)) {
+  if (!pb_encode(&size_stream, grpc_gcp_HandshakerResp_fields, resp)) {
     gpr_log(GPR_ERROR, "nanopb error: %s", PB_GET_ERROR(&size_stream));
     return false;
   }
@@ -276,24 +276,24 @@ bool grpc_alts_handshaker_resp_encode(grpc_alts_handshaker_resp* resp,
   *slice = grpc_slice_malloc(encoded_length);
   pb_ostream_t output_stream =
       pb_ostream_from_buffer(GRPC_SLICE_START_PTR(*slice), encoded_length);
-  if (!pb_encode(&output_stream, grpc_alts_HandshakerResp_fields, resp)) {
+  if (!pb_encode(&output_stream, grpc_gcp_HandshakerResp_fields, resp)) {
     gpr_log(GPR_ERROR, "nanopb error: %s", PB_GET_ERROR(&size_stream));
     return false;
   }
   return true;
 }
 
-bool grpc_alts_handshaker_req_decode(grpc_slice slice,
-                                    grpc_alts_handshaker_req* req) {
+bool grpc_gcp_handshaker_req_decode(grpc_slice slice,
+                                    grpc_gcp_handshaker_req* req) {
   if (req == nullptr) {
     gpr_log(GPR_ERROR,
-            "Invalid nullptr argument to grpc_alts_handshaker_req_decode().");
+            "Invalid nullptr argument to grpc_gcp_handshaker_req_decode().");
     return false;
   }
   pb_istream_t stream = pb_istream_from_buffer(GRPC_SLICE_START_PTR(slice),
                                                GRPC_SLICE_LENGTH(slice));
   req->next.in_bytes.funcs.decode = decode_string_or_bytes_cb;
-  if (!pb_decode(&stream, grpc_alts_HandshakerReq_fields, req)) {
+  if (!pb_decode(&stream, grpc_gcp_HandshakerReq_fields, req)) {
     gpr_log(GPR_ERROR, "nanopb error: %s", PB_GET_ERROR(&stream));
     return false;
   }
@@ -311,9 +311,9 @@ static bool slice_equals(grpc_slice* l_slice, grpc_slice* r_slice) {
   return false;
 }
 
-/* Check equality of a pair of grpc_alts_identity fields. */
-static bool handshaker_identity_equals(const grpc_alts_identity* l_id,
-                                       const grpc_alts_identity* r_id) {
+/* Check equality of a pair of grpc_gcp_identity fields. */
+static bool handshaker_identity_equals(const grpc_gcp_identity* l_id,
+                                       const grpc_gcp_identity* r_id) {
   if (!((l_id->hostname.arg != nullptr) != (r_id->hostname.arg != nullptr))) {
     if (l_id->hostname.arg != nullptr) {
       return slice_equals(static_cast<grpc_slice*>(l_id->hostname.arg),
@@ -335,8 +335,8 @@ static bool handshaker_identity_equals(const grpc_alts_identity* l_id,
 }
 
 static bool handshaker_rpc_versions_equals(
-    const grpc_alts_rpc_protocol_versions* l_version,
-    const grpc_alts_rpc_protocol_versions* r_version) {
+    const grpc_gcp_rpc_protocol_versions* l_version,
+    const grpc_gcp_rpc_protocol_versions* r_version) {
   bool result = true;
   result &=
       (l_version->max_rpc_version.major == r_version->max_rpc_version.major);
@@ -349,9 +349,9 @@ static bool handshaker_rpc_versions_equals(
   return result;
 }
 
-/* Check equality of a pair of grpc_alts_endpoint fields. */
-static bool handshaker_endpoint_equals(const grpc_alts_endpoint* l_end,
-                                       const grpc_alts_endpoint* r_end) {
+/* Check equality of a pair of grpc_gcp_endpoint fields. */
+static bool handshaker_endpoint_equals(const grpc_gcp_endpoint* l_end,
+                                       const grpc_gcp_endpoint* r_end) {
   bool result = true;
   result &= (l_end->port == r_end->port);
   result &= (l_end->protocol == r_end->protocol);
@@ -375,8 +375,8 @@ static bool repeated_field_list_contains_identity(
   repeated_field* field = const_cast<repeated_field*>(head);
   while (field != nullptr) {
     if (handshaker_identity_equals(
-            static_cast<const grpc_alts_identity*>(field->data),
-            static_cast<const grpc_alts_identity*>(target->data))) {
+            static_cast<const grpc_gcp_identity*>(field->data),
+            static_cast<const grpc_gcp_identity*>(target->data))) {
       return true;
     }
     field = field->next;
@@ -446,9 +446,9 @@ static bool repeated_field_list_equals_string(const repeated_field* l_head,
 }
 
 /* Check equality of a pair of ALTS client_start handshake requests. */
-bool grpc_alts_handshaker_client_start_req_equals(
-    grpc_alts_start_client_handshake_req* l_req,
-    grpc_alts_start_client_handshake_req* r_req) {
+bool grpc_gcp_handshaker_client_start_req_equals(
+    grpc_gcp_start_client_handshake_req* l_req,
+    grpc_gcp_start_client_handshake_req* r_req) {
   bool result = true;
   /* Compare handshake_security_protocol. */
   result &=
@@ -490,9 +490,9 @@ bool grpc_alts_handshaker_client_start_req_equals(
 }
 
 /* Check equality of a pair of ALTS server_start handshake requests. */
-bool grpc_alts_handshaker_server_start_req_equals(
-    grpc_alts_start_server_handshake_req* l_req,
-    grpc_alts_start_server_handshake_req* r_req) {
+bool grpc_gcp_handshaker_server_start_req_equals(
+    grpc_gcp_start_server_handshake_req* l_req,
+    grpc_gcp_start_server_handshake_req* r_req) {
   bool result = true;
   /* Compare application_protocols. */
   result &= repeated_field_list_equals_string(
@@ -547,25 +547,25 @@ bool grpc_alts_handshaker_server_start_req_equals(
 }
 
 /* Check equality of a pair of ALTS handshake requests. */
-bool grpc_alts_handshaker_req_equals(grpc_alts_handshaker_req* l_req,
-                                    grpc_alts_handshaker_req* r_req) {
+bool grpc_gcp_handshaker_req_equals(grpc_gcp_handshaker_req* l_req,
+                                    grpc_gcp_handshaker_req* r_req) {
   if (l_req->has_next && r_req->has_next) {
     return slice_equals(static_cast<grpc_slice*>(l_req->next.in_bytes.arg),
                         static_cast<grpc_slice*>(r_req->next.in_bytes.arg));
   } else if (l_req->has_client_start && r_req->has_client_start) {
-    return grpc_alts_handshaker_client_start_req_equals(&l_req->client_start,
+    return grpc_gcp_handshaker_client_start_req_equals(&l_req->client_start,
                                                        &r_req->client_start);
   } else if (l_req->has_server_start && r_req->has_server_start) {
-    return grpc_alts_handshaker_server_start_req_equals(&l_req->server_start,
+    return grpc_gcp_handshaker_server_start_req_equals(&l_req->server_start,
                                                        &r_req->server_start);
   }
   return false;
 }
 
 /* Check equality of a pair of ALTS handshake results. */
-bool grpc_alts_handshaker_resp_result_equals(
-    grpc_alts_handshaker_result* l_result,
-    grpc_alts_handshaker_result* r_result) {
+bool grpc_gcp_handshaker_resp_result_equals(
+    grpc_gcp_handshaker_result* l_result,
+    grpc_gcp_handshaker_result* r_result) {
   bool result = true;
   /* Compare application_protocol, record_protocol, and key_data. */
   result &= slice_equals(
@@ -599,8 +599,8 @@ bool grpc_alts_handshaker_resp_result_equals(
 }
 
 /* Check equality of a pair of ALTS handshake responses. */
-bool grpc_alts_handshaker_resp_equals(grpc_alts_handshaker_resp* l_resp,
-                                     grpc_alts_handshaker_resp* r_resp) {
+bool grpc_gcp_handshaker_resp_equals(grpc_gcp_handshaker_resp* l_resp,
+                                     grpc_gcp_handshaker_resp* r_resp) {
   bool result = true;
   /* Compare out_frames and bytes_consumed. */
   result &= slice_equals(static_cast<grpc_slice*>(l_resp->out_frames.arg),
@@ -612,7 +612,7 @@ bool grpc_alts_handshaker_resp_equals(grpc_alts_handshaker_resp* l_resp,
     return false;
   }
   if (l_resp->has_result) {
-    result &= grpc_alts_handshaker_resp_result_equals(&l_resp->result,
+    result &= grpc_gcp_handshaker_resp_result_equals(&l_resp->result,
                                                      &r_resp->result);
   }
   if (l_resp->has_status) {

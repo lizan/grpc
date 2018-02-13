@@ -10,15 +10,15 @@
 
 
 
-const pb_field_t grpc_alts_RpcProtocolVersions_fields[3] = {
-    PB_FIELD(  1, MESSAGE , OPTIONAL, STATIC  , FIRST, grpc_alts_RpcProtocolVersions, max_rpc_version, max_rpc_version, &grpc_alts_RpcProtocolVersions_Version_fields),
-    PB_FIELD(  2, MESSAGE , OPTIONAL, STATIC  , OTHER, grpc_alts_RpcProtocolVersions, min_rpc_version, max_rpc_version, &grpc_alts_RpcProtocolVersions_Version_fields),
+const pb_field_t grpc_gcp_RpcProtocolVersions_fields[3] = {
+    PB_FIELD(  1, MESSAGE , OPTIONAL, STATIC  , FIRST, grpc_gcp_RpcProtocolVersions, max_rpc_version, max_rpc_version, &grpc_gcp_RpcProtocolVersions_Version_fields),
+    PB_FIELD(  2, MESSAGE , OPTIONAL, STATIC  , OTHER, grpc_gcp_RpcProtocolVersions, min_rpc_version, max_rpc_version, &grpc_gcp_RpcProtocolVersions_Version_fields),
     PB_LAST_FIELD
 };
 
-const pb_field_t grpc_alts_RpcProtocolVersions_Version_fields[3] = {
-    PB_FIELD(  1, UINT32  , OPTIONAL, STATIC  , FIRST, grpc_alts_RpcProtocolVersions_Version, major, major, 0),
-    PB_FIELD(  2, UINT32  , OPTIONAL, STATIC  , OTHER, grpc_alts_RpcProtocolVersions_Version, minor, major, 0),
+const pb_field_t grpc_gcp_RpcProtocolVersions_Version_fields[3] = {
+    PB_FIELD(  1, UINT32  , OPTIONAL, STATIC  , FIRST, grpc_gcp_RpcProtocolVersions_Version, major, major, 0),
+    PB_FIELD(  2, UINT32  , OPTIONAL, STATIC  , OTHER, grpc_gcp_RpcProtocolVersions_Version, minor, major, 0),
     PB_LAST_FIELD
 };
 
@@ -33,7 +33,7 @@ const pb_field_t grpc_alts_RpcProtocolVersions_Version_fields[3] = {
  * numbers or field sizes that are larger than what can fit in 8 or 16 bit
  * field descriptors.
  */
-PB_STATIC_ASSERT((pb_membersize(grpc_alts_RpcProtocolVersions, max_rpc_version) < 65536 && pb_membersize(grpc_alts_RpcProtocolVersions, min_rpc_version) < 65536), YOU_MUST_DEFINE_PB_FIELD_32BIT_FOR_MESSAGES_grpc_alts_RpcProtocolVersions_grpc_alts_RpcProtocolVersions_Version)
+PB_STATIC_ASSERT((pb_membersize(grpc_gcp_RpcProtocolVersions, max_rpc_version) < 65536 && pb_membersize(grpc_gcp_RpcProtocolVersions, min_rpc_version) < 65536), YOU_MUST_DEFINE_PB_FIELD_32BIT_FOR_MESSAGES_grpc_gcp_RpcProtocolVersions_grpc_gcp_RpcProtocolVersions_Version)
 #endif
 
 #if !defined(PB_FIELD_16BIT) && !defined(PB_FIELD_32BIT)
@@ -44,7 +44,7 @@ PB_STATIC_ASSERT((pb_membersize(grpc_alts_RpcProtocolVersions, max_rpc_version) 
  * numbers or field sizes that are larger than what can fit in the default
  * 8 bit descriptors.
  */
-PB_STATIC_ASSERT((pb_membersize(grpc_alts_RpcProtocolVersions, max_rpc_version) < 256 && pb_membersize(grpc_alts_RpcProtocolVersions, min_rpc_version) < 256), YOU_MUST_DEFINE_PB_FIELD_16BIT_FOR_MESSAGES_grpc_alts_RpcProtocolVersions_grpc_alts_RpcProtocolVersions_Version)
+PB_STATIC_ASSERT((pb_membersize(grpc_gcp_RpcProtocolVersions, max_rpc_version) < 256 && pb_membersize(grpc_gcp_RpcProtocolVersions, min_rpc_version) < 256), YOU_MUST_DEFINE_PB_FIELD_16BIT_FOR_MESSAGES_grpc_gcp_RpcProtocolVersions_grpc_gcp_RpcProtocolVersions_Version)
 #endif
 
 

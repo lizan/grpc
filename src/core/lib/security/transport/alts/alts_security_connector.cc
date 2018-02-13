@@ -71,11 +71,11 @@ static void alts_server_add_handshakers(
 }
 
 static void alts_set_rpc_protocol_versions(
-    grpc_alts_rpc_protocol_versions* rpc_versions) {
-  grpc_alts_rpc_protocol_versions_set_max(
+    grpc_gcp_rpc_protocol_versions* rpc_versions) {
+  grpc_gcp_rpc_protocol_versions_set_max(
       rpc_versions, GRPC_PROTOCOL_VERSION_MAX_MAJOR,
       GRPC_PROTOCOL_VERSION_MAX_MINOR);
-  grpc_alts_rpc_protocol_versions_set_min(
+  grpc_gcp_rpc_protocol_versions_set_min(
       rpc_versions, GRPC_PROTOCOL_VERSION_MIN_MAJOR,
       GRPC_PROTOCOL_VERSION_MIN_MINOR);
 }
@@ -105,19 +105,19 @@ grpc_security_status grpc_alts_auth_context_from_tsi_peer(
     gpr_log(GPR_ERROR, "Missing rpc protocol versions property.");
     return GRPC_SECURITY_ERROR;
   }
-  grpc_alts_rpc_protocol_versions local_versions, peer_versions;
+  grpc_gcp_rpc_protocol_versions local_versions, peer_versions;
   alts_set_rpc_protocol_versions(&local_versions);
   grpc_slice slice = grpc_slice_from_copied_buffer(
       rpc_versions_prop->value.data, rpc_versions_prop->value.length);
   bool decode_result =
-      grpc_alts_rpc_protocol_versions_decode(slice, &peer_versions);
+      grpc_gcp_rpc_protocol_versions_decode(slice, &peer_versions);
   grpc_slice_unref(slice);
   if (!decode_result) {
     gpr_log(GPR_ERROR, "Invalid peer rpc protocol versions.");
     return GRPC_SECURITY_ERROR;
   }
   /* TODO: Pass highest common rpc protocol version to grpc caller. */
-  bool check_result = grpc_alts_rpc_protocol_versions_check(
+  bool check_result = grpc_gcp_rpc_protocol_versions_check(
       &local_versions, &peer_versions, nullptr);
   if (!check_result) {
     gpr_log(GPR_ERROR, "Mismatch of local and peer rpc protocol versions.");

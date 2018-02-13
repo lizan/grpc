@@ -5,7 +5,7 @@
 
 #include "src/core/tsi/alts/handshaker/alts_tsi_event.h"
 
-#define ALTS_SERVICE_METHOD "/grpc.alts.HandshakerService/DoHandshake"
+#define ALTS_SERVICE_METHOD "/grpc.gcp.HandshakerService/DoHandshake"
 #define ALTS_APPLICATION_PROTOCOL "grpc"
 #define ALTS_RECORD_PROTOCOL "ALTSRP_GCM_AES128_REKEY"
 

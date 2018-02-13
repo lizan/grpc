@@ -1551,11 +1551,11 @@ grpc_cc_library(
         "src/core/tsi/ssl_transport_security.h",
         "src/core/tsi/ssl_types.h",
         "src/core/tsi/transport_security_grpc.h",
-        "src/core/tsi/alts/handshaker/alts/alts_handshaker_client.h",
-        "src/core/tsi/alts/handshaker/alts/alts_tsi_handshaker.h",
-        "src/core/tsi/alts/handshaker/alts/alts_tsi_event.h",
-        "src/core/tsi/alts/handshaker/alts/alts_tsi_utils.h",
-        "src/core/tsi/alts/handshaker/alts/alts_tsi_handshaker_private.h",
+        "src/core/tsi/alts/handshaker/alts_handshaker_client.h",
+        "src/core/tsi/alts/handshaker/alts_tsi_handshaker.h",
+        "src/core/tsi/alts/handshaker/alts_tsi_event.h",
+        "src/core/tsi/alts/handshaker/alts_tsi_utils.h",
+        "src/core/tsi/alts/handshaker/alts_tsi_handshaker_private.h",
 
     ],
     external_deps = [
@@ -1578,7 +1578,7 @@ grpc_cc_library(
     srcs = [
         "src/core/tsi/alts/handshaker/alts_handshaker_service_api.cc",
         "src/core/tsi/alts/handshaker/alts_handshaker_service_api_util.cc",
-        "src/core/tsi/alts/handshaker/handshaker.pb.cc",
+        "src/core/tsi/alts/handshaker/handshaker.pb.c",
         "src/core/tsi/alts/handshaker/transport_security_common.pb.c",
         "src/core/tsi/alts/handshaker/transport_security_common_api.cc",
     ],
@@ -1595,7 +1595,7 @@ grpc_cc_library(
     language = "c++",
     deps = [
         "gpr",
-        "grpc",
+        "grpc_base",
     ],
 )
 
@@ -1605,12 +1605,13 @@ grpc_cc_library(
         "src/core/lib/security/credentials/alts/grpc_alts_credentials_options.cc",
         "src/core/lib/security/credentials/alts/grpc_alts_credentials_client_options.cc",
         "src/core/lib/security/credentials/alts/grpc_alts_credentials_server_options.cc",
-    ]
+    ],
     hdrs = [
         "src/core/lib/security/credentials/alts/grpc_alts_credentials_options.h",
     ],
+    public_hdrs = GRPC_SECURE_PUBLIC_HDRS,
     deps = [
-        "grpc",
+        "grpc_base",
         "alts_handshaker_service_api",
     ],
 )
@@ -1630,7 +1631,7 @@ grpc_cc_library(
     language = "c++",
     deps = [
         "gpr",
-        "grpc",
+        "grpc_base",
     ],
 )
 
@@ -1641,11 +1642,11 @@ grpc_cc_library(
     ],
     hdrs = [
          "src/core/tsi/alts/frame_protector/alts_counter.h"
-    ]
+    ],
     language = "c++", 
     deps = [
         "gpr",
-        "grpc",
+        "grpc_base",
     ]
 )
 
@@ -1664,14 +1665,14 @@ grpc_cc_library(
         "src/core/tsi/alts/frame_protector/alts_frame_protector.h",
         "src/core/tsi/alts/frame_protector/alts_record_protocol_crypter_common.h",
         "src/core/tsi/alts/frame_protector/frame_handler.h",
-
+        "src/core/tsi/transport_security_grpc.h",
     ],
     language = "c++",
     deps = [
         "alts_counter",
         "alts_crypt",
         "gpr",
-        "grpc",
+        "grpc_base",
         "tsi_interface",
     ],
 )
@@ -1692,15 +1693,15 @@ grpc_cc_library(
         "src/core/tsi/alts/zero_copy_frame_protector/alts_grpc_record_protocol.h",
         "src/core/tsi/alts/zero_copy_frame_protector/alts_iovec_record_protocol.h",
         "src/core/tsi/alts/zero_copy_frame_protector/alts_zero_copy_grpc_protector.h",
+        "src/core/tsi/transport_security_grpc.h",
     ],
     language = "c++",
     deps = [
         "alts_counter",
         "alts_crypt", 
         "gpr",
-        "grpc",
+        "grpc_base",
         "tsi_interface",
-        "tsi",
     ]
 )
 
